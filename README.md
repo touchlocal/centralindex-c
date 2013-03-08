@@ -13,13 +13,32 @@ The centralindex C module allows developers to start using the [Central Index](h
 
 ## Hello World
 
-You'll need to put the CentralIndex.c and CentralIndex.h file alongside your code.
+You'll need to put the CentralIndex.c and CentralIndex.h file alongside your code together with [http://curl.haxx.se/libcurl/](the libcurl library)
 
 Then your first script could look something like:  
 
 ```
+int main() {
+
+   // set debug mode on
+   set_debug_mode(1);
+
+   // set the api key
+   set_api_key("<insert api key here>");
+   
+   // fetch an entity
+   char *retval = getEntity("379236608286720");
+   
+   if(retval != NULL) {
+     printf("%s",retval);
+     free(retval);  
+   } else {
+     printf("Failed!");    
+   }
+}
 
 ```
+
 
 ## Function reference
 
