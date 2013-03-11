@@ -1196,14 +1196,13 @@ char * doCurl (char * method, char * path, char * params) {
    *  @param longitude
    *  @param timezone
    *  @param telephone_number
-   *  @param telephone_type
    *  @param email
    *  @param website
    *  @param category_id
    *  @param category_name
    *  @return - the data from the api
   */
-  char * putBusiness( char *name, char *address1, char *address2, char *address3, char *district, char *town, char *county, char *postcode, char *country, char *latitude, char *longitude, char *timezone, char *telephone_number, char *telephone_type, char *email, char *website, char *category_id, char *category_name) {
+  char * putBusiness( char *name, char *address1, char *address2, char *address3, char *district, char *town, char *county, char *postcode, char *country, char *latitude, char *longitude, char *timezone, char *telephone_number, char *email, char *website, char *category_id, char *category_name) {
     CURL *curl = curl_easy_init();
     char params[10000];
     char *p;
@@ -1275,11 +1274,6 @@ char * doCurl (char * method, char * path, char * params) {
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");
-    strcat(params,"telephone_type=");
-    p = curl_easy_escape(curl,telephone_type,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
     strcat(params,"email=");
     p = curl_easy_escape(curl,email,0);
     strcat(params,p);
@@ -1307,10 +1301,11 @@ char * doCurl (char * method, char * path, char * params) {
   /**
    * Provides a personalised URL to redirect a user to add an entity to Central Index
    *
-   *  @param language - The language to use to render the add path
+   *  @param language - The language to use to render the add path e.g. en
+   *  @param portal_name - The name of the website that data is to be added on e.g. YourLocal
    *  @return - the data from the api
   */
-  char * getEntityAdd( char *language) {
+  char * getEntityAdd( char *language, char *portal_name) {
     CURL *curl = curl_easy_init();
     char params[10000];
     char *p;
@@ -1319,6 +1314,11 @@ char * doCurl (char * method, char * path, char * params) {
     strcat(params,"?");
     strcat(params,"language=");
     p = curl_easy_escape(curl,language,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"portal_name=");
+    p = curl_easy_escape(curl,portal_name,0);
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");
@@ -1600,13 +1600,9 @@ char * doCurl (char * method, char * path, char * params) {
    *  @param entity_id
    *  @param number
    *  @param description
-   *  @param premium_rate
-   *  @param telephone_type
-   *  @param tps
-   *  @param ctps
    *  @return - the data from the api
   */
-  char * postEntityPhone( char *entity_id, char *number, char *description, char *premium_rate, char *telephone_type, char *tps, char *ctps) {
+  char * postEntityPhone( char *entity_id, char *number, char *description) {
     CURL *curl = curl_easy_init();
     char params[10000];
     char *p;
@@ -1625,26 +1621,6 @@ char * doCurl (char * method, char * path, char * params) {
     strcat(params,"&");
     strcat(params,"description=");
     p = curl_easy_escape(curl,description,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"premium_rate=");
-    p = curl_easy_escape(curl,premium_rate,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"telephone_type=");
-    p = curl_easy_escape(curl,telephone_type,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"tps=");
-    p = curl_easy_escape(curl,tps,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"ctps=");
-    p = curl_easy_escape(curl,ctps,0);
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");
@@ -1686,10 +1662,9 @@ char * doCurl (char * method, char * path, char * params) {
    *  @param entity_id
    *  @param number
    *  @param description
-   *  @param premium_rate
    *  @return - the data from the api
   */
-  char * postEntityFax( char *entity_id, char *number, char *description, char *premium_rate) {
+  char * postEntityFax( char *entity_id, char *number, char *description) {
     CURL *curl = curl_easy_init();
     char params[10000];
     char *p;
@@ -1708,11 +1683,6 @@ char * doCurl (char * method, char * path, char * params) {
     strcat(params,"&");
     strcat(params,"description=");
     p = curl_easy_escape(curl,description,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"premium_rate=");
-    p = curl_easy_escape(curl,premium_rate,0);
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");
