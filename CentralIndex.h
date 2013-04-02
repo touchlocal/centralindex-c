@@ -119,14 +119,14 @@ void set_debug_mode (int debug);
   /**
    * Search for matching entities
    *
-   *  @param what
-   *  @param latitude_1
-   *  @param longitude_1
-   *  @param latitude_2
-   *  @param longitude_2
+   *  @param what - What to get results for. E.g. Plumber e.g. plumber
+   *  @param latitude_1 - Latitude of first point in bounding box e.g. 53.396842
+   *  @param longitude_1 - Longitude of first point in bounding box e.g. -6.37619
+   *  @param latitude_2 - Latitude of second point in bounding box e.g. 53.290463
+   *  @param longitude_2 - Longitude of second point in bounding box e.g. -6.207275
    *  @param per_page
    *  @param page
-   *  @param country
+   *  @param country - A valid ISO 3166 country code e.g. ie
    *  @param language
    *  @return - the data from the api
   */
@@ -368,6 +368,31 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * getEntityAdd( char *language, char *portal_name);
+
+ 
+  /**
+   * Allows the removal or insertion of tags into an advertiser object
+   *
+   *  @param gen_id - The gen_id of this advertiser
+   *  @param entity_id - The entity_id of the advertiser
+   *  @param language - The tag language to alter
+   *  @param tags_to_add - The tags to add
+   *  @param tags_to_remove - The tags to remove
+   *  @return - the data from the api
+  */
+  char * postEntityAdvertiserTag( char *gen_id, char *entity_id, char *language, char *tags_to_add, char *tags_to_remove);
+
+ 
+  /**
+   * Allows the removal or insertion of locations into an advertiser object
+   *
+   *  @param gen_id - The gen_id of this advertiser
+   *  @param entity_id - The entity_id of the advertiser
+   *  @param locations_to_add - The locations to add
+   *  @param locations_to_remove - The locations to remove
+   *  @return - the data from the api
+  */
+  char * postEntityAdvertiserLocation( char *gen_id, char *entity_id, char *locations_to_add, char *locations_to_remove);
 
  
   /**
@@ -666,10 +691,17 @@ void set_debug_mode (int debug);
   /**
    * Supply an address to geocode - returns lat/lon and accuracy
    *
-   *  @param address
+   *  @param address1
+   *  @param address2
+   *  @param address3
+   *  @param district
+   *  @param town
+   *  @param county
+   *  @param postcode
+   *  @param country
    *  @return - the data from the api
   */
-  char * getToolsGeocode( char *address);
+  char * getToolsGeocode( char *address1, char *address2, char *address3, char *district, char *town, char *county, char *postcode, char *country);
 
  
   /**
@@ -787,9 +819,12 @@ void set_debug_mode (int debug);
    *  @param expiry
    *  @param is_national
    *  @param language
+   *  @param reseller_ref
+   *  @param reseller_agent_id
+   *  @param publisher_id
    *  @return - the data from the api
   */
-  char * postEntityAdvertiser( char *entity_id, char *tags, char *locations, char *expiry, char *is_national, char *language);
+  char * postEntityAdvertiser( char *entity_id, char *tags, char *locations, char *expiry, char *is_national, char *language, char *reseller_ref, char *reseller_agent_id, char *publisher_id);
 
  
   /**
@@ -1182,13 +1217,23 @@ void set_debug_mode (int debug);
 
  
   /**
-   * The search matches a category name or synonym on a given string and language.
+   * The search matches a category name on a given string and language.
    *
    *  @param str - A string to search against, E.g. Plumbers e.g. but
    *  @param language - An ISO compatible language code, E.g. en e.g. en
    *  @return - the data from the api
   */
   char * getAutocompleteCategory( char *str, char *language);
+
+ 
+  /**
+   * The search matches a category name or synonym on a given string and language.
+   *
+   *  @param str - A string to search against, E.g. Plumbers e.g. but
+   *  @param language - An ISO compatible language code, E.g. en e.g. en
+   *  @return - the data from the api
+  */
+  char * getAutocompleteKeyword( char *str, char *language);
 
  
   /**
@@ -1342,6 +1387,55 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * postEntityClaim( char *entity_id, char *claimed_user_id, char *claimed_date);
+
+ 
+  /**
+   * Update/Add a publisher
+   *
+   *  @param publisher_id
+   *  @param country
+   *  @param name
+   *  @param description
+   *  @param active
+   *  @return - the data from the api
+  */
+  char * postPublisher( char *publisher_id, char *country, char *name, char *description, char *active);
+
+ 
+  /**
+   * Delete a publisher with a specified publisher_id
+   *
+   *  @param publisher_id
+   *  @return - the data from the api
+  */
+  char * deletePublisher( char *publisher_id);
+
+ 
+  /**
+   * Returns publisher that matches a given publisher id
+   *
+   *  @param publisher_id
+   *  @return - the data from the api
+  */
+  char * getPublisher( char *publisher_id);
+
+ 
+  /**
+   * Returns publisher that matches a given publisher id
+   *
+   *  @param country
+   *  @return - the data from the api
+  */
+  char * getPublisherByCountry( char *country);
+
+ 
+  /**
+   * Returns publishers that are available for a given entity_id.
+   *
+   *  @param entity_id
+   *  @return - the data from the api
+  */
+  char * getPublisherByEntityId( char *entity_id);
 
  
 
