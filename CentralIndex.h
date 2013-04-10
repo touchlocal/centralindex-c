@@ -1,3 +1,4 @@
+Starting Wolf using 'dev' configuration
 /**
  * Central Index
  *
@@ -368,6 +369,17 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * getEntityAdd( char *language, char *portal_name);
+
+ 
+  /**
+   * Provides a personalised URL to redirect a user to claim an entity in the Central Index
+   *
+   *  @param language - The language to use to render the add path e.g. en
+   *  @param portal_name - The name of the website that data is to be added on e.g. YourLocal
+   *  @param entity_id - The id of the index card that is being claimed e.g. 379236808425472
+   *  @return - the data from the api
+  */
+  char * getEntityClaim( char *language, char *portal_name, char *entity_id);
 
  
   /**
@@ -1436,6 +1448,41 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * getPublisherByEntityId( char *entity_id);
+
+ 
+  /**
+   * Update/Add a country
+   *
+   *  @param country_id
+   *  @param name
+   *  @param synonyms
+   *  @param continentName
+   *  @param continent
+   *  @param geonameId
+   *  @param dbpediaURL
+   *  @param freebaseURL
+   *  @param population
+   *  @param currencyCode
+   *  @param languages
+   *  @param areaInSqKm
+   *  @param capital
+   *  @param east
+   *  @param west
+   *  @param north
+   *  @param south
+   *  @param claimPrice
+   *  @return - the data from the api
+  */
+  char * postCountry( char *country_id, char *name, char *synonyms, char *continentName, char *continent, char *geonameId, char *dbpediaURL, char *freebaseURL, char *population, char *currencyCode, char *languages, char *areaInSqKm, char *capital, char *east, char *west, char *north, char *south, char *claimPrice);
+
+ 
+  /**
+   * Fetching a country
+   *
+   *  @param country_id
+   *  @return - the data from the api
+  */
+  char * getCountry( char *country_id);
 
  
 

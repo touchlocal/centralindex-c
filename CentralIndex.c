@@ -1,3 +1,4 @@
+Starting Wolf using 'dev' configuration
 /**
  * Central Index
  *
@@ -1323,6 +1324,40 @@ char * doCurl (char * method, char * path, char * params) {
     curl_free(p);
     strcat(params,"&");
     return doCurl("GET","/entity/add",params);
+  }
+
+
+  /**
+   * Provides a personalised URL to redirect a user to claim an entity in the Central Index
+   *
+   *  @param language - The language to use to render the add path e.g. en
+   *  @param portal_name - The name of the website that data is to be added on e.g. YourLocal
+   *  @param entity_id - The id of the index card that is being claimed e.g. 379236808425472
+   *  @return - the data from the api
+  */
+  char * getEntityClaim( char *language, char *portal_name, char *entity_id) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"language=");
+    p = curl_easy_escape(curl,language,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"portal_name=");
+    p = curl_easy_escape(curl,portal_name,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"entity_id=");
+    p = curl_easy_escape(curl,entity_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("GET","/entity/claim",params);
   }
 
 
@@ -4659,6 +4694,152 @@ char * doCurl (char * method, char * path, char * params) {
     curl_free(p);
     strcat(params,"&");
     return doCurl("GET","/publisher/byEntityId",params);
+  }
+
+
+  /**
+   * Update/Add a country
+   *
+   *  @param country_id
+   *  @param name
+   *  @param synonyms
+   *  @param continentName
+   *  @param continent
+   *  @param geonameId
+   *  @param dbpediaURL
+   *  @param freebaseURL
+   *  @param population
+   *  @param currencyCode
+   *  @param languages
+   *  @param areaInSqKm
+   *  @param capital
+   *  @param east
+   *  @param west
+   *  @param north
+   *  @param south
+   *  @param claimPrice
+   *  @return - the data from the api
+  */
+  char * postCountry( char *country_id, char *name, char *synonyms, char *continentName, char *continent, char *geonameId, char *dbpediaURL, char *freebaseURL, char *population, char *currencyCode, char *languages, char *areaInSqKm, char *capital, char *east, char *west, char *north, char *south, char *claimPrice) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"country_id=");
+    p = curl_easy_escape(curl,country_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"name=");
+    p = curl_easy_escape(curl,name,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"synonyms=");
+    p = curl_easy_escape(curl,synonyms,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"continentName=");
+    p = curl_easy_escape(curl,continentName,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"continent=");
+    p = curl_easy_escape(curl,continent,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"geonameId=");
+    p = curl_easy_escape(curl,geonameId,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"dbpediaURL=");
+    p = curl_easy_escape(curl,dbpediaURL,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"freebaseURL=");
+    p = curl_easy_escape(curl,freebaseURL,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"population=");
+    p = curl_easy_escape(curl,population,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"currencyCode=");
+    p = curl_easy_escape(curl,currencyCode,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"languages=");
+    p = curl_easy_escape(curl,languages,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"areaInSqKm=");
+    p = curl_easy_escape(curl,areaInSqKm,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"capital=");
+    p = curl_easy_escape(curl,capital,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"east=");
+    p = curl_easy_escape(curl,east,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"west=");
+    p = curl_easy_escape(curl,west,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"north=");
+    p = curl_easy_escape(curl,north,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"south=");
+    p = curl_easy_escape(curl,south,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"claimPrice=");
+    p = curl_easy_escape(curl,claimPrice,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("POST","/country",params);
+  }
+
+
+  /**
+   * Fetching a country
+   *
+   *  @param country_id
+   *  @return - the data from the api
+  */
+  char * getCountry( char *country_id) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"country_id=");
+    p = curl_easy_escape(curl,country_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("GET","/country",params);
   }
 
 
