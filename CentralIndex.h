@@ -56,12 +56,30 @@ void set_debug_mode (int debug);
 
  
   /**
+   * Uploads a JSON file of known format and bulk inserts into DB
+   *
+   *  @param data
+   *  @return - the data from the api
+  */
+  char * postEntityBulkJson( char *data);
+
+ 
+  /**
    * Shows the current status of a bulk upload
    *
    *  @param upload_id
    *  @return - the data from the api
   */
   char * getEntityBulkCsvStatus( char *upload_id);
+
+ 
+  /**
+   * Shows the current status of a bulk JSON upload
+   *
+   *  @param upload_id
+   *  @return - the data from the api
+  */
+  char * getEntityBulkJsonStatus( char *upload_id);
 
  
   /**
@@ -355,10 +373,10 @@ void set_debug_mode (int debug);
    *  @param email
    *  @param website
    *  @param category_id
-   *  @param category_name
+   *  @param category_type
    *  @return - the data from the api
   */
-  char * putBusiness( char *name, char *address1, char *address2, char *address3, char *district, char *town, char *county, char *postcode, char *country, char *latitude, char *longitude, char *timezone, char *telephone_number, char *email, char *website, char *category_id, char *category_name);
+  char * putBusiness( char *name, char *address1, char *address2, char *address3, char *district, char *town, char *county, char *postcode, char *country, char *latitude, char *longitude, char *timezone, char *telephone_number, char *email, char *website, char *category_id, char *category_type);
 
  
   /**
@@ -372,14 +390,14 @@ void set_debug_mode (int debug);
 
  
   /**
-   * Provides a personalised URL to redirect a user to claim an entity in the Central Index
+   * Provides a personalised URL to redirect a user to claim an entity on Central Index
    *
-   *  @param language - The language to use to render the add path e.g. en
-   *  @param portal_name - The name of the website that data is to be added on e.g. YourLocal
-   *  @param entity_id - The id of the index card that is being claimed e.g. 379236808425472
+   *  @param entity_id - Entity ID to be claimed e.g. 380348266819584
+   *  @param language - The language to use to render the claim path e.g. en
+   *  @param portal_name - The name of the website that entity is being claimed on e.g. YourLocal
    *  @return - the data from the api
   */
-  char * getEntityClaim( char *language, char *portal_name, char *entity_id);
+  char * getEntityClaim( char *entity_id, char *language, char *portal_name);
 
  
   /**
@@ -587,14 +605,23 @@ void set_debug_mode (int debug);
 
  
   /**
+   * Returns the supplied wolf category object by fetching the supplied category_id from our categories object.
+   *
+   *  @param category_id
+   *  @return - the data from the api
+  */
+  char * getCategory( char *category_id);
+
+ 
+  /**
    * With a known entity id, an category object can be added.
    *
    *  @param entity_id
    *  @param category_id
-   *  @param category_name
+   *  @param category_type
    *  @return - the data from the api
   */
-  char * postEntityCategory( char *entity_id, char *category_id, char *category_name);
+  char * postEntityCategory( char *entity_id, char *category_id, char *category_type);
 
  
   /**
@@ -626,11 +653,12 @@ void set_debug_mode (int debug);
    *  @param company_name
    *  @param latitude
    *  @param longitude
+   *  @param country
    *  @param name_strictness
    *  @param location_strictness
    *  @return - the data from the api
   */
-  char * getMatchByphone( char *phone, char *company_name, char *latitude, char *longitude, char *name_strictness, char *location_strictness);
+  char * getMatchByphone( char *phone, char *company_name, char *latitude, char *longitude, char *country, char *name_strictness, char *location_strictness);
 
  
   /**
@@ -1483,6 +1511,29 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * getCountry( char *country_id);
+
+ 
+  /**
+   * For insance, reporting a phone number as wrong
+   *
+   *  @param entity_id - A valid entity_id e.g. 379236608286720
+   *  @param gen_id - The gen_id for the item being reported
+   *  @param signal_type - The signal that is to be reported e.g. wrong
+   *  @param data_type - The type of data being reported
+   *  @return - the data from the api
+  */
+  char * postSignal( char *entity_id, char *gen_id, char *signal_type, char *data_type);
+
+ 
+  /**
+   * Get the number of times an entity has been served out as an advert or on serps/bdp pages
+   *
+   *  @param entity_id - A valid entity_id e.g. 379236608286720
+   *  @param year - The year to report on
+   *  @param month - The month to report on
+   *  @return - the data from the api
+  */
+  char * getStatsEntityBy_date( char *entity_id, char *year, char *month);
 
  
 

@@ -264,6 +264,28 @@ char * doCurl (char * method, char * path, char * params) {
 
 
   /**
+   * Uploads a JSON file of known format and bulk inserts into DB
+   *
+   *  @param data
+   *  @return - the data from the api
+  */
+  char * postEntityBulkJson( char *data) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"data=");
+    p = curl_easy_escape(curl,data,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("POST","/entity/bulk/json",params);
+  }
+
+
+  /**
    * Shows the current status of a bulk upload
    *
    *  @param upload_id
@@ -282,6 +304,28 @@ char * doCurl (char * method, char * path, char * params) {
     curl_free(p);
     strcat(params,"&");
     return doCurl("GET","/entity/bulk/csv/status",params);
+  }
+
+
+  /**
+   * Shows the current status of a bulk JSON upload
+   *
+   *  @param upload_id
+   *  @return - the data from the api
+  */
+  char * getEntityBulkJsonStatus( char *upload_id) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"upload_id=");
+    p = curl_easy_escape(curl,upload_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("GET","/entity/bulk/json/status",params);
   }
 
 
@@ -1200,10 +1244,10 @@ char * doCurl (char * method, char * path, char * params) {
    *  @param email
    *  @param website
    *  @param category_id
-   *  @param category_name
+   *  @param category_type
    *  @return - the data from the api
   */
-  char * putBusiness( char *name, char *address1, char *address2, char *address3, char *district, char *town, char *county, char *postcode, char *country, char *latitude, char *longitude, char *timezone, char *telephone_number, char *email, char *website, char *category_id, char *category_name) {
+  char * putBusiness( char *name, char *address1, char *address2, char *address3, char *district, char *town, char *county, char *postcode, char *country, char *latitude, char *longitude, char *timezone, char *telephone_number, char *email, char *website, char *category_id, char *category_type) {
     CURL *curl = curl_easy_init();
     char params[10000];
     char *p;
@@ -1290,8 +1334,8 @@ char * doCurl (char * method, char * path, char * params) {
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");
-    strcat(params,"category_name=");
-    p = curl_easy_escape(curl,category_name,0);
+    strcat(params,"category_type=");
+    p = curl_easy_escape(curl,category_type,0);
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");
@@ -1328,20 +1372,25 @@ char * doCurl (char * method, char * path, char * params) {
 
 
   /**
-   * Provides a personalised URL to redirect a user to claim an entity in the Central Index
+   * Provides a personalised URL to redirect a user to claim an entity on Central Index
    *
-   *  @param language - The language to use to render the add path e.g. en
-   *  @param portal_name - The name of the website that data is to be added on e.g. YourLocal
-   *  @param entity_id - The id of the index card that is being claimed e.g. 379236808425472
+   *  @param entity_id - Entity ID to be claimed e.g. 380348266819584
+   *  @param language - The language to use to render the claim path e.g. en
+   *  @param portal_name - The name of the website that entity is being claimed on e.g. YourLocal
    *  @return - the data from the api
   */
-  char * getEntityClaim( char *language, char *portal_name, char *entity_id) {
+  char * getEntityClaim( char *entity_id, char *language, char *portal_name) {
     CURL *curl = curl_easy_init();
     char params[10000];
     char *p;
     strcpy(params,"?api_key=");
     strcat(params,API_KEY);
     strcat(params,"?");
+    strcat(params,"entity_id=");
+    p = curl_easy_escape(curl,entity_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
     strcat(params,"language=");
     p = curl_easy_escape(curl,language,0);
     strcat(params,p);
@@ -1349,11 +1398,6 @@ char * doCurl (char * method, char * path, char * params) {
     strcat(params,"&");
     strcat(params,"portal_name=");
     p = curl_easy_escape(curl,portal_name,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"entity_id=");
-    p = curl_easy_escape(curl,entity_id,0);
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");
@@ -2010,14 +2054,36 @@ char * doCurl (char * method, char * path, char * params) {
 
 
   /**
+   * Returns the supplied wolf category object by fetching the supplied category_id from our categories object.
+   *
+   *  @param category_id
+   *  @return - the data from the api
+  */
+  char * getCategory( char *category_id) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"category_id=");
+    p = curl_easy_escape(curl,category_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("GET","/category",params);
+  }
+
+
+  /**
    * With a known entity id, an category object can be added.
    *
    *  @param entity_id
    *  @param category_id
-   *  @param category_name
+   *  @param category_type
    *  @return - the data from the api
   */
-  char * postEntityCategory( char *entity_id, char *category_id, char *category_name) {
+  char * postEntityCategory( char *entity_id, char *category_id, char *category_type) {
     CURL *curl = curl_easy_init();
     char params[10000];
     char *p;
@@ -2034,8 +2100,8 @@ char * doCurl (char * method, char * path, char * params) {
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");
-    strcat(params,"category_name=");
-    p = curl_easy_escape(curl,category_name,0);
+    strcat(params,"category_type=");
+    p = curl_easy_escape(curl,category_type,0);
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");
@@ -2118,11 +2184,12 @@ char * doCurl (char * method, char * path, char * params) {
    *  @param company_name
    *  @param latitude
    *  @param longitude
+   *  @param country
    *  @param name_strictness
    *  @param location_strictness
    *  @return - the data from the api
   */
-  char * getMatchByphone( char *phone, char *company_name, char *latitude, char *longitude, char *name_strictness, char *location_strictness) {
+  char * getMatchByphone( char *phone, char *company_name, char *latitude, char *longitude, char *country, char *name_strictness, char *location_strictness) {
     CURL *curl = curl_easy_init();
     char params[10000];
     char *p;
@@ -2146,6 +2213,11 @@ char * doCurl (char * method, char * path, char * params) {
     strcat(params,"&");
     strcat(params,"longitude=");
     p = curl_easy_escape(curl,longitude,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"country=");
+    p = curl_easy_escape(curl,country,0);
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");
@@ -4840,6 +4912,80 @@ char * doCurl (char * method, char * path, char * params) {
     curl_free(p);
     strcat(params,"&");
     return doCurl("GET","/country",params);
+  }
+
+
+  /**
+   * For insance, reporting a phone number as wrong
+   *
+   *  @param entity_id - A valid entity_id e.g. 379236608286720
+   *  @param gen_id - The gen_id for the item being reported
+   *  @param signal_type - The signal that is to be reported e.g. wrong
+   *  @param data_type - The type of data being reported
+   *  @return - the data from the api
+  */
+  char * postSignal( char *entity_id, char *gen_id, char *signal_type, char *data_type) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"entity_id=");
+    p = curl_easy_escape(curl,entity_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"gen_id=");
+    p = curl_easy_escape(curl,gen_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"signal_type=");
+    p = curl_easy_escape(curl,signal_type,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"data_type=");
+    p = curl_easy_escape(curl,data_type,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("POST","/signal",params);
+  }
+
+
+  /**
+   * Get the number of times an entity has been served out as an advert or on serps/bdp pages
+   *
+   *  @param entity_id - A valid entity_id e.g. 379236608286720
+   *  @param year - The year to report on
+   *  @param month - The month to report on
+   *  @return - the data from the api
+  */
+  char * getStatsEntityBy_date( char *entity_id, char *year, char *month) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"entity_id=");
+    p = curl_easy_escape(curl,entity_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"year=");
+    p = curl_easy_escape(curl,year,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"month=");
+    p = curl_easy_escape(curl,month,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("GET","/stats/entity/by_date",params);
   }
 
 
