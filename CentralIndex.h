@@ -327,11 +327,11 @@ void set_debug_mode (int debug);
    * Supply an entity and an object within it (e.g. a phone number), and retrieve a URL that allows the user to report an issue with that object
    *
    *  @param entity_id - The unique Entity ID e.g. 379236608286720
-   *  @param gen_id - A Unique ID for the object you wish to report, E.g. Phone number e.g. 379236608299008
+   *  @param portal_name - The name of the portal that the user is coming from e.g. YourLocal
    *  @param language
    *  @return - the data from the api
   */
-  char * getEntityReport( char *entity_id, char *gen_id, char *language);
+  char * getEntityReport( char *entity_id, char *portal_name, char *language);
 
  
   /**
@@ -1534,6 +1534,47 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * getStatsEntityBy_date( char *entity_id, char *year, char *month);
+
+ 
+  /**
+   * Update/Add a traction
+   *
+   *  @param traction_id
+   *  @param trigger_type
+   *  @param action_type
+   *  @param email_addresses
+   *  @param title
+   *  @param body
+   *  @param active
+   *  @return - the data from the api
+  */
+  char * postTraction( char *traction_id, char *trigger_type, char *action_type, char *email_addresses, char *title, char *body, char *active);
+
+ 
+  /**
+   * Fetching a traction
+   *
+   *  @param traction_id
+   *  @return - the data from the api
+  */
+  char * getTraction( char *traction_id);
+
+ 
+  /**
+   * Fetching active tractions
+   *
+   *  @return - the data from the api
+  */
+  char * getTractionActive();
+
+ 
+  /**
+   * Deleting a traction
+   *
+   *  @param traction_id
+   *  @return - the data from the api
+  */
+  char * deleteTraction( char *traction_id);
 
  
 

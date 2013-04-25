@@ -1139,11 +1139,11 @@ char * doCurl (char * method, char * path, char * params) {
    * Supply an entity and an object within it (e.g. a phone number), and retrieve a URL that allows the user to report an issue with that object
    *
    *  @param entity_id - The unique Entity ID e.g. 379236608286720
-   *  @param gen_id - A Unique ID for the object you wish to report, E.g. Phone number e.g. 379236608299008
+   *  @param portal_name - The name of the portal that the user is coming from e.g. YourLocal
    *  @param language
    *  @return - the data from the api
   */
-  char * getEntityReport( char *entity_id, char *gen_id, char *language) {
+  char * getEntityReport( char *entity_id, char *portal_name, char *language) {
     CURL *curl = curl_easy_init();
     char params[10000];
     char *p;
@@ -1155,8 +1155,8 @@ char * doCurl (char * method, char * path, char * params) {
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");
-    strcat(params,"gen_id=");
-    p = curl_easy_escape(curl,gen_id,0);
+    strcat(params,"portal_name=");
+    p = curl_easy_escape(curl,portal_name,0);
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");
@@ -4986,6 +4986,124 @@ char * doCurl (char * method, char * path, char * params) {
     curl_free(p);
     strcat(params,"&");
     return doCurl("GET","/stats/entity/by_date",params);
+  }
+
+
+  /**
+   * Update/Add a traction
+   *
+   *  @param traction_id
+   *  @param trigger_type
+   *  @param action_type
+   *  @param email_addresses
+   *  @param title
+   *  @param body
+   *  @param active
+   *  @return - the data from the api
+  */
+  char * postTraction( char *traction_id, char *trigger_type, char *action_type, char *email_addresses, char *title, char *body, char *active) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"traction_id=");
+    p = curl_easy_escape(curl,traction_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"trigger_type=");
+    p = curl_easy_escape(curl,trigger_type,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"action_type=");
+    p = curl_easy_escape(curl,action_type,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"email_addresses=");
+    p = curl_easy_escape(curl,email_addresses,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"title=");
+    p = curl_easy_escape(curl,title,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"body=");
+    p = curl_easy_escape(curl,body,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"active=");
+    p = curl_easy_escape(curl,active,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("POST","/traction",params);
+  }
+
+
+  /**
+   * Fetching a traction
+   *
+   *  @param traction_id
+   *  @return - the data from the api
+  */
+  char * getTraction( char *traction_id) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"traction_id=");
+    p = curl_easy_escape(curl,traction_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("GET","/traction",params);
+  }
+
+
+  /**
+   * Fetching active tractions
+   *
+   *  @return - the data from the api
+  */
+  char * getTractionActive() {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    return doCurl("GET","/traction/active",params);
+  }
+
+
+  /**
+   * Deleting a traction
+   *
+   *  @param traction_id
+   *  @return - the data from the api
+  */
+  char * deleteTraction( char *traction_id) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"traction_id=");
+    p = curl_easy_escape(curl,traction_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("DELETE","/traction",params);
   }
 
 
