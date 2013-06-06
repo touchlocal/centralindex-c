@@ -1,4 +1,3 @@
-Starting Wolf using 'dev' configuration
 /**
  * Central Index
  *
@@ -1132,12 +1131,10 @@ void set_debug_mode (int debug);
    *
    *  @param entity_id
    *  @param title
-   *  @param description
-   *  @param thumbnail
    *  @param embed_code
    *  @return - the data from the api
   */
-  char * postEntityVideo( char *entity_id, char *title, char *description, char *thumbnail, char *embed_code);
+  char * postEntityVideoYoutube( char *entity_id, char *title, char *embed_code);
 
  
   /**
@@ -1749,8 +1746,6 @@ void set_debug_mode (int debug);
    *  @param less - the LESS configuration to use to overrides the Bootstrap CSS
    *  @param language - the language in which to render the flatpack site
    *  @param country - the country to use for searches etc
-   *  @param afsId - the adsense-for-search id to use for Google ads on serps
-   *  @param afcId - the adsense-for-content id to use for Google ads on bdps
    *  @param mapsType - the type of maps to use
    *  @param mapKey - the nokia map key to use to render maps
    *  @param analyticsHTML - the html to insert to record page views
@@ -1776,10 +1771,12 @@ void set_debug_mode (int debug);
    *  @param footer_menu - the JSON that describes a navigation at the bottom of the page
    *  @param bdpTitle - The page title of the entity business profile pages
    *  @param bdpDescription - The meta description of entity business profile pages
+   *  @param bdpAds - The block of HTML/JS that renders Ads on BDPs
    *  @param serpTitle - The page title of the serps
    *  @param serpDescription - The meta description of serps
    *  @param serpNumberResults - The number of results per search page
    *  @param serpNumberAdverts - The number of adverts to show on the first search page
+   *  @param serpAds - The block of HTML/JS that renders Ads on Serps
    *  @param cookiePolicyUrl - The cookie policy url of the flatpack
    *  @param cookiePolicyNotice - Whether to show the cookie policy on this flatpack
    *  @param addBusinessButtonText - The text used in the 'Add your business' button
@@ -1787,7 +1784,7 @@ void set_debug_mode (int debug);
    *  @param facebookUrl - Facebook link
    *  @return - the data from the api
   */
-  char * postFlatpack( char *flatpack_id, char *domainName, char *flatpackName, char *less, char *language, char *country, char *afsId, char *afcId, char *mapsType, char *mapKey, char *analyticsHTML, char *searchFormShowOn, char *searchFormShowKeywordsBox, char *searchFormShowLocationBox, char *searchFormKeywordsAutoComplete, char *searchFormLocationsAutoComplete, char *searchFormDefaultLocation, char *searchFormPlaceholderKeywords, char *searchFormPlaceholderLocation, char *searchFormKeywordsLabel, char *searchFormLocationLabel, char *cannedLinksHeader, char *homepageTitle, char *homepageDescription, char *homepageIntroTitle, char *homepageIntroText, char *adblockHeader, char *adblock728x90, char *adblock468x60, char *header_menu, char *footer_menu, char *bdpTitle, char *bdpDescription, char *serpTitle, char *serpDescription, char *serpNumberResults, char *serpNumberAdverts, char *cookiePolicyUrl, char *cookiePolicyNotice, char *addBusinessButtonText, char *twitterUrl, char *facebookUrl);
+  char * postFlatpack( char *flatpack_id, char *domainName, char *flatpackName, char *less, char *language, char *country, char *mapsType, char *mapKey, char *analyticsHTML, char *searchFormShowOn, char *searchFormShowKeywordsBox, char *searchFormShowLocationBox, char *searchFormKeywordsAutoComplete, char *searchFormLocationsAutoComplete, char *searchFormDefaultLocation, char *searchFormPlaceholderKeywords, char *searchFormPlaceholderLocation, char *searchFormKeywordsLabel, char *searchFormLocationLabel, char *cannedLinksHeader, char *homepageTitle, char *homepageDescription, char *homepageIntroTitle, char *homepageIntroText, char *adblockHeader, char *adblock728x90, char *adblock468x60, char *header_menu, char *footer_menu, char *bdpTitle, char *bdpDescription, char *bdpAds, char *serpTitle, char *serpDescription, char *serpNumberResults, char *serpNumberAdverts, char *serpAds, char *cookiePolicyUrl, char *cookiePolicyNotice, char *addBusinessButtonText, char *twitterUrl, char *facebookUrl);
 
  
   /**
