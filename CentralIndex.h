@@ -1127,14 +1127,13 @@ void set_debug_mode (int debug);
 
  
   /**
-   * With a known entity id, avideo object can be added.
+   * With a known entity id, a YouTube video object can be added.
    *
    *  @param entity_id
-   *  @param title
    *  @param embed_code
    *  @return - the data from the api
   */
-  char * postEntityVideoYoutube( char *entity_id, char *title, char *embed_code);
+  char * postEntityVideoYoutube( char *entity_id, char *embed_code);
 
  
   /**

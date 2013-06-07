@@ -3751,14 +3751,13 @@ char * doCurl (char * method, char * path, char * params) {
 
 
   /**
-   * With a known entity id, avideo object can be added.
+   * With a known entity id, a YouTube video object can be added.
    *
    *  @param entity_id
-   *  @param title
    *  @param embed_code
    *  @return - the data from the api
   */
-  char * postEntityVideoYoutube( char *entity_id, char *title, char *embed_code) {
+  char * postEntityVideoYoutube( char *entity_id, char *embed_code) {
     CURL *curl = curl_easy_init();
     char params[10000];
     char *p;
@@ -3767,11 +3766,6 @@ char * doCurl (char * method, char * path, char * params) {
     strcat(params,"?");
     strcat(params,"entity_id=");
     p = curl_easy_escape(curl,entity_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"title=");
-    p = curl_easy_escape(curl,title,0);
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");
