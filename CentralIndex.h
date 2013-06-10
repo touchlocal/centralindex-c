@@ -1805,6 +1805,14 @@ void set_debug_mode (int debug);
 
  
   /**
+   * Get flatpacks that match the supplied masheryid
+   *
+   *  @return - the data from the api
+  */
+  char * getFlatpackBy_masheryid();
+
+ 
+  /**
    * Remove a flatpack using a supplied flatpack_id
    *
    *  @param flatpack_id - the id of the flatpack to delete
@@ -1914,6 +1922,16 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * getTokenMessage( char *entity_id, char *portal_name, char *language);
+
+ 
+  /**
+   * Fetch token for login path
+   *
+   *  @param portal_name - The name of the application that has initiated the login process, example: 'Your Local'
+   *  @param language - The language for the app
+   *  @return - the data from the api
+  */
+  char * getTokenLogin( char *portal_name, char *language);
 
  
   /**
