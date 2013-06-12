@@ -1172,6 +1172,7 @@ char * doCurl (char * method, char * path, char * params) {
    * Create a new business entity with all it's objects
    *
    *  @param name
+   *  @param building_number
    *  @param address1
    *  @param address2
    *  @param address3
@@ -1191,7 +1192,7 @@ char * doCurl (char * method, char * path, char * params) {
    *  @param do_not_display
    *  @return - the data from the api
   */
-  char * putBusiness( char *name, char *address1, char *address2, char *address3, char *district, char *town, char *county, char *postcode, char *country, char *latitude, char *longitude, char *timezone, char *telephone_number, char *email, char *website, char *category_id, char *category_type, char *do_not_display) {
+  char * putBusiness( char *name, char *building_number, char *address1, char *address2, char *address3, char *district, char *town, char *county, char *postcode, char *country, char *latitude, char *longitude, char *timezone, char *telephone_number, char *email, char *website, char *category_id, char *category_type, char *do_not_display) {
     CURL *curl = curl_easy_init();
     char params[10000];
     char *p;
@@ -1200,6 +1201,11 @@ char * doCurl (char * method, char * path, char * params) {
     strcat(params,"?");
     strcat(params,"name=");
     p = curl_easy_escape(curl,name,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"building_number=");
+    p = curl_easy_escape(curl,building_number,0);
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");
@@ -2325,6 +2331,7 @@ char * doCurl (char * method, char * path, char * params) {
   /**
    * Supply an address to geocode - returns lat/lon and accuracy
    *
+   *  @param building_number
    *  @param address1
    *  @param address2
    *  @param address3
@@ -2335,13 +2342,18 @@ char * doCurl (char * method, char * path, char * params) {
    *  @param country
    *  @return - the data from the api
   */
-  char * getToolsGeocode( char *address1, char *address2, char *address3, char *district, char *town, char *county, char *postcode, char *country) {
+  char * getToolsGeocode( char *building_number, char *address1, char *address2, char *address3, char *district, char *town, char *county, char *postcode, char *country) {
     CURL *curl = curl_easy_init();
     char params[10000];
     char *p;
     strcpy(params,"?api_key=");
     strcat(params,API_KEY);
     strcat(params,"?");
+    strcat(params,"building_number=");
+    p = curl_easy_escape(curl,building_number,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
     strcat(params,"address1=");
     p = curl_easy_escape(curl,address1,0);
     strcat(params,p);
@@ -2648,6 +2660,7 @@ char * doCurl (char * method, char * path, char * params) {
    * With a known entity id, an invoice_address object can be updated.
    *
    *  @param entity_id
+   *  @param building_number
    *  @param address1
    *  @param address2
    *  @param address3
@@ -2658,7 +2671,7 @@ char * doCurl (char * method, char * path, char * params) {
    *  @param address_type
    *  @return - the data from the api
   */
-  char * postEntityInvoice_address( char *entity_id, char *address1, char *address2, char *address3, char *district, char *town, char *county, char *postcode, char *address_type) {
+  char * postEntityInvoice_address( char *entity_id, char *building_number, char *address1, char *address2, char *address3, char *district, char *town, char *county, char *postcode, char *address_type) {
     CURL *curl = curl_easy_init();
     char params[10000];
     char *p;
@@ -2667,6 +2680,11 @@ char * doCurl (char * method, char * path, char * params) {
     strcat(params,"?");
     strcat(params,"entity_id=");
     p = curl_easy_escape(curl,entity_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"building_number=");
+    p = curl_easy_escape(curl,building_number,0);
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");
@@ -2802,6 +2820,7 @@ char * doCurl (char * method, char * path, char * params) {
    * Create/Update a postal address
    *
    *  @param entity_id
+   *  @param building_number
    *  @param address1
    *  @param address2
    *  @param address3
@@ -2813,7 +2832,7 @@ char * doCurl (char * method, char * path, char * params) {
    *  @param do_not_display
    *  @return - the data from the api
   */
-  char * postEntityPostal_address( char *entity_id, char *address1, char *address2, char *address3, char *district, char *town, char *county, char *postcode, char *address_type, char *do_not_display) {
+  char * postEntityPostal_address( char *entity_id, char *building_number, char *address1, char *address2, char *address3, char *district, char *town, char *county, char *postcode, char *address_type, char *do_not_display) {
     CURL *curl = curl_easy_init();
     char params[10000];
     char *p;
@@ -2822,6 +2841,11 @@ char * doCurl (char * method, char * path, char * params) {
     strcat(params,"?");
     strcat(params,"entity_id=");
     p = curl_easy_escape(curl,entity_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"building_number=");
+    p = curl_easy_escape(curl,building_number,0);
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");
@@ -6173,9 +6197,10 @@ char * doCurl (char * method, char * path, char * params) {
    *
    *  @param language - The language to use to render the add path e.g. en
    *  @param portal_name - The name of the website that data is to be added on e.g. YourLocal
+   *  @param country - The country of the entity to be added e.g. gb
    *  @return - the data from the api
   */
-  char * getTokenAdd( char *language, char *portal_name) {
+  char * getTokenAdd( char *language, char *portal_name, char *country) {
     CURL *curl = curl_easy_init();
     char params[10000];
     char *p;
@@ -6189,6 +6214,11 @@ char * doCurl (char * method, char * path, char * params) {
     strcat(params,"&");
     strcat(params,"portal_name=");
     p = curl_easy_escape(curl,portal_name,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"country=");
+    p = curl_easy_escape(curl,country,0);
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");
@@ -6323,6 +6353,70 @@ char * doCurl (char * method, char * path, char * params) {
     curl_free(p);
     strcat(params,"&");
     return doCurl("GET","/token/login",params);
+  }
+
+
+  /**
+   * Fetch token for update path
+   *
+   *  @param entity_id - The id of the entity being upgraded
+   *  @param portal_name - The name of the application that has initiated the login process, example: 'Your Local'
+   *  @param language - The language for the app
+   *  @param price - The price of the advert in the entities native currency
+   *  @param max_tags - The number of tags attached to the advert
+   *  @param max_locations - The number of locations attached to the advert
+   *  @param contract_length - The number of days from the initial sale date that the contract is valid for
+   *  @param ref_id - The campaign or reference id
+   *  @return - the data from the api
+  */
+  char * getTokenUpgrade( char *entity_id, char *portal_name, char *language, char *price, char *max_tags, char *max_locations, char *contract_length, char *ref_id) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"entity_id=");
+    p = curl_easy_escape(curl,entity_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"portal_name=");
+    p = curl_easy_escape(curl,portal_name,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"language=");
+    p = curl_easy_escape(curl,language,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"price=");
+    p = curl_easy_escape(curl,price,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"max_tags=");
+    p = curl_easy_escape(curl,max_tags,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"max_locations=");
+    p = curl_easy_escape(curl,max_locations,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"contract_length=");
+    p = curl_easy_escape(curl,contract_length,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"ref_id=");
+    p = curl_easy_escape(curl,ref_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("GET","/token/upgrade",params);
   }
 
 
@@ -6753,6 +6847,40 @@ char * doCurl (char * method, char * path, char * params) {
     curl_free(p);
     strcat(params,"&");
     return doCurl("DELETE","/entity/group",params);
+  }
+
+
+  /**
+   * Add an entityserve document
+   *
+   *  @param entity_id - The id of the entity to create the entityserve event for
+   *  @param country - the ISO code of the country
+   *  @param event_type - The event type being recorded
+   *  @return - the data from the api
+  */
+  char * putEntityserve( char *entity_id, char *country, char *event_type) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"entity_id=");
+    p = curl_easy_escape(curl,entity_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"country=");
+    p = curl_easy_escape(curl,country,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"event_type=");
+    p = curl_easy_escape(curl,event_type,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("PUT","/entityserve",params);
   }
 
 
