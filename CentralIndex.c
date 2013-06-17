@@ -2629,6 +2629,46 @@ char * doCurl (char * method, char * path, char * params) {
 
 
   /**
+   * Ring the person and verify their account
+   *
+   *  @param to - The phone number to verify
+   *  @param from - The phone number to call from
+   *  @param pin - The pin to verify the phone number with
+   *  @param language - The language to read the verification in
+   *  @return - the data from the api
+  */
+  char * getToolsPhonecallVerify( char *to, char *from, char *pin, char *language) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"to=");
+    p = curl_easy_escape(curl,to,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"from=");
+    p = curl_easy_escape(curl,from,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"pin=");
+    p = curl_easy_escape(curl,pin,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"language=");
+    p = curl_easy_escape(curl,language,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("GET","/tools/phonecall/verify",params);
+  }
+
+
+  /**
    * Given a spreadsheet id add a row
    *
    *  @param spreadsheet_key - The key of the spreadsheet to edit
@@ -3207,6 +3247,34 @@ char * doCurl (char * method, char * path, char * params) {
     curl_free(p);
     strcat(params,"&");
     return doCurl("POST","/entity/advertiser/location",params);
+  }
+
+
+  /**
+   * Get all advertisers that have been updated from a give date for a given reseller
+   *
+   *  @param from_date
+   *  @param country
+   *  @return - the data from the api
+  */
+  char * getAdvertiserUpdated( char *from_date, char *country) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"from_date=");
+    p = curl_easy_escape(curl,from_date,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"country=");
+    p = curl_easy_escape(curl,country,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("GET","/advertiser/updated",params);
   }
 
 

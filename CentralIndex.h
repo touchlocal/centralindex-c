@@ -796,6 +796,18 @@ void set_debug_mode (int debug);
 
  
   /**
+   * Ring the person and verify their account
+   *
+   *  @param to - The phone number to verify
+   *  @param from - The phone number to call from
+   *  @param pin - The pin to verify the phone number with
+   *  @param language - The language to read the verification in
+   *  @return - the data from the api
+  */
+  char * getToolsPhonecallVerify( char *to, char *from, char *pin, char *language);
+
+ 
+  /**
    * Given a spreadsheet id add a row
    *
    *  @param spreadsheet_key - The key of the spreadsheet to edit
@@ -954,6 +966,16 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * postEntityAdvertiserLocation( char *entity_id, char *gen_id, char *locations_to_add, char *locations_to_remove);
+
+ 
+  /**
+   * Get all advertisers that have been updated from a give date for a given reseller
+   *
+   *  @param from_date
+   *  @param country
+   *  @return - the data from the api
+  */
+  char * getAdvertiserUpdated( char *from_date, char *country);
 
  
   /**
