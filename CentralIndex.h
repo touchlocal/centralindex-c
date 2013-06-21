@@ -1158,7 +1158,6 @@ void set_debug_mode (int debug);
    *  @param country - the country to use for searches etc
    *  @param mapsType - the type of maps to use
    *  @param mapKey - the nokia map key to use to render maps
-   *  @param analyticsHTML - the html to insert to record page views
    *  @param searchFormShowOn - list of pages to show the search form
    *  @param searchFormShowKeywordsBox - whether to display the keywords box on the search form
    *  @param searchFormShowLocationBox - whether to display the location box on search forms - not required
@@ -1174,9 +1173,10 @@ void set_debug_mode (int debug);
    *  @param homepageDescription - the meta description of the home page
    *  @param homepageIntroTitle - the introductory title for the homepage
    *  @param homepageIntroText - the introductory text for the homepage
-   *  @param adblockHeader - the html (JS) to render an advert
-   *  @param adblock728x90 - the html (JS) to render a 728x90 advert
-   *  @param adblock468x60 - the html (JS) to render a 468x60 advert
+   *  @param head - payload to put in the head of the flatpack
+   *  @param adblock - payload to put in the adblock of the flatpack
+   *  @param bodyTop - the payload to put in the top of the body of a flatpack
+   *  @param bodyBottom - the payload to put in the bottom of the body of a flatpack
    *  @param header_menu - the JSON that describes a navigation at the top of the page
    *  @param footer_menu - the JSON that describes a navigation at the bottom of the page
    *  @param bdpTitle - The page title of the entity business profile pages
@@ -1192,9 +1192,16 @@ void set_debug_mode (int debug);
    *  @param addBusinessButtonText - The text used in the 'Add your business' button
    *  @param twitterUrl - Twitter link
    *  @param facebookUrl - Facebook link
+   *  @param copyright - Copyright message
+   *  @param advertUpgradeActive - whether upgrade message is displayed on this Flatpack
+   *  @param advertUpgradePrice - the cost of upgrading
+   *  @param advertUpgradeMaxTags - the number of tags upgrading gives you
+   *  @param advertUpgradeMaxLocations - the number of locations upgrading gives you
+   *  @param advertUpgradeContractLength - the length of the contract (days)
+   *  @param advertUpgradeRefId - a unique reference for the upgrade
    *  @return - the data from the api
   */
-  char * postFlatpack( char *flatpack_id, char *domainName, char *flatpackName, char *less, char *language, char *country, char *mapsType, char *mapKey, char *analyticsHTML, char *searchFormShowOn, char *searchFormShowKeywordsBox, char *searchFormShowLocationBox, char *searchFormKeywordsAutoComplete, char *searchFormLocationsAutoComplete, char *searchFormDefaultLocation, char *searchFormPlaceholderKeywords, char *searchFormPlaceholderLocation, char *searchFormKeywordsLabel, char *searchFormLocationLabel, char *cannedLinksHeader, char *homepageTitle, char *homepageDescription, char *homepageIntroTitle, char *homepageIntroText, char *adblockHeader, char *adblock728x90, char *adblock468x60, char *header_menu, char *footer_menu, char *bdpTitle, char *bdpDescription, char *bdpAds, char *serpTitle, char *serpDescription, char *serpNumberResults, char *serpNumberAdverts, char *serpAds, char *cookiePolicyUrl, char *cookiePolicyNotice, char *addBusinessButtonText, char *twitterUrl, char *facebookUrl);
+  char * postFlatpack( char *flatpack_id, char *domainName, char *flatpackName, char *less, char *language, char *country, char *mapsType, char *mapKey, char *searchFormShowOn, char *searchFormShowKeywordsBox, char *searchFormShowLocationBox, char *searchFormKeywordsAutoComplete, char *searchFormLocationsAutoComplete, char *searchFormDefaultLocation, char *searchFormPlaceholderKeywords, char *searchFormPlaceholderLocation, char *searchFormKeywordsLabel, char *searchFormLocationLabel, char *cannedLinksHeader, char *homepageTitle, char *homepageDescription, char *homepageIntroTitle, char *homepageIntroText, char *head, char *adblock, char *bodyTop, char *bodyBottom, char *header_menu, char *footer_menu, char *bdpTitle, char *bdpDescription, char *bdpAds, char *serpTitle, char *serpDescription, char *serpNumberResults, char *serpNumberAdverts, char *serpAds, char *cookiePolicyUrl, char *cookiePolicyNotice, char *addBusinessButtonText, char *twitterUrl, char *facebookUrl, char *copyright, char *advertUpgradeActive, char *advertUpgradePrice, char *advertUpgradeMaxTags, char *advertUpgradeMaxLocations, char *advertUpgradeContractLength, char *advertUpgradeRefId);
 
  
   /**

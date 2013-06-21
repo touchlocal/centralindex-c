@@ -3919,7 +3919,6 @@ char * doCurl (char * method, char * path, char * params) {
    *  @param country - the country to use for searches etc
    *  @param mapsType - the type of maps to use
    *  @param mapKey - the nokia map key to use to render maps
-   *  @param analyticsHTML - the html to insert to record page views
    *  @param searchFormShowOn - list of pages to show the search form
    *  @param searchFormShowKeywordsBox - whether to display the keywords box on the search form
    *  @param searchFormShowLocationBox - whether to display the location box on search forms - not required
@@ -3935,9 +3934,10 @@ char * doCurl (char * method, char * path, char * params) {
    *  @param homepageDescription - the meta description of the home page
    *  @param homepageIntroTitle - the introductory title for the homepage
    *  @param homepageIntroText - the introductory text for the homepage
-   *  @param adblockHeader - the html (JS) to render an advert
-   *  @param adblock728x90 - the html (JS) to render a 728x90 advert
-   *  @param adblock468x60 - the html (JS) to render a 468x60 advert
+   *  @param head - payload to put in the head of the flatpack
+   *  @param adblock - payload to put in the adblock of the flatpack
+   *  @param bodyTop - the payload to put in the top of the body of a flatpack
+   *  @param bodyBottom - the payload to put in the bottom of the body of a flatpack
    *  @param header_menu - the JSON that describes a navigation at the top of the page
    *  @param footer_menu - the JSON that describes a navigation at the bottom of the page
    *  @param bdpTitle - The page title of the entity business profile pages
@@ -3953,9 +3953,16 @@ char * doCurl (char * method, char * path, char * params) {
    *  @param addBusinessButtonText - The text used in the 'Add your business' button
    *  @param twitterUrl - Twitter link
    *  @param facebookUrl - Facebook link
+   *  @param copyright - Copyright message
+   *  @param advertUpgradeActive - whether upgrade message is displayed on this Flatpack
+   *  @param advertUpgradePrice - the cost of upgrading
+   *  @param advertUpgradeMaxTags - the number of tags upgrading gives you
+   *  @param advertUpgradeMaxLocations - the number of locations upgrading gives you
+   *  @param advertUpgradeContractLength - the length of the contract (days)
+   *  @param advertUpgradeRefId - a unique reference for the upgrade
    *  @return - the data from the api
   */
-  char * postFlatpack( char *flatpack_id, char *domainName, char *flatpackName, char *less, char *language, char *country, char *mapsType, char *mapKey, char *analyticsHTML, char *searchFormShowOn, char *searchFormShowKeywordsBox, char *searchFormShowLocationBox, char *searchFormKeywordsAutoComplete, char *searchFormLocationsAutoComplete, char *searchFormDefaultLocation, char *searchFormPlaceholderKeywords, char *searchFormPlaceholderLocation, char *searchFormKeywordsLabel, char *searchFormLocationLabel, char *cannedLinksHeader, char *homepageTitle, char *homepageDescription, char *homepageIntroTitle, char *homepageIntroText, char *adblockHeader, char *adblock728x90, char *adblock468x60, char *header_menu, char *footer_menu, char *bdpTitle, char *bdpDescription, char *bdpAds, char *serpTitle, char *serpDescription, char *serpNumberResults, char *serpNumberAdverts, char *serpAds, char *cookiePolicyUrl, char *cookiePolicyNotice, char *addBusinessButtonText, char *twitterUrl, char *facebookUrl) {
+  char * postFlatpack( char *flatpack_id, char *domainName, char *flatpackName, char *less, char *language, char *country, char *mapsType, char *mapKey, char *searchFormShowOn, char *searchFormShowKeywordsBox, char *searchFormShowLocationBox, char *searchFormKeywordsAutoComplete, char *searchFormLocationsAutoComplete, char *searchFormDefaultLocation, char *searchFormPlaceholderKeywords, char *searchFormPlaceholderLocation, char *searchFormKeywordsLabel, char *searchFormLocationLabel, char *cannedLinksHeader, char *homepageTitle, char *homepageDescription, char *homepageIntroTitle, char *homepageIntroText, char *head, char *adblock, char *bodyTop, char *bodyBottom, char *header_menu, char *footer_menu, char *bdpTitle, char *bdpDescription, char *bdpAds, char *serpTitle, char *serpDescription, char *serpNumberResults, char *serpNumberAdverts, char *serpAds, char *cookiePolicyUrl, char *cookiePolicyNotice, char *addBusinessButtonText, char *twitterUrl, char *facebookUrl, char *copyright, char *advertUpgradeActive, char *advertUpgradePrice, char *advertUpgradeMaxTags, char *advertUpgradeMaxLocations, char *advertUpgradeContractLength, char *advertUpgradeRefId) {
     CURL *curl = curl_easy_init();
     char params[10000];
     char *p;
@@ -3999,11 +4006,6 @@ char * doCurl (char * method, char * path, char * params) {
     strcat(params,"&");
     strcat(params,"mapKey=");
     p = curl_easy_escape(curl,mapKey,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"analyticsHTML=");
-    p = curl_easy_escape(curl,analyticsHTML,0);
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");
@@ -4082,18 +4084,23 @@ char * doCurl (char * method, char * path, char * params) {
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");
-    strcat(params,"adblockHeader=");
-    p = curl_easy_escape(curl,adblockHeader,0);
+    strcat(params,"head=");
+    p = curl_easy_escape(curl,head,0);
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");
-    strcat(params,"adblock728x90=");
-    p = curl_easy_escape(curl,adblock728x90,0);
+    strcat(params,"adblock=");
+    p = curl_easy_escape(curl,adblock,0);
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");
-    strcat(params,"adblock468x60=");
-    p = curl_easy_escape(curl,adblock468x60,0);
+    strcat(params,"bodyTop=");
+    p = curl_easy_escape(curl,bodyTop,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"bodyBottom=");
+    p = curl_easy_escape(curl,bodyBottom,0);
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");
@@ -4169,6 +4176,41 @@ char * doCurl (char * method, char * path, char * params) {
     strcat(params,"&");
     strcat(params,"facebookUrl=");
     p = curl_easy_escape(curl,facebookUrl,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"copyright=");
+    p = curl_easy_escape(curl,copyright,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"advertUpgradeActive=");
+    p = curl_easy_escape(curl,advertUpgradeActive,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"advertUpgradePrice=");
+    p = curl_easy_escape(curl,advertUpgradePrice,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"advertUpgradeMaxTags=");
+    p = curl_easy_escape(curl,advertUpgradeMaxTags,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"advertUpgradeMaxLocations=");
+    p = curl_easy_escape(curl,advertUpgradeMaxLocations,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"advertUpgradeContractLength=");
+    p = curl_easy_escape(curl,advertUpgradeContractLength,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"advertUpgradeRefId=");
+    p = curl_easy_escape(curl,advertUpgradeRefId,0);
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");
