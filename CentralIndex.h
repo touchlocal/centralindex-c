@@ -191,9 +191,11 @@ void set_debug_mode (int debug);
    *  @param nokia_country_code
    *  @param twilio_sms
    *  @param twilio_phone
+   *  @param currency_symbol - the symbol of this country's currency
+   *  @param currency_symbol_html - the html version of the symbol of this country's currency
    *  @return - the data from the api
   */
-  char * postCountry( char *country_id, char *name, char *synonyms, char *continentName, char *continent, char *geonameId, char *dbpediaURL, char *freebaseURL, char *population, char *currencyCode, char *languages, char *areaInSqKm, char *capital, char *east, char *west, char *north, char *south, char *claimPrice, char *claimMethods, char *nokia_country_code, char *twilio_sms, char *twilio_phone);
+  char * postCountry( char *country_id, char *name, char *synonyms, char *continentName, char *continent, char *geonameId, char *dbpediaURL, char *freebaseURL, char *population, char *currencyCode, char *languages, char *areaInSqKm, char *capital, char *east, char *west, char *north, char *south, char *claimPrice, char *claimMethods, char *nokia_country_code, char *twilio_sms, char *twilio_phone, char *currency_symbol, char *currency_symbol_html);
 
  
   /**
@@ -2014,9 +2016,11 @@ void set_debug_mode (int debug);
    *  @param api_url
    *  @param api_params
    *  @param active
+   *  @param reseller_masheryid
+   *  @param description
    *  @return - the data from the api
   */
-  char * postTraction( char *traction_id, char *trigger_type, char *action_type, char *country, char *email_addresses, char *title, char *body, char *api_method, char *api_url, char *api_params, char *active);
+  char * postTraction( char *traction_id, char *trigger_type, char *action_type, char *country, char *email_addresses, char *title, char *body, char *api_method, char *api_url, char *api_params, char *active, char *reseller_masheryid, char *description);
 
  
   /**
