@@ -2144,10 +2144,11 @@ void set_debug_mode (int debug);
    *  @param api_params
    *  @param active
    *  @param reseller_masheryid
+   *  @param publisher_masheryid
    *  @param description
    *  @return - the data from the api
   */
-  char * postTraction( char *traction_id, char *trigger_type, char *action_type, char *country, char *email_addresses, char *title, char *body, char *api_method, char *api_url, char *api_params, char *active, char *reseller_masheryid, char *description);
+  char * postTraction( char *traction_id, char *trigger_type, char *action_type, char *country, char *email_addresses, char *title, char *body, char *api_method, char *api_url, char *api_params, char *active, char *reseller_masheryid, char *publisher_masheryid, char *description);
 
  
   /**

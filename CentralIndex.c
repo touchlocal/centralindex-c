@@ -7031,10 +7031,11 @@ char * doCurl (char * method, char * path, char * params) {
    *  @param api_params
    *  @param active
    *  @param reseller_masheryid
+   *  @param publisher_masheryid
    *  @param description
    *  @return - the data from the api
   */
-  char * postTraction( char *traction_id, char *trigger_type, char *action_type, char *country, char *email_addresses, char *title, char *body, char *api_method, char *api_url, char *api_params, char *active, char *reseller_masheryid, char *description) {
+  char * postTraction( char *traction_id, char *trigger_type, char *action_type, char *country, char *email_addresses, char *title, char *body, char *api_method, char *api_url, char *api_params, char *active, char *reseller_masheryid, char *publisher_masheryid, char *description) {
     CURL *curl = curl_easy_init();
     char params[10000];
     char *p;
@@ -7098,6 +7099,11 @@ char * doCurl (char * method, char * path, char * params) {
     strcat(params,"&");
     strcat(params,"reseller_masheryid=");
     p = curl_easy_escape(curl,reseller_masheryid,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"publisher_masheryid=");
+    p = curl_easy_escape(curl,publisher_masheryid,0);
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");
