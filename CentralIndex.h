@@ -27,6 +27,16 @@ void set_debug_mode (int debug);
 
  
   /**
+   * Get all advertisers that have been updated from a give date for a given publisher
+   *
+   *  @param from_date
+   *  @param country
+   *  @return - the data from the api
+  */
+  char * getAdvertiserUpdatedBy_publisher( char *from_date, char *country);
+
+ 
+  /**
    * The search matches a category name on a given string and language.
    *
    *  @param str - A string to search against, E.g. Plumbers e.g. but
@@ -85,9 +95,10 @@ void set_debug_mode (int debug);
    *  @param str - A string to search against, E.g. Middle e.g. dub
    *  @param country - Which country to return results for. An ISO compatible country code, E.g. ie e.g. ie
    *  @param resolution
+   *  @param all_data
    *  @return - the data from the api
   */
-  char * getAutocompleteLoczBy_resolution( char *str, char *country, char *resolution);
+  char * getAutocompleteLoczBy_resolution( char *str, char *country, char *resolution, char *all_data);
 
  
   /**
@@ -122,21 +133,21 @@ void set_debug_mode (int debug);
 
  
   /**
-   * Delete a business tool with a specified tool_id
-   *
-   *  @param tool_id
-   *  @return - the data from the api
-  */
-  char * deleteBusiness_tool( char *tool_id);
-
- 
-  /**
    * Returns business tool that matches a given tool id
    *
    *  @param tool_id
    *  @return - the data from the api
   */
   char * getBusiness_tool( char *tool_id);
+
+ 
+  /**
+   * Delete a business tool with a specified tool_id
+   *
+   *  @param tool_id
+   *  @return - the data from the api
+  */
+  char * deleteBusiness_tool( char *tool_id);
 
  
   /**
@@ -173,6 +184,15 @@ void set_debug_mode (int debug);
 
  
   /**
+   * Returns the supplied wolf category object by fetching the supplied category_id from our categories object.
+   *
+   *  @param category_id
+   *  @return - the data from the api
+  */
+  char * getCategory( char *category_id);
+
+ 
+  /**
    * With a known category id, an category object can be added.
    *
    *  @param category_id
@@ -184,20 +204,22 @@ void set_debug_mode (int debug);
 
  
   /**
-   * Returns the supplied wolf category object by fetching the supplied category_id from our categories object.
-   *
-   *  @param category_id
-   *  @return - the data from the api
-  */
-  char * getCategory( char *category_id);
-
- 
-  /**
    * Returns all Central Index categories and associated data
    *
    *  @return - the data from the api
   */
   char * getCategoryAll();
+
+ 
+  /**
+   * With a known category id, a mapping object can be deleted.
+   *
+   *  @param category_id
+   *  @param category_type
+   *  @param mapped_id
+   *  @return - the data from the api
+  */
+  char * deleteCategoryMappings( char *category_id, char *category_type, char *mapped_id);
 
  
   /**
@@ -213,17 +235,6 @@ void set_debug_mode (int debug);
 
  
   /**
-   * With a known category id, a mapping object can be deleted.
-   *
-   *  @param category_id
-   *  @param category_type
-   *  @param mapped_id
-   *  @return - the data from the api
-  */
-  char * deleteCategoryMappings( char *category_id, char *category_type, char *mapped_id);
-
- 
-  /**
    * Allows a category object to merged with another
    *
    *  @param from
@@ -231,6 +242,17 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * postCategoryMerge( char *from, char *to);
+
+ 
+  /**
+   * With a known category id, an synonym object can be added.
+   *
+   *  @param category_id
+   *  @param synonym
+   *  @param language
+   *  @return - the data from the api
+  */
+  char * postCategorySynonym( char *category_id, char *synonym, char *language);
 
  
   /**
@@ -245,14 +267,12 @@ void set_debug_mode (int debug);
 
  
   /**
-   * With a known category id, an synonym object can be added.
+   * Fetching a country
    *
-   *  @param category_id
-   *  @param synonym
-   *  @param language
+   *  @param country_id
    *  @return - the data from the api
   */
-  char * postCategorySynonym( char *category_id, char *synonym, char *language);
+  char * getCountry( char *country_id);
 
  
   /**
@@ -283,18 +303,11 @@ void set_debug_mode (int debug);
    *  @param twilio_voice
    *  @param currency_symbol - the symbol of this country's currency
    *  @param currency_symbol_html - the html version of the symbol of this country's currency
+   *  @param postcodeLookupActive - Whether the lookup is activated for this country
+   *  @param addressFields - Whether fields are activated for this country
    *  @return - the data from the api
   */
-  char * postCountry( char *country_id, char *name, char *synonyms, char *continentName, char *continent, char *geonameId, char *dbpediaURL, char *freebaseURL, char *population, char *currencyCode, char *languages, char *areaInSqKm, char *capital, char *east, char *west, char *north, char *south, char *claimPrice, char *claimMethods, char *nokia_country_code, char *twilio_sms, char *twilio_phone, char *twilio_voice, char *currency_symbol, char *currency_symbol_html);
-
- 
-  /**
-   * Fetching a country
-   *
-   *  @param country_id
-   *  @return - the data from the api
-  */
-  char * getCountry( char *country_id);
+  char * postCountry( char *country_id, char *name, char *synonyms, char *continentName, char *continent, char *geonameId, char *dbpediaURL, char *freebaseURL, char *population, char *currencyCode, char *languages, char *areaInSqKm, char *capital, char *east, char *west, char *north, char *south, char *claimPrice, char *claimMethods, char *nokia_country_code, char *twilio_sms, char *twilio_phone, char *twilio_voice, char *currency_symbol, char *currency_symbol_html, char *postcodeLookupActive, char *addressFields);
 
  
   /**
@@ -333,6 +346,15 @@ void set_debug_mode (int debug);
 
  
   /**
+   * Allows a whole entity to be pulled from the datastore by its unique id
+   *
+   *  @param entity_id - The unique entity ID e.g. 379236608286720
+   *  @return - the data from the api
+  */
+  char * getEntity( char *entity_id);
+
+ 
+  /**
    * This entity isn't really supported anymore. You probably want PUT /business. Only to be used for testing.
    *
    *  @param type
@@ -343,15 +365,6 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * putEntity( char *type, char *scope, char *country, char *trust, char *our_data);
-
- 
-  /**
-   * Allows a whole entity to be pulled from the datastore by its unique id
-   *
-   *  @param entity_id - The unique entity ID e.g. 379236608286720
-   *  @return - the data from the api
-  */
-  char * getEntity( char *entity_id);
 
  
   /**
@@ -577,16 +590,6 @@ void set_debug_mode (int debug);
 
  
   /**
-   * Allows a category object to be reduced in confidence
-   *
-   *  @param entity_id
-   *  @param gen_id
-   *  @return - the data from the api
-  */
-  char * deleteEntityCategory( char *entity_id, char *gen_id);
-
- 
-  /**
    * With a known entity id, an category object can be added.
    *
    *  @param entity_id
@@ -595,6 +598,16 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * postEntityCategory( char *entity_id, char *category_id, char *category_type);
+
+ 
+  /**
+   * Allows a category object to be reduced in confidence
+   *
+   *  @param entity_id
+   *  @param gen_id
+   *  @return - the data from the api
+  */
+  char * deleteEntityCategory( char *entity_id, char *gen_id);
 
  
   /**
@@ -643,6 +656,16 @@ void set_debug_mode (int debug);
 
  
   /**
+   * Allows a phone object to be reduced in confidence
+   *
+   *  @param entity_id
+   *  @param gen_id
+   *  @return - the data from the api
+  */
+  char * deleteEntityDocument( char *entity_id, char *gen_id);
+
+ 
+  /**
    * With a known entity id, an document object can be added.
    *
    *  @param entity_id
@@ -651,16 +674,6 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * postEntityDocument( char *entity_id, char *name, char *filedata);
-
- 
-  /**
-   * Allows a phone object to be reduced in confidence
-   *
-   *  @param entity_id
-   *  @param gen_id
-   *  @return - the data from the api
-  */
-  char * deleteEntityDocument( char *entity_id, char *gen_id);
 
  
   /**
@@ -685,16 +698,6 @@ void set_debug_mode (int debug);
 
  
   /**
-   * Allows an employee object to be reduced in confidence
-   *
-   *  @param entity_id
-   *  @param gen_id
-   *  @return - the data from the api
-  */
-  char * deleteEntityEmployee( char *entity_id, char *gen_id);
-
- 
-  /**
    * With a known entity id, an employee object can be added.
    *
    *  @param entity_id
@@ -711,13 +714,13 @@ void set_debug_mode (int debug);
 
  
   /**
-   * Allows a fax object to be reduced in confidence
+   * Allows an employee object to be reduced in confidence
    *
    *  @param entity_id
    *  @param gen_id
    *  @return - the data from the api
   */
-  char * deleteEntityFax( char *entity_id, char *gen_id);
+  char * deleteEntityEmployee( char *entity_id, char *gen_id);
 
  
   /**
@@ -729,6 +732,16 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * postEntityFax( char *entity_id, char *number, char *description);
+
+ 
+  /**
+   * Allows a fax object to be reduced in confidence
+   *
+   *  @param entity_id
+   *  @param gen_id
+   *  @return - the data from the api
+  */
+  char * deleteEntityFax( char *entity_id, char *gen_id);
 
  
   /**
@@ -744,16 +757,6 @@ void set_debug_mode (int debug);
 
  
   /**
-   * With a known entity id, a group  can be added to group members.
-   *
-   *  @param entity_id
-   *  @param group_id
-   *  @return - the data from the api
-  */
-  char * postEntityGroup( char *entity_id, char *group_id);
-
- 
-  /**
    * Allows a group object to be removed from an entities group members
    *
    *  @param entity_id
@@ -764,13 +767,13 @@ void set_debug_mode (int debug);
 
  
   /**
-   * Allows a image object to be reduced in confidence
+   * With a known entity id, a group  can be added to group members.
    *
    *  @param entity_id
-   *  @param gen_id
+   *  @param group_id
    *  @return - the data from the api
   */
-  char * deleteEntityImage( char *entity_id, char *gen_id);
+  char * postEntityGroup( char *entity_id, char *group_id);
 
  
   /**
@@ -782,6 +785,16 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * postEntityImage( char *entity_id, char *filedata, char *image_name);
+
+ 
+  /**
+   * Allows a image object to be reduced in confidence
+   *
+   *  @param entity_id
+   *  @param gen_id
+   *  @return - the data from the api
+  */
+  char * deleteEntityImage( char *entity_id, char *gen_id);
 
  
   /**
@@ -813,6 +826,16 @@ void set_debug_mode (int debug);
 
  
   /**
+   * Allows a list description object to be reduced in confidence
+   *
+   *  @param gen_id
+   *  @param entity_id
+   *  @return - the data from the api
+  */
+  char * deleteEntityList( char *gen_id, char *entity_id);
+
+ 
+  /**
    * With a known entity id, a list description object can be added.
    *
    *  @param entity_id
@@ -821,16 +844,6 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * postEntityList( char *entity_id, char *headline, char *body);
-
- 
-  /**
-   * Allows a list description object to be reduced in confidence
-   *
-   *  @param gen_id
-   *  @param entity_id
-   *  @return - the data from the api
-  */
-  char * deleteEntityList( char *gen_id, char *entity_id);
 
  
   /**
@@ -884,6 +897,15 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * postEntityName( char *entity_id, char *name, char *formal_name);
+
+ 
+  /**
+   * With a known entity id, a opening times object can be removed.
+   *
+   *  @param entity_id - The id of the entity to edit
+   *  @return - the data from the api
+  */
+  char * deleteEntityOpening_times( char *entity_id);
 
  
   /**
@@ -1118,16 +1140,6 @@ void set_debug_mode (int debug);
 
  
   /**
-   * Allows a social media object to be reduced in confidence
-   *
-   *  @param entity_id
-   *  @param gen_id
-   *  @return - the data from the api
-  */
-  char * deleteEntitySocialmedia( char *entity_id, char *gen_id);
-
- 
-  /**
    * With a known entity id, a social media object can be added.
    *
    *  @param entity_id
@@ -1136,6 +1148,16 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * postEntitySocialmedia( char *entity_id, char *type, char *website_url);
+
+ 
+  /**
+   * Allows a social media object to be reduced in confidence
+   *
+   *  @param entity_id
+   *  @param gen_id
+   *  @return - the data from the api
+  */
+  char * deleteEntitySocialmedia( char *entity_id, char *gen_id);
 
  
   /**
@@ -1175,6 +1197,16 @@ void set_debug_mode (int debug);
 
  
   /**
+   * Allows a tag object to be reduced in confidence
+   *
+   *  @param entity_id
+   *  @param gen_id
+   *  @return - the data from the api
+  */
+  char * deleteEntityTag( char *entity_id, char *gen_id);
+
+ 
+  /**
    * With a known entity id, an tag object can be added.
    *
    *  @param entity_id
@@ -1183,16 +1215,6 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * postEntityTag( char *entity_id, char *tag, char *language);
-
- 
-  /**
-   * Allows a tag object to be reduced in confidence
-   *
-   *  @param entity_id
-   *  @param gen_id
-   *  @return - the data from the api
-  */
-  char * deleteEntityTag( char *entity_id, char *gen_id);
 
  
   /**
@@ -1314,6 +1336,7 @@ void set_debug_mode (int debug);
    *  @param bodyTop - the payload to put in the top of the body of a flatpack
    *  @param bodyBottom - the payload to put in the bottom of the body of a flatpack
    *  @param header_menu - the JSON that describes a navigation at the top of the page
+   *  @param header_menu_bottom - the JSON that describes a navigation below the masthead
    *  @param footer_menu - the JSON that describes a navigation at the bottom of the page
    *  @param bdpTitle - The page title of the entity business profile pages
    *  @param bdpDescription - The meta description of entity business profile pages
@@ -1337,18 +1360,11 @@ void set_debug_mode (int debug);
    *  @param advertUpgradeRefId - a unique reference for the upgrade
    *  @param phoneReveal - record phone number reveal
    *  @param loginLinkText - the link text for the Login link
+   *  @param contextLocationId - The location ID to use as the context for searches on this flatpack
+   *  @param addBusinessButtonPosition - The location ID to use as the context for searches on this flatpack
    *  @return - the data from the api
   */
-  char * postFlatpack( char *flatpack_id, char *domainName, char *stub, char *flatpackName, char *less, char *language, char *country, char *mapsType, char *mapKey, char *searchFormShowOn, char *searchFormShowKeywordsBox, char *searchFormShowLocationBox, char *searchFormKeywordsAutoComplete, char *searchFormLocationsAutoComplete, char *searchFormDefaultLocation, char *searchFormPlaceholderKeywords, char *searchFormPlaceholderLocation, char *searchFormKeywordsLabel, char *searchFormLocationLabel, char *cannedLinksHeader, char *homepageTitle, char *homepageDescription, char *homepageIntroTitle, char *homepageIntroText, char *head, char *adblock, char *bodyTop, char *bodyBottom, char *header_menu, char *footer_menu, char *bdpTitle, char *bdpDescription, char *bdpAds, char *serpTitle, char *serpDescription, char *serpNumberResults, char *serpNumberAdverts, char *serpAds, char *cookiePolicyUrl, char *cookiePolicyNotice, char *addBusinessButtonText, char *twitterUrl, char *facebookUrl, char *copyright, char *advertUpgradeActive, char *advertUpgradePrice, char *advertUpgradeMaxTags, char *advertUpgradeMaxLocations, char *advertUpgradeContractLength, char *advertUpgradeRefId, char *phoneReveal, char *loginLinkText);
-
- 
-  /**
-   * Remove a flatpack using a supplied flatpack_id
-   *
-   *  @param flatpack_id - the id of the flatpack to delete
-   *  @return - the data from the api
-  */
-  char * deleteFlatpack( char *flatpack_id);
+  char * postFlatpack( char *flatpack_id, char *domainName, char *stub, char *flatpackName, char *less, char *language, char *country, char *mapsType, char *mapKey, char *searchFormShowOn, char *searchFormShowKeywordsBox, char *searchFormShowLocationBox, char *searchFormKeywordsAutoComplete, char *searchFormLocationsAutoComplete, char *searchFormDefaultLocation, char *searchFormPlaceholderKeywords, char *searchFormPlaceholderLocation, char *searchFormKeywordsLabel, char *searchFormLocationLabel, char *cannedLinksHeader, char *homepageTitle, char *homepageDescription, char *homepageIntroTitle, char *homepageIntroText, char *head, char *adblock, char *bodyTop, char *bodyBottom, char *header_menu, char *header_menu_bottom, char *footer_menu, char *bdpTitle, char *bdpDescription, char *bdpAds, char *serpTitle, char *serpDescription, char *serpNumberResults, char *serpNumberAdverts, char *serpAds, char *cookiePolicyUrl, char *cookiePolicyNotice, char *addBusinessButtonText, char *twitterUrl, char *facebookUrl, char *copyright, char *advertUpgradeActive, char *advertUpgradePrice, char *advertUpgradeMaxTags, char *advertUpgradeMaxLocations, char *advertUpgradeContractLength, char *advertUpgradeRefId, char *phoneReveal, char *loginLinkText, char *contextLocationId, char *addBusinessButtonPosition);
 
  
   /**
@@ -1358,6 +1374,15 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * getFlatpack( char *flatpack_id);
+
+ 
+  /**
+   * Remove a flatpack using a supplied flatpack_id
+   *
+   *  @param flatpack_id - the id of the flatpack to delete
+   *  @return - the data from the api
+  */
+  char * deleteFlatpack( char *flatpack_id);
 
  
   /**
@@ -1405,6 +1430,16 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * getFlatpackBy_masheryid();
+
+ 
+  /**
+   * Clone an existing flatpack
+   *
+   *  @param flatpack_id - the flatpack_id to clone
+   *  @param domainName - the domain of the new flatpack site (no leading http:// or anything please)
+   *  @return - the data from the api
+  */
+  char * getFlatpackClone( char *flatpack_id, char *domainName);
 
  
   /**
@@ -1469,15 +1504,6 @@ void set_debug_mode (int debug);
 
  
   /**
-   * Delete a group with a specified group_id
-   *
-   *  @param group_id
-   *  @return - the data from the api
-  */
-  char * deleteGroup( char *group_id);
-
- 
-  /**
    * Returns group that matches a given group id
    *
    *  @param group_id
@@ -1496,6 +1522,15 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * postGroup( char *group_id, char *name, char *description, char *url);
+
+ 
+  /**
+   * Delete a group with a specified group_id
+   *
+   *  @param group_id
+   *  @return - the data from the api
+  */
+  char * deleteGroup( char *group_id);
 
  
   /**
@@ -1570,15 +1605,6 @@ void set_debug_mode (int debug);
 
  
   /**
-   * Read a location with the supplied ID in the locations reference database.
-   *
-   *  @param location_id
-   *  @return - the data from the api
-  */
-  char * getLocation( char *location_id);
-
- 
-  /**
    * Create/update a new location entity with the supplied ID in the locations reference database.
    *
    *  @param location_id
@@ -1603,6 +1629,15 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * postLocation( char *location_id, char *name, char *formal_name, char *latitude, char *longitude, char *resolution, char *country, char *population, char *description, char *timezone, char *is_duplicate, char *is_default, char *parent_town, char *parent_county, char *parent_province, char *parent_region, char *parent_neighbourhood, char *parent_district, char *postalcode);
+
+ 
+  /**
+   * Read a location with the supplied ID in the locations reference database.
+   *
+   *  @param location_id
+   *  @return - the data from the api
+  */
+  char * getLocation( char *location_id);
 
  
   /**
@@ -1658,15 +1693,6 @@ void set_debug_mode (int debug);
 
  
   /**
-   * Read a location with the supplied ID in the locations reference database.
-   *
-   *  @param location_id
-   *  @return - the data from the api
-  */
-  char * getLocz( char *location_id);
-
- 
-  /**
    * Create/update a new locz document with the supplied ID in the locations reference database.
    *
    *  @param location_id
@@ -1693,6 +1719,15 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * postLocz( char *location_id, char *type, char *country, char *language, char *name, char *formal_name, char *resolution, char *population, char *description, char *timezone, char *latitude, char *longitude, char *parent_town, char *parent_county, char *parent_province, char *parent_region, char *parent_neighbourhood, char *parent_district, char *postalcode, char *searchable_id, char *searchable_ids);
+
+ 
+  /**
+   * Read a location with the supplied ID in the locations reference database.
+   *
+   *  @param location_id
+   *  @return - the data from the api
+  */
+  char * getLocz( char *location_id);
 
  
   /**
@@ -2135,6 +2170,18 @@ void set_debug_mode (int debug);
 
  
   /**
+   * Fetch token for edit path
+   *
+   *  @param entity_id - The id of the entity being upgraded
+   *  @param language - The language for the app
+   *  @param flatpack_id - The id of the flatpack site where the request originated
+   *  @param edit_page - the page in the edit path that the user should land on
+   *  @return - the data from the api
+  */
+  char * getTokenEdit( char *entity_id, char *language, char *flatpack_id, char *edit_page);
+
+ 
+  /**
    * Fetch token for login path
    *
    *  @param portal_name - The name of the application that has initiated the login process, example: 'Your Local'
@@ -2420,6 +2467,15 @@ void set_debug_mode (int debug);
 
  
   /**
+   * Given a transaction_id retrieve information on it
+   *
+   *  @param transaction_id
+   *  @return - the data from the api
+  */
+  char * getTransaction( char *transaction_id);
+
+ 
+  /**
    * Create a new transaction
    *
    *  @param entity_id
@@ -2431,15 +2487,6 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * putTransaction( char *entity_id, char *user_id, char *basket_total, char *basket, char *currency, char *notes);
-
- 
-  /**
-   * Given a transaction_id retrieve information on it
-   *
-   *  @param transaction_id
-   *  @return - the data from the api
-  */
-  char * getTransaction( char *transaction_id);
 
  
   /**
