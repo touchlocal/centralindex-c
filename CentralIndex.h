@@ -1817,9 +1817,10 @@ void set_debug_mode (int debug);
    * Perform the whole PTB process on the supplied entity
    *
    *  @param entity_id
+   *  @param destructive
    *  @return - the data from the api
   */
-  char * getPtbAll( char *entity_id);
+  char * getPtbAll( char *entity_id, char *destructive);
 
  
   /**
@@ -1838,9 +1839,10 @@ void set_debug_mode (int debug);
    *
    *  @param entity_id
    *  @param module
+   *  @param destructive
    *  @return - the data from the api
   */
-  char * getPtbModule( char *entity_id, char *module);
+  char * getPtbModule( char *entity_id, char *module, char *destructive);
 
  
   /**

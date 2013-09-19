@@ -6148,9 +6148,10 @@ char * doCurl (char * method, char * path, char * params) {
    * Perform the whole PTB process on the supplied entity
    *
    *  @param entity_id
+   *  @param destructive
    *  @return - the data from the api
   */
-  char * getPtbAll( char *entity_id) {
+  char * getPtbAll( char *entity_id, char *destructive) {
     CURL *curl = curl_easy_init();
     char params[10000];
     char *p;
@@ -6159,6 +6160,11 @@ char * doCurl (char * method, char * path, char * params) {
     strcat(params,"?");
     strcat(params,"entity_id=");
     p = curl_easy_escape(curl,entity_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"destructive=");
+    p = curl_easy_escape(curl,destructive,0);
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");
@@ -6205,9 +6211,10 @@ char * doCurl (char * method, char * path, char * params) {
    *
    *  @param entity_id
    *  @param module
+   *  @param destructive
    *  @return - the data from the api
   */
-  char * getPtbModule( char *entity_id, char *module) {
+  char * getPtbModule( char *entity_id, char *module, char *destructive) {
     CURL *curl = curl_easy_init();
     char params[10000];
     char *p;
@@ -6221,6 +6228,11 @@ char * doCurl (char * method, char * path, char * params) {
     strcat(params,"&");
     strcat(params,"module=");
     p = curl_easy_escape(curl,module,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"destructive=");
+    p = curl_easy_escape(curl,destructive,0);
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");
