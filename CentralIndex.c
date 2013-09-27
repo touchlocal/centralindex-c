@@ -5301,9 +5301,10 @@ char * doCurl (char * method, char * path, char * params) {
    *
    *  @param from_date
    *  @param to_date
+   *  @param country_id
    *  @return - the data from the api
   */
-  char * getHeartbeatBy_date( char *from_date, char *to_date) {
+  char * getHeartbeatBy_date( char *from_date, char *to_date, char *country_id) {
     CURL *curl = curl_easy_init();
     char params[10000];
     char *p;
@@ -5317,6 +5318,11 @@ char * doCurl (char * method, char * path, char * params) {
     strcat(params,"&");
     strcat(params,"to_date=");
     p = curl_easy_escape(curl,to_date,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"country_id=");
+    p = curl_easy_escape(curl,country_id,0);
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");

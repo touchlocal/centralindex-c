@@ -1554,9 +1554,10 @@ void set_debug_mode (int debug);
    *
    *  @param from_date
    *  @param to_date
+   *  @param country_id
    *  @return - the data from the api
   */
-  char * getHeartbeatBy_date( char *from_date, char *to_date);
+  char * getHeartbeatBy_date( char *from_date, char *to_date, char *country_id);
 
  
   /**
