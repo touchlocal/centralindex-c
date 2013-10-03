@@ -193,17 +193,23 @@ char * doCurl (char * method, char * path, char * params) {
   /**
    * Get all advertisers that have been updated from a give date for a given publisher
    *
+   *  @param publisher_id
    *  @param from_date
    *  @param country
    *  @return - the data from the api
   */
-  char * getAdvertiserUpdatedBy_publisher( char *from_date, char *country) {
+  char * getAdvertiserUpdatedBy_publisher( char *publisher_id, char *from_date, char *country) {
     CURL *curl = curl_easy_init();
     char params[10000];
     char *p;
     strcpy(params,"?api_key=");
     strcat(params,API_KEY);
     strcat(params,"?");
+    strcat(params,"publisher_id=");
+    p = curl_easy_escape(curl,publisher_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
     strcat(params,"from_date=");
     p = curl_easy_escape(curl,from_date,0);
     strcat(params,p);
@@ -339,80 +345,6 @@ char * doCurl (char * method, char * path, char * params) {
     curl_free(p);
     strcat(params,"&");
     return doCurl("GET","/autocomplete/location/by_resolution",params);
-  }
-
-
-  /**
-   * The search matches a locz given string and language.
-   *
-   *  @param str - A string to search against, E.g. Dub e.g. dub
-   *  @param country - Which country to return results for. An ISO compatible country code, E.g. ie e.g. ie
-   *  @param language - An ISO compatible language code, E.g. en e.g. en
-   *  @return - the data from the api
-  */
-  char * getAutocompleteLocz( char *str, char *country, char *language) {
-    CURL *curl = curl_easy_init();
-    char params[10000];
-    char *p;
-    strcpy(params,"?api_key=");
-    strcat(params,API_KEY);
-    strcat(params,"?");
-    strcat(params,"str=");
-    p = curl_easy_escape(curl,str,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"country=");
-    p = curl_easy_escape(curl,country,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"language=");
-    p = curl_easy_escape(curl,language,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    return doCurl("GET","/autocomplete/locz",params);
-  }
-
-
-  /**
-   * The search matches a location name or synonym on a given string and language.
-   *
-   *  @param str - A string to search against, E.g. Middle e.g. dub
-   *  @param country - Which country to return results for. An ISO compatible country code, E.g. ie e.g. ie
-   *  @param resolution
-   *  @param all_data
-   *  @return - the data from the api
-  */
-  char * getAutocompleteLoczBy_resolution( char *str, char *country, char *resolution, char *all_data) {
-    CURL *curl = curl_easy_init();
-    char params[10000];
-    char *p;
-    strcpy(params,"?api_key=");
-    strcat(params,API_KEY);
-    strcat(params,"?");
-    strcat(params,"str=");
-    p = curl_easy_escape(curl,str,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"country=");
-    p = curl_easy_escape(curl,country,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"resolution=");
-    p = curl_easy_escape(curl,resolution,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"all_data=");
-    p = curl_easy_escape(curl,all_data,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    return doCurl("GET","/autocomplete/locz/by_resolution",params);
   }
 
 
@@ -571,28 +503,6 @@ char * doCurl (char * method, char * path, char * params) {
 
 
   /**
-   * Returns business tool that matches a given tool id
-   *
-   *  @param tool_id
-   *  @return - the data from the api
-  */
-  char * getBusiness_tool( char *tool_id) {
-    CURL *curl = curl_easy_init();
-    char params[10000];
-    char *p;
-    strcpy(params,"?api_key=");
-    strcat(params,API_KEY);
-    strcat(params,"?");
-    strcat(params,"tool_id=");
-    p = curl_easy_escape(curl,tool_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    return doCurl("GET","/business_tool",params);
-  }
-
-
-  /**
    * Delete a business tool with a specified tool_id
    *
    *  @param tool_id
@@ -663,6 +573,28 @@ char * doCurl (char * method, char * path, char * params) {
     curl_free(p);
     strcat(params,"&");
     return doCurl("POST","/business_tool",params);
+  }
+
+
+  /**
+   * Returns business tool that matches a given tool id
+   *
+   *  @param tool_id
+   *  @return - the data from the api
+  */
+  char * getBusiness_tool( char *tool_id) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"tool_id=");
+    p = curl_easy_escape(curl,tool_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("GET","/business_tool",params);
   }
 
 
@@ -789,40 +721,6 @@ char * doCurl (char * method, char * path, char * params) {
 
 
   /**
-   * With a known category id, a mapping object can be deleted.
-   *
-   *  @param category_id
-   *  @param category_type
-   *  @param mapped_id
-   *  @return - the data from the api
-  */
-  char * deleteCategoryMappings( char *category_id, char *category_type, char *mapped_id) {
-    CURL *curl = curl_easy_init();
-    char params[10000];
-    char *p;
-    strcpy(params,"?api_key=");
-    strcat(params,API_KEY);
-    strcat(params,"?");
-    strcat(params,"category_id=");
-    p = curl_easy_escape(curl,category_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"category_type=");
-    p = curl_easy_escape(curl,category_type,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"mapped_id=");
-    p = curl_easy_escape(curl,mapped_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    return doCurl("DELETE","/category/mappings",params);
-  }
-
-
-  /**
    * With a known category id, a mapping object can be added.
    *
    *  @param category_id
@@ -863,6 +761,40 @@ char * doCurl (char * method, char * path, char * params) {
 
 
   /**
+   * With a known category id, a mapping object can be deleted.
+   *
+   *  @param category_id
+   *  @param category_type
+   *  @param mapped_id
+   *  @return - the data from the api
+  */
+  char * deleteCategoryMappings( char *category_id, char *category_type, char *mapped_id) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"category_id=");
+    p = curl_easy_escape(curl,category_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"category_type=");
+    p = curl_easy_escape(curl,category_type,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"mapped_id=");
+    p = curl_easy_escape(curl,mapped_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("DELETE","/category/mappings",params);
+  }
+
+
+  /**
    * Allows a category object to merged with another
    *
    *  @param from
@@ -887,40 +819,6 @@ char * doCurl (char * method, char * path, char * params) {
     curl_free(p);
     strcat(params,"&");
     return doCurl("POST","/category/merge",params);
-  }
-
-
-  /**
-   * With a known category id, an synonym object can be added.
-   *
-   *  @param category_id
-   *  @param synonym
-   *  @param language
-   *  @return - the data from the api
-  */
-  char * postCategorySynonym( char *category_id, char *synonym, char *language) {
-    CURL *curl = curl_easy_init();
-    char params[10000];
-    char *p;
-    strcpy(params,"?api_key=");
-    strcat(params,API_KEY);
-    strcat(params,"?");
-    strcat(params,"category_id=");
-    p = curl_easy_escape(curl,category_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"synonym=");
-    p = curl_easy_escape(curl,synonym,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"language=");
-    p = curl_easy_escape(curl,language,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    return doCurl("POST","/category/synonym",params);
   }
 
 
@@ -955,6 +853,40 @@ char * doCurl (char * method, char * path, char * params) {
     curl_free(p);
     strcat(params,"&");
     return doCurl("DELETE","/category/synonym",params);
+  }
+
+
+  /**
+   * With a known category id, an synonym object can be added.
+   *
+   *  @param category_id
+   *  @param synonym
+   *  @param language
+   *  @return - the data from the api
+  */
+  char * postCategorySynonym( char *category_id, char *synonym, char *language) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"category_id=");
+    p = curl_easy_escape(curl,category_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"synonym=");
+    p = curl_easy_escape(curl,synonym,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"language=");
+    p = curl_easy_escape(curl,language,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("POST","/category/synonym",params);
   }
 
 
@@ -1273,28 +1205,6 @@ char * doCurl (char * method, char * path, char * params) {
 
 
   /**
-   * Allows a whole entity to be pulled from the datastore by its unique id
-   *
-   *  @param entity_id - The unique entity ID e.g. 379236608286720
-   *  @return - the data from the api
-  */
-  char * getEntity( char *entity_id) {
-    CURL *curl = curl_easy_init();
-    char params[10000];
-    char *p;
-    strcpy(params,"?api_key=");
-    strcat(params,API_KEY);
-    strcat(params,"?");
-    strcat(params,"entity_id=");
-    p = curl_easy_escape(curl,entity_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    return doCurl("GET","/entity",params);
-  }
-
-
-  /**
    * This entity isn't really supported anymore. You probably want PUT /business. Only to be used for testing.
    *
    *  @param type
@@ -1337,6 +1247,28 @@ char * doCurl (char * method, char * path, char * params) {
     curl_free(p);
     strcat(params,"&");
     return doCurl("PUT","/entity",params);
+  }
+
+
+  /**
+   * Allows a whole entity to be pulled from the datastore by its unique id
+   *
+   *  @param entity_id - The unique entity ID e.g. 379236608286720
+   *  @return - the data from the api
+  */
+  char * getEntity( char *entity_id) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"entity_id=");
+    p = curl_easy_escape(curl,entity_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("GET","/entity",params);
   }
 
 
@@ -2065,6 +1997,34 @@ char * doCurl (char * method, char * path, char * params) {
 
 
   /**
+   * Allows a category object to be reduced in confidence
+   *
+   *  @param entity_id
+   *  @param gen_id
+   *  @return - the data from the api
+  */
+  char * deleteEntityCategory( char *entity_id, char *gen_id) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"entity_id=");
+    p = curl_easy_escape(curl,entity_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"gen_id=");
+    p = curl_easy_escape(curl,gen_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("DELETE","/entity/category",params);
+  }
+
+
+  /**
    * With a known entity id, an category object can be added.
    *
    *  @param entity_id
@@ -2095,34 +2055,6 @@ char * doCurl (char * method, char * path, char * params) {
     curl_free(p);
     strcat(params,"&");
     return doCurl("POST","/entity/category",params);
-  }
-
-
-  /**
-   * Allows a category object to be reduced in confidence
-   *
-   *  @param entity_id
-   *  @param gen_id
-   *  @return - the data from the api
-  */
-  char * deleteEntityCategory( char *entity_id, char *gen_id) {
-    CURL *curl = curl_easy_init();
-    char params[10000];
-    char *p;
-    strcpy(params,"?api_key=");
-    strcat(params,API_KEY);
-    strcat(params,"?");
-    strcat(params,"entity_id=");
-    p = curl_easy_escape(curl,entity_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"gen_id=");
-    p = curl_easy_escape(curl,gen_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    return doCurl("DELETE","/entity/category",params);
   }
 
 
@@ -2207,6 +2139,34 @@ char * doCurl (char * method, char * path, char * params) {
 
 
   /**
+   * Allows a description object to be reduced in confidence
+   *
+   *  @param entity_id
+   *  @param gen_id
+   *  @return - the data from the api
+  */
+  char * deleteEntityDescription( char *entity_id, char *gen_id) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"entity_id=");
+    p = curl_easy_escape(curl,entity_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"gen_id=");
+    p = curl_easy_escape(curl,gen_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("DELETE","/entity/description",params);
+  }
+
+
+  /**
    * With a known entity id, a description object can be added.
    *
    *  @param entity_id
@@ -2241,13 +2201,13 @@ char * doCurl (char * method, char * path, char * params) {
 
 
   /**
-   * Allows a description object to be reduced in confidence
+   * Allows a phone object to be reduced in confidence
    *
    *  @param entity_id
    *  @param gen_id
    *  @return - the data from the api
   */
-  char * deleteEntityDescription( char *entity_id, char *gen_id) {
+  char * deleteEntityDocument( char *entity_id, char *gen_id) {
     CURL *curl = curl_easy_init();
     char params[10000];
     char *p;
@@ -2264,7 +2224,7 @@ char * doCurl (char * method, char * path, char * params) {
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");
-    return doCurl("DELETE","/entity/description",params);
+    return doCurl("DELETE","/entity/document",params);
   }
 
 
@@ -2299,34 +2259,6 @@ char * doCurl (char * method, char * path, char * params) {
     curl_free(p);
     strcat(params,"&");
     return doCurl("POST","/entity/document",params);
-  }
-
-
-  /**
-   * Allows a phone object to be reduced in confidence
-   *
-   *  @param entity_id
-   *  @param gen_id
-   *  @return - the data from the api
-  */
-  char * deleteEntityDocument( char *entity_id, char *gen_id) {
-    CURL *curl = curl_easy_init();
-    char params[10000];
-    char *p;
-    strcpy(params,"?api_key=");
-    strcat(params,API_KEY);
-    strcat(params,"?");
-    strcat(params,"entity_id=");
-    p = curl_easy_escape(curl,entity_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"gen_id=");
-    p = curl_easy_escape(curl,gen_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    return doCurl("DELETE","/entity/document",params);
   }
 
 
@@ -2485,34 +2417,6 @@ char * doCurl (char * method, char * path, char * params) {
 
 
   /**
-   * Allows a fax object to be reduced in confidence
-   *
-   *  @param entity_id
-   *  @param gen_id
-   *  @return - the data from the api
-  */
-  char * deleteEntityFax( char *entity_id, char *gen_id) {
-    CURL *curl = curl_easy_init();
-    char params[10000];
-    char *p;
-    strcpy(params,"?api_key=");
-    strcat(params,API_KEY);
-    strcat(params,"?");
-    strcat(params,"entity_id=");
-    p = curl_easy_escape(curl,entity_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"gen_id=");
-    p = curl_easy_escape(curl,gen_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    return doCurl("DELETE","/entity/fax",params);
-  }
-
-
-  /**
    * With a known entity id, an fax object can be added.
    *
    *  @param entity_id
@@ -2543,6 +2447,34 @@ char * doCurl (char * method, char * path, char * params) {
     curl_free(p);
     strcat(params,"&");
     return doCurl("POST","/entity/fax",params);
+  }
+
+
+  /**
+   * Allows a fax object to be reduced in confidence
+   *
+   *  @param entity_id
+   *  @param gen_id
+   *  @return - the data from the api
+  */
+  char * deleteEntityFax( char *entity_id, char *gen_id) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"entity_id=");
+    p = curl_easy_escape(curl,entity_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"gen_id=");
+    p = curl_easy_escape(curl,gen_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("DELETE","/entity/fax",params);
   }
 
 
@@ -2643,34 +2575,6 @@ char * doCurl (char * method, char * path, char * params) {
 
 
   /**
-   * Allows a image object to be reduced in confidence
-   *
-   *  @param entity_id
-   *  @param gen_id
-   *  @return - the data from the api
-  */
-  char * deleteEntityImage( char *entity_id, char *gen_id) {
-    CURL *curl = curl_easy_init();
-    char params[10000];
-    char *p;
-    strcpy(params,"?api_key=");
-    strcat(params,API_KEY);
-    strcat(params,"?");
-    strcat(params,"entity_id=");
-    p = curl_easy_escape(curl,entity_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"gen_id=");
-    p = curl_easy_escape(curl,gen_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    return doCurl("DELETE","/entity/image",params);
-  }
-
-
-  /**
    * With a known entity id, a image object can be added.
    *
    *  @param entity_id
@@ -2701,6 +2605,34 @@ char * doCurl (char * method, char * path, char * params) {
     curl_free(p);
     strcat(params,"&");
     return doCurl("POST","/entity/image",params);
+  }
+
+
+  /**
+   * Allows a image object to be reduced in confidence
+   *
+   *  @param entity_id
+   *  @param gen_id
+   *  @return - the data from the api
+  */
+  char * deleteEntityImage( char *entity_id, char *gen_id) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"entity_id=");
+    p = curl_easy_escape(curl,entity_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"gen_id=");
+    p = curl_easy_escape(curl,gen_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("DELETE","/entity/image",params);
   }
 
 
@@ -2809,6 +2741,34 @@ char * doCurl (char * method, char * path, char * params) {
 
 
   /**
+   * Allows a list description object to be reduced in confidence
+   *
+   *  @param gen_id
+   *  @param entity_id
+   *  @return - the data from the api
+  */
+  char * deleteEntityList( char *gen_id, char *entity_id) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"gen_id=");
+    p = curl_easy_escape(curl,gen_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"entity_id=");
+    p = curl_easy_escape(curl,entity_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("DELETE","/entity/list",params);
+  }
+
+
+  /**
    * With a known entity id, a list description object can be added.
    *
    *  @param entity_id
@@ -2839,34 +2799,6 @@ char * doCurl (char * method, char * path, char * params) {
     curl_free(p);
     strcat(params,"&");
     return doCurl("POST","/entity/list",params);
-  }
-
-
-  /**
-   * Allows a list description object to be reduced in confidence
-   *
-   *  @param gen_id
-   *  @param entity_id
-   *  @return - the data from the api
-  */
-  char * deleteEntityList( char *gen_id, char *entity_id) {
-    CURL *curl = curl_easy_init();
-    char params[10000];
-    char *p;
-    strcpy(params,"?api_key=");
-    strcat(params,API_KEY);
-    strcat(params,"?");
-    strcat(params,"gen_id=");
-    p = curl_easy_escape(curl,gen_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"entity_id=");
-    p = curl_easy_escape(curl,entity_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    return doCurl("DELETE","/entity/list",params);
   }
 
 
@@ -2937,9 +2869,13 @@ char * doCurl (char * method, char * path, char * params) {
    *
    *  @param from
    *  @param to
+   *  @param override_trust - Do you want to override the trust of the 'from' entity
+   *  @param uncontribute_masheryid - Do we want to uncontribute any data for a masheryid?
+   *  @param uncontribute_userid - Do we want to uncontribute any data for a user_id?
+   *  @param uncontribute_supplierid - Do we want to uncontribute any data for a supplier_id?
    *  @return - the data from the api
   */
-  char * postEntityMerge( char *from, char *to) {
+  char * postEntityMerge( char *from, char *to, char *override_trust, char *uncontribute_masheryid, char *uncontribute_userid, char *uncontribute_supplierid) {
     CURL *curl = curl_easy_init();
     char params[10000];
     char *p;
@@ -2953,6 +2889,26 @@ char * doCurl (char * method, char * path, char * params) {
     strcat(params,"&");
     strcat(params,"to=");
     p = curl_easy_escape(curl,to,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"override_trust=");
+    p = curl_easy_escape(curl,override_trust,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"uncontribute_masheryid=");
+    p = curl_easy_escape(curl,uncontribute_masheryid,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"uncontribute_userid=");
+    p = curl_easy_escape(curl,uncontribute_userid,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"uncontribute_supplierid=");
+    p = curl_easy_escape(curl,uncontribute_supplierid,0);
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");
@@ -3029,28 +2985,6 @@ char * doCurl (char * method, char * path, char * params) {
 
 
   /**
-   * With a known entity id, a opening times object can be removed.
-   *
-   *  @param entity_id - The id of the entity to edit
-   *  @return - the data from the api
-  */
-  char * deleteEntityOpening_times( char *entity_id) {
-    CURL *curl = curl_easy_init();
-    char params[10000];
-    char *p;
-    strcpy(params,"?api_key=");
-    strcat(params,API_KEY);
-    strcat(params,"?");
-    strcat(params,"entity_id=");
-    p = curl_easy_escape(curl,entity_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    return doCurl("DELETE","/entity/opening_times",params);
-  }
-
-
-  /**
    * With a known entity id, a opening times object can be added. Each day can be either 'closed' to indicate that the entity is closed that day, '24hour' to indicate that the entity is open all day or single/split time ranges can be supplied in 4-digit 24-hour format, such as '09001730' or '09001200,13001700' to indicate hours of opening.
    *
    *  @param entity_id - The id of the entity to edit
@@ -3123,6 +3057,28 @@ char * doCurl (char * method, char * path, char * params) {
     curl_free(p);
     strcat(params,"&");
     return doCurl("POST","/entity/opening_times",params);
+  }
+
+
+  /**
+   * With a known entity id, a opening times object can be removed.
+   *
+   *  @param entity_id - The id of the entity to edit
+   *  @return - the data from the api
+  */
+  char * deleteEntityOpening_times( char *entity_id) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"entity_id=");
+    p = curl_easy_escape(curl,entity_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("DELETE","/entity/opening_times",params);
   }
 
 
@@ -3351,76 +3307,6 @@ char * doCurl (char * method, char * path, char * params) {
   /**
    * Search for matching entities
    *
-   *  @param what
-   *  @param entity_name
-   *  @param where
-   *  @param per_page
-   *  @param page
-   *  @param longitude
-   *  @param latitude
-   *  @param country
-   *  @param language
-   *  @return - the data from the api
-  */
-  char * getEntitySearch( char *what, char *entity_name, char *where, char *per_page, char *page, char *longitude, char *latitude, char *country, char *language) {
-    CURL *curl = curl_easy_init();
-    char params[10000];
-    char *p;
-    strcpy(params,"?api_key=");
-    strcat(params,API_KEY);
-    strcat(params,"?");
-    strcat(params,"what=");
-    p = curl_easy_escape(curl,what,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"entity_name=");
-    p = curl_easy_escape(curl,entity_name,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"where=");
-    p = curl_easy_escape(curl,where,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"per_page=");
-    p = curl_easy_escape(curl,per_page,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"page=");
-    p = curl_easy_escape(curl,page,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"longitude=");
-    p = curl_easy_escape(curl,longitude,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"latitude=");
-    p = curl_easy_escape(curl,latitude,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"country=");
-    p = curl_easy_escape(curl,country,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"language=");
-    p = curl_easy_escape(curl,language,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    return doCurl("GET","/entity/search",params);
-  }
-
-
-  /**
-   * Search for matching entities
-   *
    *  @param latitude_1
    *  @param longitude_1
    *  @param latitude_2
@@ -3490,9 +3376,11 @@ char * doCurl (char * method, char * path, char * params) {
    *  @param page - What page number to retrieve
    *  @param country - Which country to return results for. An ISO compatible country code, E.g. ie
    *  @param language - An ISO compatible language code, E.g. en
+   *  @param latitude - The decimal latitude of the search context (optional)
+   *  @param longitude - The decimal longitude of the search context (optional)
    *  @return - the data from the api
   */
-  char * getEntitySearchBylocation( char *where, char *per_page, char *page, char *country, char *language) {
+  char * getEntitySearchBylocation( char *where, char *per_page, char *page, char *country, char *language, char *latitude, char *longitude) {
     CURL *curl = curl_easy_init();
     char params[10000];
     char *p;
@@ -3521,6 +3409,16 @@ char * doCurl (char * method, char * path, char * params) {
     strcat(params,"&");
     strcat(params,"language=");
     p = curl_easy_escape(curl,language,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"latitude=");
+    p = curl_easy_escape(curl,latitude,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"longitude=");
+    p = curl_easy_escape(curl,longitude,0);
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");
@@ -3653,9 +3551,11 @@ char * doCurl (char * method, char * path, char * params) {
    *  @param page - Which page number to retrieve
    *  @param country - Which country to return results for. An ISO compatible country code, E.g. ie e.g. ie
    *  @param language - An ISO compatible language code, E.g. en
+   *  @param latitude - The decimal latitude of the search context (optional)
+   *  @param longitude - The decimal longitude of the search context (optional)
    *  @return - the data from the api
   */
-  char * getEntitySearchWhatBylocation( char *what, char *where, char *per_page, char *page, char *country, char *language) {
+  char * getEntitySearchWhatBylocation( char *what, char *where, char *per_page, char *page, char *country, char *language, char *latitude, char *longitude) {
     CURL *curl = curl_easy_init();
     char params[10000];
     char *p;
@@ -3692,6 +3592,16 @@ char * doCurl (char * method, char * path, char * params) {
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");
+    strcat(params,"latitude=");
+    p = curl_easy_escape(curl,latitude,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"longitude=");
+    p = curl_easy_escape(curl,longitude,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
     return doCurl("GET","/entity/search/what/bylocation",params);
   }
 
@@ -3703,9 +3613,10 @@ char * doCurl (char * method, char * path, char * params) {
    *  @param per_page - How many results per page
    *  @param page - What page number to retrieve
    *  @param country - Which country to return results for. An ISO compatible country code, E.g. ie e.g. ie
+   *  @param language - An ISO compatible language code, E.g. en
    *  @return - the data from the api
   */
-  char * getEntitySearchWho( char *who, char *per_page, char *page, char *country) {
+  char * getEntitySearchWho( char *who, char *per_page, char *page, char *country, char *language) {
     CURL *curl = curl_easy_init();
     char params[10000];
     char *p;
@@ -3732,6 +3643,11 @@ char * doCurl (char * method, char * path, char * params) {
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");
+    strcat(params,"language=");
+    p = curl_easy_escape(curl,language,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
     return doCurl("GET","/entity/search/who",params);
   }
 
@@ -3747,9 +3663,10 @@ char * doCurl (char * method, char * path, char * params) {
    *  @param per_page
    *  @param page
    *  @param country
+   *  @param language - An ISO compatible language code, E.g. en
    *  @return - the data from the api
   */
-  char * getEntitySearchWhoByboundingbox( char *who, char *latitude_1, char *longitude_1, char *latitude_2, char *longitude_2, char *per_page, char *page, char *country) {
+  char * getEntitySearchWhoByboundingbox( char *who, char *latitude_1, char *longitude_1, char *latitude_2, char *longitude_2, char *per_page, char *page, char *country, char *language) {
     CURL *curl = curl_easy_init();
     char params[10000];
     char *p;
@@ -3796,6 +3713,11 @@ char * doCurl (char * method, char * path, char * params) {
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");
+    strcat(params,"language=");
+    p = curl_easy_escape(curl,language,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
     return doCurl("GET","/entity/search/who/byboundingbox",params);
   }
 
@@ -3808,9 +3730,12 @@ char * doCurl (char * method, char * path, char * params) {
    *  @param per_page - Number of results returned per page
    *  @param page - Which page number to retrieve
    *  @param country - Which country to return results for. An ISO compatible country code, E.g. ie e.g. ie
+   *  @param latitude - The decimal latitude of the search context (optional)
+   *  @param longitude - The decimal longitude of the search context (optional)
+   *  @param language - An ISO compatible language code, E.g. en
    *  @return - the data from the api
   */
-  char * getEntitySearchWhoBylocation( char *who, char *where, char *per_page, char *page, char *country) {
+  char * getEntitySearchWhoBylocation( char *who, char *where, char *per_page, char *page, char *country, char *latitude, char *longitude, char *language) {
     CURL *curl = curl_easy_init();
     char params[10000];
     char *p;
@@ -3839,6 +3764,21 @@ char * doCurl (char * method, char * path, char * params) {
     strcat(params,"&");
     strcat(params,"country=");
     p = curl_easy_escape(curl,country,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"latitude=");
+    p = curl_easy_escape(curl,latitude,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"longitude=");
+    p = curl_easy_escape(curl,longitude,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"language=");
+    p = curl_easy_escape(curl,language,0);
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");
@@ -3955,34 +3895,6 @@ char * doCurl (char * method, char * path, char * params) {
 
 
   /**
-   * Allows a special offer object to be reduced in confidence
-   *
-   *  @param entity_id
-   *  @param gen_id
-   *  @return - the data from the api
-  */
-  char * deleteEntitySpecial_offer( char *entity_id, char *gen_id) {
-    CURL *curl = curl_easy_init();
-    char params[10000];
-    char *p;
-    strcpy(params,"?api_key=");
-    strcat(params,API_KEY);
-    strcat(params,"?");
-    strcat(params,"entity_id=");
-    p = curl_easy_escape(curl,entity_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"gen_id=");
-    p = curl_easy_escape(curl,gen_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    return doCurl("DELETE","/entity/special_offer",params);
-  }
-
-
-  /**
    * With a known entity id, a website object can be added.
    *
    *  @param entity_id
@@ -4043,6 +3955,34 @@ char * doCurl (char * method, char * path, char * params) {
     curl_free(p);
     strcat(params,"&");
     return doCurl("POST","/entity/special_offer",params);
+  }
+
+
+  /**
+   * Allows a special offer object to be reduced in confidence
+   *
+   *  @param entity_id
+   *  @param gen_id
+   *  @return - the data from the api
+  */
+  char * deleteEntitySpecial_offer( char *entity_id, char *gen_id) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"entity_id=");
+    p = curl_easy_escape(curl,entity_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"gen_id=");
+    p = curl_easy_escape(curl,gen_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("DELETE","/entity/special_offer",params);
   }
 
 
@@ -4207,6 +4147,46 @@ char * doCurl (char * method, char * path, char * params) {
     curl_free(p);
     strcat(params,"&");
     return doCurl("DELETE","/entity/testimonial",params);
+  }
+
+
+  /**
+   * Get the updates a uncontribute would perform
+   *
+   *  @param entity_id - The entity to pull
+   *  @param object_name - The entity object to update
+   *  @param supplier_id - The supplier_id to remove
+   *  @param user_id - The user_id to remove
+   *  @return - the data from the api
+  */
+  char * getEntityUncontribute( char *entity_id, char *object_name, char *supplier_id, char *user_id) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"entity_id=");
+    p = curl_easy_escape(curl,entity_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"object_name=");
+    p = curl_easy_escape(curl,object_name,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"supplier_id=");
+    p = curl_easy_escape(curl,supplier_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"user_id=");
+    p = curl_easy_escape(curl,user_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("GET","/entity/uncontribute",params);
   }
 
 
@@ -4403,6 +4383,50 @@ char * doCurl (char * method, char * path, char * params) {
 
 
   /**
+   * Get a flatpack
+   *
+   *  @param flatpack_id - the unique id to search for
+   *  @return - the data from the api
+  */
+  char * getFlatpack( char *flatpack_id) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"flatpack_id=");
+    p = curl_easy_escape(curl,flatpack_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("GET","/flatpack",params);
+  }
+
+
+  /**
+   * Remove a flatpack using a supplied flatpack_id
+   *
+   *  @param flatpack_id - the id of the flatpack to delete
+   *  @return - the data from the api
+  */
+  char * deleteFlatpack( char *flatpack_id) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"flatpack_id=");
+    p = curl_easy_escape(curl,flatpack_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("DELETE","/flatpack",params);
+  }
+
+
+  /**
    * Update/Add a flatpack
    *
    *  @param flatpack_id - this record's unique, auto-generated id - if supplied, then this is an edit, otherwise it's an add
@@ -4444,6 +4468,8 @@ char * doCurl (char * method, char * path, char * params) {
    *  @param serpNumberResults - The number of results per search page
    *  @param serpNumberAdverts - The number of adverts to show on the first search page
    *  @param serpAds - The block of HTML/JS that renders Ads on Serps
+   *  @param serpTitleNoWhat - The text to display in the title for where only searches
+   *  @param serpDescriptionNoWhat - The text to display in the description for where only searches
    *  @param cookiePolicyUrl - The cookie policy url of the flatpack
    *  @param cookiePolicyNotice - Whether to show the cookie policy on this flatpack
    *  @param addBusinessButtonText - The text used in the 'Add your business' button
@@ -4460,9 +4486,10 @@ char * doCurl (char * method, char * path, char * params) {
    *  @param loginLinkText - the link text for the Login link
    *  @param contextLocationId - The location ID to use as the context for searches on this flatpack
    *  @param addBusinessButtonPosition - The location ID to use as the context for searches on this flatpack
+   *  @param denyIndexing - Whether to noindex a flatpack
    *  @return - the data from the api
   */
-  char * postFlatpack( char *flatpack_id, char *domainName, char *stub, char *flatpackName, char *less, char *language, char *country, char *mapsType, char *mapKey, char *searchFormShowOn, char *searchFormShowKeywordsBox, char *searchFormShowLocationBox, char *searchFormKeywordsAutoComplete, char *searchFormLocationsAutoComplete, char *searchFormDefaultLocation, char *searchFormPlaceholderKeywords, char *searchFormPlaceholderLocation, char *searchFormKeywordsLabel, char *searchFormLocationLabel, char *cannedLinksHeader, char *homepageTitle, char *homepageDescription, char *homepageIntroTitle, char *homepageIntroText, char *head, char *adblock, char *bodyTop, char *bodyBottom, char *header_menu, char *header_menu_bottom, char *footer_menu, char *bdpTitle, char *bdpDescription, char *bdpAds, char *serpTitle, char *serpDescription, char *serpNumberResults, char *serpNumberAdverts, char *serpAds, char *cookiePolicyUrl, char *cookiePolicyNotice, char *addBusinessButtonText, char *twitterUrl, char *facebookUrl, char *copyright, char *advertUpgradeActive, char *advertUpgradePrice, char *advertUpgradeMaxTags, char *advertUpgradeMaxLocations, char *advertUpgradeContractLength, char *advertUpgradeRefId, char *phoneReveal, char *loginLinkText, char *contextLocationId, char *addBusinessButtonPosition) {
+  char * postFlatpack( char *flatpack_id, char *domainName, char *stub, char *flatpackName, char *less, char *language, char *country, char *mapsType, char *mapKey, char *searchFormShowOn, char *searchFormShowKeywordsBox, char *searchFormShowLocationBox, char *searchFormKeywordsAutoComplete, char *searchFormLocationsAutoComplete, char *searchFormDefaultLocation, char *searchFormPlaceholderKeywords, char *searchFormPlaceholderLocation, char *searchFormKeywordsLabel, char *searchFormLocationLabel, char *cannedLinksHeader, char *homepageTitle, char *homepageDescription, char *homepageIntroTitle, char *homepageIntroText, char *head, char *adblock, char *bodyTop, char *bodyBottom, char *header_menu, char *header_menu_bottom, char *footer_menu, char *bdpTitle, char *bdpDescription, char *bdpAds, char *serpTitle, char *serpDescription, char *serpNumberResults, char *serpNumberAdverts, char *serpAds, char *serpTitleNoWhat, char *serpDescriptionNoWhat, char *cookiePolicyUrl, char *cookiePolicyNotice, char *addBusinessButtonText, char *twitterUrl, char *facebookUrl, char *copyright, char *advertUpgradeActive, char *advertUpgradePrice, char *advertUpgradeMaxTags, char *advertUpgradeMaxLocations, char *advertUpgradeContractLength, char *advertUpgradeRefId, char *phoneReveal, char *loginLinkText, char *contextLocationId, char *addBusinessButtonPosition, char *denyIndexing) {
     CURL *curl = curl_easy_init();
     char params[10000];
     char *p;
@@ -4664,6 +4691,16 @@ char * doCurl (char * method, char * path, char * params) {
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");
+    strcat(params,"serpTitleNoWhat=");
+    p = curl_easy_escape(curl,serpTitleNoWhat,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"serpDescriptionNoWhat=");
+    p = curl_easy_escape(curl,serpDescriptionNoWhat,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
     strcat(params,"cookiePolicyUrl=");
     p = curl_easy_escape(curl,cookiePolicyUrl,0);
     strcat(params,p);
@@ -4744,51 +4781,12 @@ char * doCurl (char * method, char * path, char * params) {
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");
+    strcat(params,"denyIndexing=");
+    p = curl_easy_escape(curl,denyIndexing,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
     return doCurl("POST","/flatpack",params);
-  }
-
-
-  /**
-   * Get a flatpack
-   *
-   *  @param flatpack_id - the unique id to search for
-   *  @return - the data from the api
-  */
-  char * getFlatpack( char *flatpack_id) {
-    CURL *curl = curl_easy_init();
-    char params[10000];
-    char *p;
-    strcpy(params,"?api_key=");
-    strcat(params,API_KEY);
-    strcat(params,"?");
-    strcat(params,"flatpack_id=");
-    p = curl_easy_escape(curl,flatpack_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    return doCurl("GET","/flatpack",params);
-  }
-
-
-  /**
-   * Remove a flatpack using a supplied flatpack_id
-   *
-   *  @param flatpack_id - the id of the flatpack to delete
-   *  @return - the data from the api
-  */
-  char * deleteFlatpack( char *flatpack_id) {
-    CURL *curl = curl_easy_init();
-    char params[10000];
-    char *p;
-    strcpy(params,"?api_key=");
-    strcat(params,API_KEY);
-    strcat(params,"?");
-    strcat(params,"flatpack_id=");
-    p = curl_easy_escape(curl,flatpack_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    return doCurl("DELETE","/flatpack",params);
   }
 
 
@@ -4971,6 +4969,34 @@ char * doCurl (char * method, char * path, char * params) {
 
 
   /**
+   * Remove a canned link to an existing flatpack site.
+   *
+   *  @param flatpack_id - the id of the flatpack to delete
+   *  @param gen_id - the id of the canned link to remove
+   *  @return - the data from the api
+  */
+  char * deleteFlatpackLink( char *flatpack_id, char *gen_id) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"flatpack_id=");
+    p = curl_easy_escape(curl,flatpack_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"gen_id=");
+    p = curl_easy_escape(curl,gen_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("DELETE","/flatpack/link",params);
+  }
+
+
+  /**
    * Add a canned link to an existing flatpack site.
    *
    *  @param flatpack_id - the id of the flatpack to delete
@@ -5007,34 +5033,6 @@ char * doCurl (char * method, char * path, char * params) {
     curl_free(p);
     strcat(params,"&");
     return doCurl("POST","/flatpack/link",params);
-  }
-
-
-  /**
-   * Remove a canned link to an existing flatpack site.
-   *
-   *  @param flatpack_id - the id of the flatpack to delete
-   *  @param gen_id - the id of the canned link to remove
-   *  @return - the data from the api
-  */
-  char * deleteFlatpackLink( char *flatpack_id, char *gen_id) {
-    CURL *curl = curl_easy_init();
-    char params[10000];
-    char *p;
-    strcpy(params,"?api_key=");
-    strcat(params,API_KEY);
-    strcat(params,"?");
-    strcat(params,"flatpack_id=");
-    p = curl_easy_escape(curl,flatpack_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"gen_id=");
-    p = curl_easy_escape(curl,gen_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    return doCurl("DELETE","/flatpack/link",params);
   }
 
 
@@ -5139,6 +5137,28 @@ char * doCurl (char * method, char * path, char * params) {
 
 
   /**
+   * Delete a group with a specified group_id
+   *
+   *  @param group_id
+   *  @return - the data from the api
+  */
+  char * deleteGroup( char *group_id) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"group_id=");
+    p = curl_easy_escape(curl,group_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("DELETE","/group",params);
+  }
+
+
+  /**
    * Update/Add a Group
    *
    *  @param group_id
@@ -5179,28 +5199,6 @@ char * doCurl (char * method, char * path, char * params) {
 
 
   /**
-   * Delete a group with a specified group_id
-   *
-   *  @param group_id
-   *  @return - the data from the api
-  */
-  char * deleteGroup( char *group_id) {
-    CURL *curl = curl_easy_init();
-    char params[10000];
-    char *p;
-    strcpy(params,"?api_key=");
-    strcat(params,API_KEY);
-    strcat(params,"?");
-    strcat(params,"group_id=");
-    p = curl_easy_escape(curl,group_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    return doCurl("DELETE","/group",params);
-  }
-
-
-  /**
    * Bulk update entities with a specified group
    *
    *  @param group_id
@@ -5225,6 +5223,40 @@ char * doCurl (char * method, char * path, char * params) {
     curl_free(p);
     strcat(params,"&");
     return doCurl("POST","/group/bulk_update",params);
+  }
+
+
+  /**
+   * Get number of claims today
+   *
+   *  @param from_date
+   *  @param to_date
+   *  @param country_id
+   *  @return - the data from the api
+  */
+  char * getHeartbeatBy_date( char *from_date, char *to_date, char *country_id) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"from_date=");
+    p = curl_easy_escape(curl,from_date,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"to_date=");
+    p = curl_easy_escape(curl,to_date,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"country_id=");
+    p = curl_easy_escape(curl,country_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("GET","/heartbeat/by_date",params);
   }
 
 
@@ -5285,6 +5317,28 @@ char * doCurl (char * method, char * path, char * params) {
 
 
   /**
+   * Get an ingest job from the collection
+   *
+   *  @param job_id
+   *  @return - the data from the api
+  */
+  char * getIngest_job( char *job_id) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"job_id=");
+    p = curl_easy_escape(curl,job_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("GET","/ingest_job",params);
+  }
+
+
+  /**
    * Add a ingest job to the collection
    *
    *  @param description
@@ -5309,28 +5363,6 @@ char * doCurl (char * method, char * path, char * params) {
     curl_free(p);
     strcat(params,"&");
     return doCurl("POST","/ingest_job",params);
-  }
-
-
-  /**
-   * Get an ingest job from the collection
-   *
-   *  @param job_id
-   *  @return - the data from the api
-  */
-  char * getIngest_job( char *job_id) {
-    CURL *curl = curl_easy_init();
-    char params[10000];
-    char *p;
-    strcpy(params,"?api_key=");
-    strcat(params,API_KEY);
-    strcat(params,"?");
-    strcat(params,"job_id=");
-    p = curl_easy_escape(curl,job_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    return doCurl("GET","/ingest_job",params);
   }
 
 
@@ -5403,136 +5435,6 @@ char * doCurl (char * method, char * path, char * params) {
 
 
   /**
-   * Create/update a new location entity with the supplied ID in the locations reference database.
-   *
-   *  @param location_id
-   *  @param name
-   *  @param formal_name
-   *  @param latitude
-   *  @param longitude
-   *  @param resolution
-   *  @param country
-   *  @param population
-   *  @param description
-   *  @param timezone
-   *  @param is_duplicate
-   *  @param is_default
-   *  @param parent_town
-   *  @param parent_county
-   *  @param parent_province
-   *  @param parent_region
-   *  @param parent_neighbourhood
-   *  @param parent_district
-   *  @param postalcode
-   *  @return - the data from the api
-  */
-  char * postLocation( char *location_id, char *name, char *formal_name, char *latitude, char *longitude, char *resolution, char *country, char *population, char *description, char *timezone, char *is_duplicate, char *is_default, char *parent_town, char *parent_county, char *parent_province, char *parent_region, char *parent_neighbourhood, char *parent_district, char *postalcode) {
-    CURL *curl = curl_easy_init();
-    char params[10000];
-    char *p;
-    strcpy(params,"?api_key=");
-    strcat(params,API_KEY);
-    strcat(params,"?");
-    strcat(params,"location_id=");
-    p = curl_easy_escape(curl,location_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"name=");
-    p = curl_easy_escape(curl,name,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"formal_name=");
-    p = curl_easy_escape(curl,formal_name,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"latitude=");
-    p = curl_easy_escape(curl,latitude,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"longitude=");
-    p = curl_easy_escape(curl,longitude,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"resolution=");
-    p = curl_easy_escape(curl,resolution,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"country=");
-    p = curl_easy_escape(curl,country,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"population=");
-    p = curl_easy_escape(curl,population,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"description=");
-    p = curl_easy_escape(curl,description,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"timezone=");
-    p = curl_easy_escape(curl,timezone,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"is_duplicate=");
-    p = curl_easy_escape(curl,is_duplicate,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"is_default=");
-    p = curl_easy_escape(curl,is_default,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"parent_town=");
-    p = curl_easy_escape(curl,parent_town,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"parent_county=");
-    p = curl_easy_escape(curl,parent_county,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"parent_province=");
-    p = curl_easy_escape(curl,parent_province,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"parent_region=");
-    p = curl_easy_escape(curl,parent_region,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"parent_neighbourhood=");
-    p = curl_easy_escape(curl,parent_neighbourhood,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"parent_district=");
-    p = curl_easy_escape(curl,parent_district,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"postalcode=");
-    p = curl_easy_escape(curl,postalcode,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    return doCurl("POST","/location",params);
-  }
-
-
-  /**
    * Read a location with the supplied ID in the locations reference database.
    *
    *  @param location_id
@@ -5551,158 +5453,6 @@ char * doCurl (char * method, char * path, char * params) {
     curl_free(p);
     strcat(params,"&");
     return doCurl("GET","/location",params);
-  }
-
-
-  /**
-   * Read multiple locations with the supplied ID in the locations reference database.
-   *
-   *  @param location_ids
-   *  @return - the data from the api
-  */
-  char * getLocationMultiple( char *location_ids) {
-    CURL *curl = curl_easy_init();
-    char params[10000];
-    char *p;
-    strcpy(params,"?api_key=");
-    strcat(params,API_KEY);
-    strcat(params,"?");
-    strcat(params,"location_ids=");
-    p = curl_easy_escape(curl,location_ids,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    return doCurl("GET","/location/multiple",params);
-  }
-
-
-  /**
-   * Add a new source to a known location
-   *
-   *  @param location_id
-   *  @param type
-   *  @param url
-   *  @param ref
-   *  @return - the data from the api
-  */
-  char * postLocationSource( char *location_id, char *type, char *url, char *ref) {
-    CURL *curl = curl_easy_init();
-    char params[10000];
-    char *p;
-    strcpy(params,"?api_key=");
-    strcat(params,API_KEY);
-    strcat(params,"?");
-    strcat(params,"location_id=");
-    p = curl_easy_escape(curl,location_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"type=");
-    p = curl_easy_escape(curl,type,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"url=");
-    p = curl_easy_escape(curl,url,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"ref=");
-    p = curl_easy_escape(curl,ref,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    return doCurl("POST","/location/source",params);
-  }
-
-
-  /**
-   * Add a new synonym to a known location
-   *
-   *  @param location_id
-   *  @param synonym
-   *  @param language
-   *  @return - the data from the api
-  */
-  char * postLocationSynonym( char *location_id, char *synonym, char *language) {
-    CURL *curl = curl_easy_init();
-    char params[10000];
-    char *p;
-    strcpy(params,"?api_key=");
-    strcat(params,API_KEY);
-    strcat(params,"?");
-    strcat(params,"location_id=");
-    p = curl_easy_escape(curl,location_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"synonym=");
-    p = curl_easy_escape(curl,synonym,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"language=");
-    p = curl_easy_escape(curl,language,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    return doCurl("POST","/location/synonym",params);
-  }
-
-
-  /**
-   * Remove a new synonym from a known location
-   *
-   *  @param location_id
-   *  @param synonym
-   *  @param language
-   *  @return - the data from the api
-  */
-  char * deleteLocationSynonym( char *location_id, char *synonym, char *language) {
-    CURL *curl = curl_easy_init();
-    char params[10000];
-    char *p;
-    strcpy(params,"?api_key=");
-    strcat(params,API_KEY);
-    strcat(params,"?");
-    strcat(params,"location_id=");
-    p = curl_easy_escape(curl,location_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"synonym=");
-    p = curl_easy_escape(curl,synonym,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"language=");
-    p = curl_easy_escape(curl,language,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    return doCurl("DELETE","/location/synonym",params);
-  }
-
-
-  /**
-   * Given a csv of location synonyms add them
-   *
-   *  @param filedata - A tab separated CSV file
-   *  @return - the data from the api
-  */
-  char * postLocationSynonymBulk( char *filedata) {
-    CURL *curl = curl_easy_init();
-    char params[10000];
-    char *p;
-    strcpy(params,"?api_key=");
-    strcat(params,API_KEY);
-    strcat(params,"?");
-    strcat(params,"filedata=");
-    p = curl_easy_escape(curl,filedata,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    return doCurl("POST","/location/synonym/bulk",params);
   }
 
 
@@ -5732,7 +5482,7 @@ char * doCurl (char * method, char * path, char * params) {
    *  @param searchable_ids
    *  @return - the data from the api
   */
-  char * postLocz( char *location_id, char *type, char *country, char *language, char *name, char *formal_name, char *resolution, char *population, char *description, char *timezone, char *latitude, char *longitude, char *parent_town, char *parent_county, char *parent_province, char *parent_region, char *parent_neighbourhood, char *parent_district, char *postalcode, char *searchable_id, char *searchable_ids) {
+  char * postLocation( char *location_id, char *type, char *country, char *language, char *name, char *formal_name, char *resolution, char *population, char *description, char *timezone, char *latitude, char *longitude, char *parent_town, char *parent_county, char *parent_province, char *parent_region, char *parent_neighbourhood, char *parent_district, char *postalcode, char *searchable_id, char *searchable_ids) {
     CURL *curl = curl_easy_init();
     char params[10000];
     char *p;
@@ -5844,29 +5594,7 @@ char * doCurl (char * method, char * path, char * params) {
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");
-    return doCurl("POST","/locz",params);
-  }
-
-
-  /**
-   * Read a location with the supplied ID in the locations reference database.
-   *
-   *  @param location_id
-   *  @return - the data from the api
-  */
-  char * getLocz( char *location_id) {
-    CURL *curl = curl_easy_init();
-    char params[10000];
-    char *p;
-    strcpy(params,"?api_key=");
-    strcat(params,API_KEY);
-    strcat(params,"?");
-    strcat(params,"location_id=");
-    p = curl_easy_escape(curl,location_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    return doCurl("GET","/locz",params);
+    return doCurl("POST","/location",params);
   }
 
 
@@ -5876,7 +5604,7 @@ char * doCurl (char * method, char * path, char * params) {
    *  @param location_ids
    *  @return - the data from the api
   */
-  char * getLoczMultiple( char *location_ids) {
+  char * getLocationMultiple( char *location_ids) {
     CURL *curl = curl_easy_init();
     char params[10000];
     char *p;
@@ -5888,7 +5616,29 @@ char * doCurl (char * method, char * path, char * params) {
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");
-    return doCurl("GET","/locz/multiple",params);
+    return doCurl("GET","/location/multiple",params);
+  }
+
+
+  /**
+   * Fetch the project logo, the symbol of the Wolf
+   *
+   *  @param a
+   *  @return - the data from the api
+  */
+  char * putLogo( char *a) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"a=");
+    p = curl_easy_escape(curl,a,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("PUT","/logo",params);
   }
 
 
@@ -5929,28 +5679,6 @@ char * doCurl (char * method, char * path, char * params) {
     curl_free(p);
     strcat(params,"&");
     return doCurl("GET","/logo",params);
-  }
-
-
-  /**
-   * Fetch the project logo, the symbol of the Wolf
-   *
-   *  @param a
-   *  @return - the data from the api
-  */
-  char * putLogo( char *a) {
-    CURL *curl = curl_easy_init();
-    char params[10000];
-    char *p;
-    strcpy(params,"?api_key=");
-    strcat(params,API_KEY);
-    strcat(params,"?");
-    strcat(params,"a=");
-    p = curl_easy_escape(curl,a,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    return doCurl("PUT","/logo",params);
   }
 
 
@@ -6011,84 +5739,6 @@ char * doCurl (char * method, char * path, char * params) {
 
 
   /**
-   * Find a location from cache or cloudant depending if it is in the cache
-   *
-   *  @param string
-   *  @param country
-   *  @return - the data from the api
-  */
-  char * getLookupLocation( char *string, char *country) {
-    CURL *curl = curl_easy_init();
-    char params[10000];
-    char *p;
-    strcpy(params,"?api_key=");
-    strcat(params,API_KEY);
-    strcat(params,"?");
-    strcat(params,"string=");
-    p = curl_easy_escape(curl,string,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"country=");
-    p = curl_easy_escape(curl,country,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    return doCurl("GET","/lookup/location",params);
-  }
-
-
-  /**
-   * Find all the child locations of the selected location
-   *
-   *  @param location_id
-   *  @param resolution
-   *  @return - the data from the api
-  */
-  char * getLookupLocationChildren( char *location_id, char *resolution) {
-    CURL *curl = curl_easy_init();
-    char params[10000];
-    char *p;
-    strcpy(params,"?api_key=");
-    strcat(params,API_KEY);
-    strcat(params,"?");
-    strcat(params,"location_id=");
-    p = curl_easy_escape(curl,location_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"resolution=");
-    p = curl_easy_escape(curl,resolution,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    return doCurl("GET","/lookup/location/children",params);
-  }
-
-
-  /**
-   * Find all the parents locations of the selected location
-   *
-   *  @param location_id
-   *  @return - the data from the api
-  */
-  char * getLookupLocationParents( char *location_id) {
-    CURL *curl = curl_easy_init();
-    char params[10000];
-    char *p;
-    strcpy(params,"?api_key=");
-    strcat(params,API_KEY);
-    strcat(params,"?");
-    strcat(params,"location_id=");
-    p = curl_easy_escape(curl,location_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    return doCurl("GET","/lookup/location/parents",params);
-  }
-
-
-  /**
    * Find a location from cache or cloudant depending if it is in the cache (locz)
    *
    *  @param string
@@ -6098,7 +5748,7 @@ char * doCurl (char * method, char * path, char * params) {
    *  @param longitude
    *  @return - the data from the api
   */
-  char * getLookupLocz( char *string, char *language, char *country, char *latitude, char *longitude) {
+  char * getLookupLocation( char *string, char *language, char *country, char *latitude, char *longitude) {
     CURL *curl = curl_easy_init();
     char params[10000];
     char *p;
@@ -6130,7 +5780,7 @@ char * doCurl (char * method, char * path, char * params) {
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");
-    return doCurl("GET","/lookup/locz",params);
+    return doCurl("GET","/lookup/location",params);
   }
 
 
@@ -6187,12 +5837,13 @@ char * doCurl (char * method, char * path, char * params) {
    *  @param company_name
    *  @param latitude
    *  @param longitude
+   *  @param postcode
    *  @param country
    *  @param name_strictness
    *  @param location_strictness
    *  @return - the data from the api
   */
-  char * getMatchByphone( char *phone, char *company_name, char *latitude, char *longitude, char *country, char *name_strictness, char *location_strictness) {
+  char * getMatchByphone( char *phone, char *company_name, char *latitude, char *longitude, char *postcode, char *country, char *name_strictness, char *location_strictness) {
     CURL *curl = curl_easy_init();
     char params[10000];
     char *p;
@@ -6216,6 +5867,11 @@ char * doCurl (char * method, char * path, char * params) {
     strcat(params,"&");
     strcat(params,"longitude=");
     p = curl_easy_escape(curl,longitude,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"postcode=");
+    p = curl_easy_escape(curl,postcode,0);
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");
@@ -6428,9 +6084,10 @@ char * doCurl (char * method, char * path, char * params) {
    * Perform the whole PTB process on the supplied entity
    *
    *  @param entity_id
+   *  @param destructive
    *  @return - the data from the api
   */
-  char * getPtbAll( char *entity_id) {
+  char * getPtbAll( char *entity_id, char *destructive) {
     CURL *curl = curl_easy_init();
     char params[10000];
     char *p;
@@ -6439,6 +6096,11 @@ char * doCurl (char * method, char * path, char * params) {
     strcat(params,"?");
     strcat(params,"entity_id=");
     p = curl_easy_escape(curl,entity_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"destructive=");
+    p = curl_easy_escape(curl,destructive,0);
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");
@@ -6485,9 +6147,10 @@ char * doCurl (char * method, char * path, char * params) {
    *
    *  @param entity_id
    *  @param module
+   *  @param destructive
    *  @return - the data from the api
   */
-  char * getPtbModule( char *entity_id, char *module) {
+  char * getPtbModule( char *entity_id, char *module, char *destructive) {
     CURL *curl = curl_easy_init();
     char params[10000];
     char *p;
@@ -6501,6 +6164,11 @@ char * doCurl (char * method, char * path, char * params) {
     strcat(params,"&");
     strcat(params,"module=");
     p = curl_easy_escape(curl,module,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"destructive=");
+    p = curl_easy_escape(curl,destructive,0);
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");
@@ -6589,28 +6257,6 @@ char * doCurl (char * method, char * path, char * params) {
 
 
   /**
-   * Returns publisher that matches a given publisher id
-   *
-   *  @param publisher_id
-   *  @return - the data from the api
-  */
-  char * getPublisher( char *publisher_id) {
-    CURL *curl = curl_easy_init();
-    char params[10000];
-    char *p;
-    strcpy(params,"?api_key=");
-    strcat(params,API_KEY);
-    strcat(params,"?");
-    strcat(params,"publisher_id=");
-    p = curl_easy_escape(curl,publisher_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    return doCurl("GET","/publisher",params);
-  }
-
-
-  /**
    * Delete a publisher with a specified publisher_id
    *
    *  @param publisher_id
@@ -6681,6 +6327,28 @@ char * doCurl (char * method, char * path, char * params) {
   /**
    * Returns publisher that matches a given publisher id
    *
+   *  @param publisher_id
+   *  @return - the data from the api
+  */
+  char * getPublisher( char *publisher_id) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"publisher_id=");
+    p = curl_easy_escape(curl,publisher_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("GET","/publisher",params);
+  }
+
+
+  /**
+   * Returns publisher that matches a given publisher id
+   *
    *  @param country
    *  @return - the data from the api
   */
@@ -6723,28 +6391,6 @@ char * doCurl (char * method, char * path, char * params) {
 
 
   /**
-   * With a known queue id, a queue item can be removed.
-   *
-   *  @param queue_id
-   *  @return - the data from the api
-  */
-  char * deleteQueue( char *queue_id) {
-    CURL *curl = curl_easy_init();
-    char params[10000];
-    char *p;
-    strcpy(params,"?api_key=");
-    strcat(params,API_KEY);
-    strcat(params,"?");
-    strcat(params,"queue_id=");
-    p = curl_easy_escape(curl,queue_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    return doCurl("DELETE","/queue",params);
-  }
-
-
-  /**
    * Create a queue item
    *
    *  @param queue_name
@@ -6769,6 +6415,28 @@ char * doCurl (char * method, char * path, char * params) {
     curl_free(p);
     strcat(params,"&");
     return doCurl("PUT","/queue",params);
+  }
+
+
+  /**
+   * With a known queue id, a queue item can be removed.
+   *
+   *  @param queue_id
+   *  @return - the data from the api
+  */
+  char * deleteQueue( char *queue_id) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"queue_id=");
+    p = curl_easy_escape(curl,queue_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("DELETE","/queue",params);
   }
 
 
@@ -6885,28 +6553,6 @@ char * doCurl (char * method, char * path, char * params) {
 
 
   /**
-   * Return a sales log by id
-   *
-   *  @param sales_log_id - The sales log id to pull
-   *  @return - the data from the api
-  */
-  char * getSales_log( char *sales_log_id) {
-    CURL *curl = curl_easy_init();
-    char params[10000];
-    char *p;
-    strcpy(params,"?api_key=");
-    strcat(params,API_KEY);
-    strcat(params,"?");
-    strcat(params,"sales_log_id=");
-    p = curl_easy_escape(curl,sales_log_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    return doCurl("GET","/sales_log",params);
-  }
-
-
-  /**
    * Log a sale
    *
    *  @param entity_id - The entity the sale was made against
@@ -6995,6 +6641,90 @@ char * doCurl (char * method, char * path, char * params) {
 
 
   /**
+   * Return a sales log by id
+   *
+   *  @param sales_log_id - The sales log id to pull
+   *  @return - the data from the api
+  */
+  char * getSales_log( char *sales_log_id) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"sales_log_id=");
+    p = curl_easy_escape(curl,sales_log_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("GET","/sales_log",params);
+  }
+
+
+  /**
+   * Return a sales log by id
+   *
+   *  @param from_date
+   *  @param country
+   *  @param action_type
+   *  @return - the data from the api
+  */
+  char * getSales_logBy_countryBy_date( char *from_date, char *country, char *action_type) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"from_date=");
+    p = curl_easy_escape(curl,from_date,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"country=");
+    p = curl_easy_escape(curl,country,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"action_type=");
+    p = curl_easy_escape(curl,action_type,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("GET","/sales_log/by_country/by_date",params);
+  }
+
+
+  /**
+   * Return a sales log by id
+   *
+   *  @param from_date
+   *  @param to_date
+   *  @return - the data from the api
+  */
+  char * getSales_logBy_date( char *from_date, char *to_date) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"from_date=");
+    p = curl_easy_escape(curl,from_date,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"to_date=");
+    p = curl_easy_escape(curl,to_date,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("GET","/sales_log/by_date",params);
+  }
+
+
+  /**
    * For insance, reporting a phone number as wrong
    *
    *  @param entity_id - A valid entity_id e.g. 379236608286720
@@ -7071,6 +6801,34 @@ char * doCurl (char * method, char * path, char * params) {
     curl_free(p);
     strcat(params,"&");
     return doCurl("GET","/stats/entity/by_date",params);
+  }
+
+
+  /**
+   * Get the stats on an entity in a given year
+   *
+   *  @param entity_id - A valid entity_id e.g. 379236608286720
+   *  @param year - The year to report on
+   *  @return - the data from the api
+  */
+  char * getStatsEntityBy_year( char *entity_id, char *year) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"entity_id=");
+    p = curl_easy_escape(curl,entity_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"year=");
+    p = curl_easy_escape(curl,year,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("GET","/stats/entity/by_year",params);
   }
 
 
@@ -7189,6 +6947,46 @@ char * doCurl (char * method, char * path, char * params) {
     curl_free(p);
     strcat(params,"&");
     return doCurl("GET","/token/decode",params);
+  }
+
+
+  /**
+   * Fetch token for edit path
+   *
+   *  @param entity_id - The id of the entity being upgraded
+   *  @param language - The language for the app
+   *  @param flatpack_id - The id of the flatpack site where the request originated
+   *  @param edit_page - the page in the edit path that the user should land on
+   *  @return - the data from the api
+  */
+  char * getTokenEdit( char *entity_id, char *language, char *flatpack_id, char *edit_page) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"entity_id=");
+    p = curl_easy_escape(curl,entity_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"language=");
+    p = curl_easy_escape(curl,language,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"flatpack_id=");
+    p = curl_easy_escape(curl,flatpack_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"edit_page=");
+    p = curl_easy_escape(curl,edit_page,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("GET","/token/edit",params);
   }
 
 
@@ -7377,6 +7175,34 @@ char * doCurl (char * method, char * path, char * params) {
 
 
   /**
+   * The JaroWinklerDistance between two entities postal address objects
+   *
+   *  @param first_entity_id - The entity id of the first entity to be used in the postal address difference
+   *  @param second_entity_id - The entity id of the second entity to be used in the postal address difference
+   *  @return - the data from the api
+  */
+  char * getToolsAddressdiff( char *first_entity_id, char *second_entity_id) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"first_entity_id=");
+    p = curl_easy_escape(curl,first_entity_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"second_entity_id=");
+    p = curl_easy_escape(curl,second_entity_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("GET","/tools/addressdiff",params);
+  }
+
+
+  /**
    * Use this call to get information (in HTML or JSON) about the data structure of given entity object (e.g. a phone number or an address)
    *
    *  @param object - The API call documentation is required for
@@ -7561,6 +7387,34 @@ char * doCurl (char * method, char * path, char * params) {
     curl_free(p);
     strcat(params,"&");
     return doCurl("POST","/tools/googlesheet/add_row",params);
+  }
+
+
+  /**
+   * Given some image data we can resize and upload the images
+   *
+   *  @param filedata - The image data to upload and resize
+   *  @param type - The type of image to upload and resize
+   *  @return - the data from the api
+  */
+  char * postToolsImage( char *filedata, char *type) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"filedata=");
+    p = curl_easy_escape(curl,filedata,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"type=");
+    p = curl_easy_escape(curl,type,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("POST","/tools/image",params);
   }
 
 
@@ -7933,6 +7787,28 @@ char * doCurl (char * method, char * path, char * params) {
 
 
   /**
+   * Deleting a traction
+   *
+   *  @param traction_id
+   *  @return - the data from the api
+  */
+  char * deleteTraction( char *traction_id) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"traction_id=");
+    p = curl_easy_escape(curl,traction_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("DELETE","/traction",params);
+  }
+
+
+  /**
    * Update/Add a traction
    *
    *  @param traction_id
@@ -8029,28 +7905,6 @@ char * doCurl (char * method, char * path, char * params) {
     curl_free(p);
     strcat(params,"&");
     return doCurl("POST","/traction",params);
-  }
-
-
-  /**
-   * Deleting a traction
-   *
-   *  @param traction_id
-   *  @return - the data from the api
-  */
-  char * deleteTraction( char *traction_id) {
-    CURL *curl = curl_easy_init();
-    char params[10000];
-    char *p;
-    strcpy(params,"?api_key=");
-    strcat(params,API_KEY);
-    strcat(params,"?");
-    strcat(params,"traction_id=");
-    p = curl_easy_escape(curl,traction_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    return doCurl("DELETE","/traction",params);
   }
 
 
@@ -8285,9 +8139,32 @@ char * doCurl (char * method, char * path, char * params) {
 
 
   /**
+   * With a unique ID address an user can be retrieved
+   *
+   *  @param user_id
+   *  @return - the data from the api
+  */
+  char * getUser( char *user_id) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"user_id=");
+    p = curl_easy_escape(curl,user_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("GET","/user",params);
+  }
+
+
+  /**
    * Update user based on email address or social_network/social_network_id
    *
    *  @param email
+   *  @param user_id
    *  @param first_name
    *  @param last_name
    *  @param active
@@ -8301,7 +8178,7 @@ char * doCurl (char * method, char * path, char * params) {
    *  @param admin_upgrader
    *  @return - the data from the api
   */
-  char * postUser( char *email, char *first_name, char *last_name, char *active, char *trust, char *creation_date, char *user_type, char *social_network, char *social_network_id, char *reseller_admin_masheryid, char *group_id, char *admin_upgrader) {
+  char * postUser( char *email, char *user_id, char *first_name, char *last_name, char *active, char *trust, char *creation_date, char *user_type, char *social_network, char *social_network_id, char *reseller_admin_masheryid, char *group_id, char *admin_upgrader) {
     CURL *curl = curl_easy_init();
     char params[10000];
     char *p;
@@ -8310,6 +8187,11 @@ char * doCurl (char * method, char * path, char * params) {
     strcat(params,"?");
     strcat(params,"email=");
     p = curl_easy_escape(curl,email,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"user_id=");
+    p = curl_easy_escape(curl,user_id,0);
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");
@@ -8369,28 +8251,6 @@ char * doCurl (char * method, char * path, char * params) {
     curl_free(p);
     strcat(params,"&");
     return doCurl("POST","/user",params);
-  }
-
-
-  /**
-   * With a unique ID address an user can be retrieved
-   *
-   *  @param user_id
-   *  @return - the data from the api
-  */
-  char * getUser( char *user_id) {
-    CURL *curl = curl_easy_init();
-    char params[10000];
-    char *p;
-    strcpy(params,"?api_key=");
-    strcat(params,API_KEY);
-    strcat(params,"?");
-    strcat(params,"user_id=");
-    p = curl_easy_escape(curl,user_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    return doCurl("GET","/user",params);
   }
 
 
@@ -8529,6 +8389,46 @@ char * doCurl (char * method, char * path, char * params) {
     curl_free(p);
     strcat(params,"&");
     return doCurl("POST","/user/reseller_remove",params);
+  }
+
+
+  /**
+   * Shows what would be emitted by a view, given a document
+   *
+   *  @param database - the database being worked on e.g. entities
+   *  @param designdoc - the design document containing the view e.g. _design/report
+   *  @param view - the name of the view to be tested e.g. bydate
+   *  @param doc - the JSON document to be analysed e.g. {}
+   *  @return - the data from the api
+  */
+  char * getViewhelper( char *database, char *designdoc, char *view, char *doc) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"database=");
+    p = curl_easy_escape(curl,database,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"designdoc=");
+    p = curl_easy_escape(curl,designdoc,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"view=");
+    p = curl_easy_escape(curl,view,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"doc=");
+    p = curl_easy_escape(curl,doc,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("GET","/viewhelper",params);
   }
 
 
