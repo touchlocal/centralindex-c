@@ -1177,16 +1177,6 @@ void set_debug_mode (int debug);
 
  
   /**
-   * Allows a special offer object to be reduced in confidence
-   *
-   *  @param entity_id
-   *  @param gen_id
-   *  @return - the data from the api
-  */
-  char * deleteEntitySpecial_offer( char *entity_id, char *gen_id);
-
- 
-  /**
    * With a known entity id, a website object can be added.
    *
    *  @param entity_id
@@ -1200,6 +1190,16 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * postEntitySpecial_offer( char *entity_id, char *title, char *description, char *terms, char *start_date, char *expiry_date, char *url, char *image_url);
+
+ 
+  /**
+   * Allows a special offer object to be reduced in confidence
+   *
+   *  @param entity_id
+   *  @param gen_id
+   *  @return - the data from the api
+  */
+  char * deleteEntitySpecial_offer( char *entity_id, char *gen_id);
 
  
   /**
@@ -1413,9 +1413,11 @@ void set_debug_mode (int debug);
    *  @param contextLocationId - The location ID to use as the context for searches on this flatpack
    *  @param addBusinessButtonPosition - The location ID to use as the context for searches on this flatpack
    *  @param denyIndexing - Whether to noindex a flatpack
+   *  @param contextRadius - allows you to set a catchment area around the contextLocationId in miles for use when displaying the activity stream module
+   *  @param activityStream - allows you to set the activity to be displayed in the activity stream
    *  @return - the data from the api
   */
-  char * postFlatpack( char *flatpack_id, char *domainName, char *stub, char *flatpackName, char *less, char *language, char *country, char *mapsType, char *mapKey, char *searchFormShowOn, char *searchFormShowKeywordsBox, char *searchFormShowLocationBox, char *searchFormKeywordsAutoComplete, char *searchFormLocationsAutoComplete, char *searchFormDefaultLocation, char *searchFormPlaceholderKeywords, char *searchFormPlaceholderLocation, char *searchFormKeywordsLabel, char *searchFormLocationLabel, char *cannedLinksHeader, char *homepageTitle, char *homepageDescription, char *homepageIntroTitle, char *homepageIntroText, char *head, char *adblock, char *bodyTop, char *bodyBottom, char *header_menu, char *header_menu_bottom, char *footer_menu, char *bdpTitle, char *bdpDescription, char *bdpAds, char *serpTitle, char *serpDescription, char *serpNumberResults, char *serpNumberAdverts, char *serpAds, char *serpTitleNoWhat, char *serpDescriptionNoWhat, char *cookiePolicyUrl, char *cookiePolicyNotice, char *addBusinessButtonText, char *twitterUrl, char *facebookUrl, char *copyright, char *advertUpgradeActive, char *advertUpgradePrice, char *advertUpgradeMaxTags, char *advertUpgradeMaxLocations, char *advertUpgradeContractLength, char *advertUpgradeRefId, char *phoneReveal, char *loginLinkText, char *contextLocationId, char *addBusinessButtonPosition, char *denyIndexing);
+  char * postFlatpack( char *flatpack_id, char *domainName, char *stub, char *flatpackName, char *less, char *language, char *country, char *mapsType, char *mapKey, char *searchFormShowOn, char *searchFormShowKeywordsBox, char *searchFormShowLocationBox, char *searchFormKeywordsAutoComplete, char *searchFormLocationsAutoComplete, char *searchFormDefaultLocation, char *searchFormPlaceholderKeywords, char *searchFormPlaceholderLocation, char *searchFormKeywordsLabel, char *searchFormLocationLabel, char *cannedLinksHeader, char *homepageTitle, char *homepageDescription, char *homepageIntroTitle, char *homepageIntroText, char *head, char *adblock, char *bodyTop, char *bodyBottom, char *header_menu, char *header_menu_bottom, char *footer_menu, char *bdpTitle, char *bdpDescription, char *bdpAds, char *serpTitle, char *serpDescription, char *serpNumberResults, char *serpNumberAdverts, char *serpAds, char *serpTitleNoWhat, char *serpDescriptionNoWhat, char *cookiePolicyUrl, char *cookiePolicyNotice, char *addBusinessButtonText, char *twitterUrl, char *facebookUrl, char *copyright, char *advertUpgradeActive, char *advertUpgradePrice, char *advertUpgradeMaxTags, char *advertUpgradeMaxLocations, char *advertUpgradeContractLength, char *advertUpgradeRefId, char *phoneReveal, char *loginLinkText, char *contextLocationId, char *addBusinessButtonPosition, char *denyIndexing, char *contextRadius, char *activityStream);
 
  
   /**
@@ -1537,6 +1539,15 @@ void set_debug_mode (int debug);
 
  
   /**
+   * Delete a group with a specified group_id
+   *
+   *  @param group_id
+   *  @return - the data from the api
+  */
+  char * deleteGroup( char *group_id);
+
+ 
+  /**
    * Update/Add a Group
    *
    *  @param group_id
@@ -1555,15 +1566,6 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * getGroup( char *group_id);
-
- 
-  /**
-   * Delete a group with a specified group_id
-   *
-   *  @param group_id
-   *  @return - the data from the api
-  */
-  char * deleteGroup( char *group_id);
 
  
   /**
@@ -1649,6 +1651,15 @@ void set_debug_mode (int debug);
 
  
   /**
+   * Read a location with the supplied ID in the locations reference database.
+   *
+   *  @param location_id
+   *  @return - the data from the api
+  */
+  char * getLocation( char *location_id);
+
+ 
+  /**
    * Create/update a new locz document with the supplied ID in the locations reference database.
    *
    *  @param location_id
@@ -1678,15 +1689,6 @@ void set_debug_mode (int debug);
 
  
   /**
-   * Read a location with the supplied ID in the locations reference database.
-   *
-   *  @param location_id
-   *  @return - the data from the api
-  */
-  char * getLocation( char *location_id);
-
- 
-  /**
    * Read multiple locations with the supplied ID in the locations reference database.
    *
    *  @param location_ids
@@ -1699,21 +1701,21 @@ void set_debug_mode (int debug);
    * Fetch the project logo, the symbol of the Wolf
    *
    *  @param a
-   *  @return - the data from the api
-  */
-  char * putLogo( char *a);
-
- 
-  /**
-   * Fetch the project logo, the symbol of the Wolf
-   *
-   *  @param a
    *  @param b
    *  @param c
    *  @param d
    *  @return - the data from the api
   */
   char * getLogo( char *a, char *b, char *c, char *d);
+
+ 
+  /**
+   * Fetch the project logo, the symbol of the Wolf
+   *
+   *  @param a
+   *  @return - the data from the api
+  */
+  char * putLogo( char *a);
 
  
   /**
@@ -1823,6 +1825,15 @@ void set_debug_mode (int debug);
 
  
   /**
+   * Allows a private object to be removed
+   *
+   *  @param private_object_id - The id of the private object to remove
+   *  @return - the data from the api
+  */
+  char * deletePrivate_object( char *private_object_id);
+
+ 
+  /**
    * With a known entity id, a private object can be added.
    *
    *  @param entity_id - The entity to associate the private object with
@@ -1830,15 +1841,6 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * putPrivate_object( char *entity_id, char *data);
-
- 
-  /**
-   * Allows a private object to be removed
-   *
-   *  @param private_object_id - The id of the private object to remove
-   *  @return - the data from the api
-  */
-  char * deletePrivate_object( char *private_object_id);
 
  
   /**
@@ -1907,6 +1909,19 @@ void set_debug_mode (int debug);
 
  
   /**
+   * Update/Add a publisher
+   *
+   *  @param publisher_id
+   *  @param country
+   *  @param name
+   *  @param description
+   *  @param active
+   *  @return - the data from the api
+  */
+  char * postPublisher( char *publisher_id, char *country, char *name, char *description, char *active);
+
+ 
+  /**
    * Returns publisher that matches a given publisher id
    *
    *  @param publisher_id
@@ -1922,19 +1937,6 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * deletePublisher( char *publisher_id);
-
- 
-  /**
-   * Update/Add a publisher
-   *
-   *  @param publisher_id
-   *  @param country
-   *  @param name
-   *  @param description
-   *  @param active
-   *  @return - the data from the api
-  */
-  char * postPublisher( char *publisher_id, char *country, char *name, char *description, char *active);
 
  
   /**
@@ -1956,16 +1958,6 @@ void set_debug_mode (int debug);
 
  
   /**
-   * Create a queue item
-   *
-   *  @param queue_name
-   *  @param data
-   *  @return - the data from the api
-  */
-  char * putQueue( char *queue_name, char *data);
-
- 
-  /**
    * With a known queue id, a queue item can be removed.
    *
    *  @param queue_id
@@ -1982,6 +1974,16 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * getQueue( char *limit, char *queue_name);
+
+ 
+  /**
+   * Create a queue item
+   *
+   *  @param queue_name
+   *  @param data
+   *  @return - the data from the api
+  */
+  char * putQueue( char *queue_name, char *data);
 
  
   /**
@@ -2153,6 +2155,15 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * postSyndication_log( char *entity_id, char *publisher_id, char *action, char *success, char *message, char *syndicated_id);
+
+ 
+  /**
+   * Get all syndication log entries for a given entity id
+   *
+   *  @param entity_id
+   *  @return - the data from the api
+  */
+  char * getSyndication_logBy_entity_id( char *entity_id);
 
  
   /**
@@ -2468,24 +2479,6 @@ void set_debug_mode (int debug);
 
  
   /**
-   * Deleting a traction
-   *
-   *  @param traction_id
-   *  @return - the data from the api
-  */
-  char * deleteTraction( char *traction_id);
-
- 
-  /**
-   * Fetching a traction
-   *
-   *  @param traction_id
-   *  @return - the data from the api
-  */
-  char * getTraction( char *traction_id);
-
- 
-  /**
    * Update/Add a traction
    *
    *  @param traction_id
@@ -2505,6 +2498,24 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * postTraction( char *traction_id, char *trigger_type, char *action_type, char *country, char *email_addresses, char *title, char *body, char *api_method, char *api_url, char *api_params, char *active, char *reseller_masheryid, char *publisher_masheryid, char *description);
+
+ 
+  /**
+   * Deleting a traction
+   *
+   *  @param traction_id
+   *  @return - the data from the api
+  */
+  char * deleteTraction( char *traction_id);
+
+ 
+  /**
+   * Fetching a traction
+   *
+   *  @param traction_id
+   *  @return - the data from the api
+  */
+  char * getTraction( char *traction_id);
 
  
   /**
@@ -2589,6 +2600,15 @@ void set_debug_mode (int debug);
 
  
   /**
+   * With a unique ID address an user can be retrieved
+   *
+   *  @param user_id
+   *  @return - the data from the api
+  */
+  char * getUser( char *user_id);
+
+ 
+  /**
    * Update user based on email address or social_network/social_network_id
    *
    *  @param email
@@ -2607,15 +2627,6 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * postUser( char *email, char *user_id, char *first_name, char *last_name, char *active, char *trust, char *creation_date, char *user_type, char *social_network, char *social_network_id, char *reseller_admin_masheryid, char *group_id, char *admin_upgrader);
-
- 
-  /**
-   * With a unique ID address an user can be retrieved
-   *
-   *  @param user_id
-   *  @return - the data from the api
-  */
-  char * getUser( char *user_id);
 
  
   /**
