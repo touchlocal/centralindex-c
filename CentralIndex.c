@@ -165,16 +165,17 @@ char * doCurl (char * method, char * path, char * params) {
   /**
    * Get the activity from the collection
    *
-   *  @param type - The activity type
+   *  @param type - The activity type: add, claim, special offer, image, video, description, testimonial
    *  @param country - The country to filter by
    *  @param latitude_1 - The latitude_1 to filter by
    *  @param longitude_1 - The longitude_1 to filter by
    *  @param latitude_2 - The latitude_2 to filter by
    *  @param longitude_2 - The longitude_2 to filter by
    *  @param number_results - The number_results to filter by
+   *  @param unique_action - Return only the most recent instance of this action?
    *  @return - the data from the api
   */
-  char * getActivity_stream( char *type, char *country, char *latitude_1, char *longitude_1, char *latitude_2, char *longitude_2, char *number_results) {
+  char * getActivity_stream( char *type, char *country, char *latitude_1, char *longitude_1, char *latitude_2, char *longitude_2, char *number_results, char *unique_action) {
     CURL *curl = curl_easy_init();
     char params[10000];
     char *p;
@@ -216,6 +217,11 @@ char * doCurl (char * method, char * path, char * params) {
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");
+    strcat(params,"unique_action=");
+    p = curl_easy_escape(curl,unique_action,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
     return doCurl("GET","/activity_stream",params);
   }
 
@@ -225,7 +231,7 @@ char * doCurl (char * method, char * path, char * params) {
    *
    *  @param entity_id - The entity to pull
    *  @param entity_name - The entity name this entry refers to
-   *  @param type - The activity type. add, claim, special offer, image, video, description, testimonial
+   *  @param type - The activity type.
    *  @param country - The country for the activity
    *  @param longitude - The longitude for teh activity
    *  @param latitude - The latitude for teh activity
@@ -4669,9 +4675,10 @@ char * doCurl (char * method, char * path, char * params) {
    *  @param denyIndexing - Whether to noindex a flatpack
    *  @param contextRadius - allows you to set a catchment area around the contextLocationId in miles for use when displaying the activity stream module
    *  @param activityStream - allows you to set the activity to be displayed in the activity stream
+   *  @param activityStreamSize - Sets the number of items to show within the activity stream.
    *  @return - the data from the api
   */
-  char * postFlatpack( char *flatpack_id, char *domainName, char *stub, char *flatpackName, char *less, char *language, char *country, char *mapsType, char *mapKey, char *searchFormShowOn, char *searchFormShowKeywordsBox, char *searchFormShowLocationBox, char *searchFormKeywordsAutoComplete, char *searchFormLocationsAutoComplete, char *searchFormDefaultLocation, char *searchFormPlaceholderKeywords, char *searchFormPlaceholderLocation, char *searchFormKeywordsLabel, char *searchFormLocationLabel, char *cannedLinksHeader, char *homepageTitle, char *homepageDescription, char *homepageIntroTitle, char *homepageIntroText, char *head, char *adblock, char *bodyTop, char *bodyBottom, char *header_menu, char *header_menu_bottom, char *footer_menu, char *bdpTitle, char *bdpDescription, char *bdpAds, char *serpTitle, char *serpDescription, char *serpNumberResults, char *serpNumberAdverts, char *serpAds, char *serpTitleNoWhat, char *serpDescriptionNoWhat, char *cookiePolicyUrl, char *cookiePolicyNotice, char *addBusinessButtonText, char *twitterUrl, char *facebookUrl, char *copyright, char *advertUpgradeActive, char *advertUpgradePrice, char *advertUpgradeMaxTags, char *advertUpgradeMaxLocations, char *advertUpgradeContractLength, char *advertUpgradeRefId, char *phoneReveal, char *loginLinkText, char *contextLocationId, char *addBusinessButtonPosition, char *denyIndexing, char *contextRadius, char *activityStream) {
+  char * postFlatpack( char *flatpack_id, char *domainName, char *stub, char *flatpackName, char *less, char *language, char *country, char *mapsType, char *mapKey, char *searchFormShowOn, char *searchFormShowKeywordsBox, char *searchFormShowLocationBox, char *searchFormKeywordsAutoComplete, char *searchFormLocationsAutoComplete, char *searchFormDefaultLocation, char *searchFormPlaceholderKeywords, char *searchFormPlaceholderLocation, char *searchFormKeywordsLabel, char *searchFormLocationLabel, char *cannedLinksHeader, char *homepageTitle, char *homepageDescription, char *homepageIntroTitle, char *homepageIntroText, char *head, char *adblock, char *bodyTop, char *bodyBottom, char *header_menu, char *header_menu_bottom, char *footer_menu, char *bdpTitle, char *bdpDescription, char *bdpAds, char *serpTitle, char *serpDescription, char *serpNumberResults, char *serpNumberAdverts, char *serpAds, char *serpTitleNoWhat, char *serpDescriptionNoWhat, char *cookiePolicyUrl, char *cookiePolicyNotice, char *addBusinessButtonText, char *twitterUrl, char *facebookUrl, char *copyright, char *advertUpgradeActive, char *advertUpgradePrice, char *advertUpgradeMaxTags, char *advertUpgradeMaxLocations, char *advertUpgradeContractLength, char *advertUpgradeRefId, char *phoneReveal, char *loginLinkText, char *contextLocationId, char *addBusinessButtonPosition, char *denyIndexing, char *contextRadius, char *activityStream, char *activityStreamSize) {
     CURL *curl = curl_easy_init();
     char params[10000];
     char *p;
@@ -4975,6 +4982,11 @@ char * doCurl (char * method, char * path, char * params) {
     strcat(params,"&");
     strcat(params,"activityStream=");
     p = curl_easy_escape(curl,activityStream,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"activityStreamSize=");
+    p = curl_easy_escape(curl,activityStreamSize,0);
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");
