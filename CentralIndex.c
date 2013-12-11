@@ -7235,10 +7235,9 @@ char * doCurl (char * method, char * path, char * params) {
    *  @param seed_masheryid
    *  @param supplier_masheryid
    *  @param country
-   *  @param reseller_masheryid
    *  @return - the data from the api
   */
-  char * postSyndicationCreate( char *syndication_type, char *publisher_id, char *expiry_date, char *entity_id, char *group_id, char *seed_masheryid, char *supplier_masheryid, char *country, char *reseller_masheryid) {
+  char * postSyndicationCreate( char *syndication_type, char *publisher_id, char *expiry_date, char *entity_id, char *group_id, char *seed_masheryid, char *supplier_masheryid, char *country) {
     CURL *curl = curl_easy_init();
     char params[10000];
     char *p;
@@ -7282,11 +7281,6 @@ char * doCurl (char * method, char * path, char * params) {
     strcat(params,"&");
     strcat(params,"country=");
     p = curl_easy_escape(curl,country,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"reseller_masheryid=");
-    p = curl_easy_escape(curl,reseller_masheryid,0);
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");
