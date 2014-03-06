@@ -2854,9 +2854,10 @@ char * doCurl (char * method, char * path, char * params) {
    *  @param entity_id
    *  @param headline
    *  @param body
+   *  @param gen_id
    *  @return - the data from the api
   */
-  char * postEntityDescription( char *entity_id, char *headline, char *body) {
+  char * postEntityDescription( char *entity_id, char *headline, char *body, char *gen_id) {
     CURL *curl = curl_easy_init();
     char params[10000];
     char *p;
@@ -2875,6 +2876,11 @@ char * doCurl (char * method, char * path, char * params) {
     strcat(params,"&");
     strcat(params,"body=");
     p = curl_easy_escape(curl,body,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"gen_id=");
+    p = curl_easy_escape(curl,gen_id,0);
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");
@@ -5153,9 +5159,10 @@ char * doCurl (char * method, char * path, char * params) {
    *  @param website_url
    *  @param display_url
    *  @param website_description
+   *  @param gen_id
    *  @return - the data from the api
   */
-  char * postEntityWebsite( char *entity_id, char *website_url, char *display_url, char *website_description) {
+  char * postEntityWebsite( char *entity_id, char *website_url, char *display_url, char *website_description, char *gen_id) {
     CURL *curl = curl_easy_init();
     char params[10000];
     char *p;
@@ -5179,6 +5186,11 @@ char * doCurl (char * method, char * path, char * params) {
     strcat(params,"&");
     strcat(params,"website_description=");
     p = curl_easy_escape(curl,website_description,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"gen_id=");
+    p = curl_easy_escape(curl,gen_id,0);
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");

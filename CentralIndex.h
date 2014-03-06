@@ -827,9 +827,10 @@ void set_debug_mode (int debug);
    *  @param entity_id
    *  @param headline
    *  @param body
+   *  @param gen_id
    *  @return - the data from the api
   */
-  char * postEntityDescription( char *entity_id, char *headline, char *body);
+  char * postEntityDescription( char *entity_id, char *headline, char *body, char *gen_id);
 
  
   /**
@@ -1515,9 +1516,10 @@ void set_debug_mode (int debug);
    *  @param website_url
    *  @param display_url
    *  @param website_description
+   *  @param gen_id
    *  @return - the data from the api
   */
-  char * postEntityWebsite( char *entity_id, char *website_url, char *display_url, char *website_description);
+  char * postEntityWebsite( char *entity_id, char *website_url, char *display_url, char *website_description, char *gen_id);
 
  
   /**
