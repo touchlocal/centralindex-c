@@ -4366,6 +4366,7 @@ char * doCurl (char * method, char * path, char * params) {
    * Search for matching entities, ordered by nearness
    *
    *  @param what - What to get results for. E.g. Plumber e.g. plumber
+   *  @param country - The country to fetch results for e.g. gb
    *  @param per_page - Number of results returned per page
    *  @param page - Which page number to retrieve
    *  @param language - An ISO compatible language code, E.g. en
@@ -4373,7 +4374,7 @@ char * doCurl (char * method, char * path, char * params) {
    *  @param longitude - The decimal longitude of the centre point of the search
    *  @return - the data from the api
   */
-  char * getEntitySearchWhatBynearest( char *what, char *per_page, char *page, char *language, char *latitude, char *longitude) {
+  char * getEntitySearchWhatBynearest( char *what, char *country, char *per_page, char *page, char *language, char *latitude, char *longitude) {
     CURL *curl = curl_easy_init();
     char params[10000];
     char *p;
@@ -4382,6 +4383,11 @@ char * doCurl (char * method, char * path, char * params) {
     strcat(params,"?");
     strcat(params,"what=");
     p = curl_easy_escape(curl,what,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"country=");
+    p = curl_easy_escape(curl,country,0);
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");
@@ -4598,6 +4604,7 @@ char * doCurl (char * method, char * path, char * params) {
    * Search for entities matching the supplied 'who', ordered by nearness
    *
    *  @param who - What to get results for. E.g. Plumber e.g. plumber
+   *  @param country - The country to fetch results for e.g. gb
    *  @param per_page - Number of results returned per page
    *  @param page - Which page number to retrieve
    *  @param language - An ISO compatible language code, E.g. en
@@ -4605,7 +4612,7 @@ char * doCurl (char * method, char * path, char * params) {
    *  @param longitude - The decimal longitude of the centre point of the search
    *  @return - the data from the api
   */
-  char * getEntitySearchWhoBynearest( char *who, char *per_page, char *page, char *language, char *latitude, char *longitude) {
+  char * getEntitySearchWhoBynearest( char *who, char *country, char *per_page, char *page, char *language, char *latitude, char *longitude) {
     CURL *curl = curl_easy_init();
     char params[10000];
     char *p;
@@ -4614,6 +4621,11 @@ char * doCurl (char * method, char * path, char * params) {
     strcat(params,"?");
     strcat(params,"who=");
     p = curl_easy_escape(curl,who,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"country=");
+    p = curl_easy_escape(curl,country,0);
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");
