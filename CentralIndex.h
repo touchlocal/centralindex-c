@@ -2359,9 +2359,10 @@ void set_debug_mode (int debug);
    *  @param name
    *  @param description
    *  @param active
+   *  @param products
    *  @return - the data from the api
   */
-  char * postReseller( char *reseller_id, char *country, char *name, char *description, char *active);
+  char * postReseller( char *reseller_id, char *country, char *name, char *description, char *active, char *products);
 
  
   /**
@@ -2721,9 +2722,10 @@ void set_debug_mode (int debug);
    *  @param province
    *  @param postcode
    *  @param country
+   *  @param geocoder
    *  @return - the data from the api
   */
-  char * getToolsGeocode( char *building_number, char *address1, char *address2, char *address3, char *district, char *town, char *county, char *province, char *postcode, char *country);
+  char * getToolsGeocode( char *building_number, char *address1, char *address2, char *address3, char *district, char *town, char *county, char *province, char *postcode, char *country, char *geocoder);
 
  
   /**
