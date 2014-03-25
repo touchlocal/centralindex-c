@@ -8600,9 +8600,11 @@ char * doCurl (char * method, char * path, char * params) {
    * Get all syndication log entries for a given entity id
    *
    *  @param entity_id
+   *  @param page
+   *  @param per_page
    *  @return - the data from the api
   */
-  char * getSyndication_logBy_entity_id( char *entity_id) {
+  char * getSyndication_logBy_entity_id( char *entity_id, char *page, char *per_page) {
     CURL *curl = curl_easy_init();
     char params[10000];
     char *p;
@@ -8611,6 +8613,16 @@ char * doCurl (char * method, char * path, char * params) {
     strcat(params,"?");
     strcat(params,"entity_id=");
     p = curl_easy_escape(curl,entity_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"page=");
+    p = curl_easy_escape(curl,page,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"per_page=");
+    p = curl_easy_escape(curl,per_page,0);
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");

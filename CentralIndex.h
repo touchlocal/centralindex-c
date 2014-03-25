@@ -2567,9 +2567,11 @@ void set_debug_mode (int debug);
    * Get all syndication log entries for a given entity id
    *
    *  @param entity_id
+   *  @param page
+   *  @param per_page
    *  @return - the data from the api
   */
-  char * getSyndication_logBy_entity_id( char *entity_id);
+  char * getSyndication_logBy_entity_id( char *entity_id, char *page, char *per_page);
 
  
   /**
