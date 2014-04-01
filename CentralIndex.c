@@ -4807,6 +4807,34 @@ char * doCurl (char * method, char * path, char * params) {
 
 
   /**
+   * Allows a special offer object to be reduced in confidence
+   *
+   *  @param entity_id
+   *  @param gen_id
+   *  @return - the data from the api
+  */
+  char * deleteEntitySpecial_offer( char *entity_id, char *gen_id) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"entity_id=");
+    p = curl_easy_escape(curl,entity_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"gen_id=");
+    p = curl_easy_escape(curl,gen_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("DELETE","/entity/special_offer",params);
+  }
+
+
+  /**
    * With a known entity id, a website object can be added.
    *
    *  @param entity_id
@@ -4871,34 +4899,6 @@ char * doCurl (char * method, char * path, char * params) {
 
 
   /**
-   * Allows a special offer object to be reduced in confidence
-   *
-   *  @param entity_id
-   *  @param gen_id
-   *  @return - the data from the api
-  */
-  char * deleteEntitySpecial_offer( char *entity_id, char *gen_id) {
-    CURL *curl = curl_easy_init();
-    char params[10000];
-    char *p;
-    strcpy(params,"?api_key=");
-    strcat(params,API_KEY);
-    strcat(params,"?");
-    strcat(params,"entity_id=");
-    p = curl_easy_escape(curl,entity_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"gen_id=");
-    p = curl_easy_escape(curl,gen_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    return doCurl("DELETE","/entity/special_offer",params);
-  }
-
-
-  /**
    * With a known entity id, a status object can be updated.
    *
    *  @param entity_id
@@ -4939,6 +4939,34 @@ char * doCurl (char * method, char * path, char * params) {
 
 
   /**
+   * Allows a tag object to be reduced in confidence
+   *
+   *  @param entity_id
+   *  @param gen_id
+   *  @return - the data from the api
+  */
+  char * deleteEntityTag( char *entity_id, char *gen_id) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"entity_id=");
+    p = curl_easy_escape(curl,entity_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"gen_id=");
+    p = curl_easy_escape(curl,gen_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("DELETE","/entity/tag",params);
+  }
+
+
+  /**
    * With a known entity id, an tag object can be added.
    *
    *  @param entity_id
@@ -4969,34 +4997,6 @@ char * doCurl (char * method, char * path, char * params) {
     curl_free(p);
     strcat(params,"&");
     return doCurl("POST","/entity/tag",params);
-  }
-
-
-  /**
-   * Allows a tag object to be reduced in confidence
-   *
-   *  @param entity_id
-   *  @param gen_id
-   *  @return - the data from the api
-  */
-  char * deleteEntityTag( char *entity_id, char *gen_id) {
-    CURL *curl = curl_easy_init();
-    char params[10000];
-    char *p;
-    strcpy(params,"?api_key=");
-    strcat(params,API_KEY);
-    strcat(params,"?");
-    strcat(params,"entity_id=");
-    p = curl_easy_escape(curl,entity_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"gen_id=");
-    p = curl_easy_escape(curl,gen_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    return doCurl("DELETE","/entity/tag",params);
   }
 
 
@@ -5205,34 +5205,6 @@ char * doCurl (char * method, char * path, char * params) {
 
 
   /**
-   * Allows a website object to be reduced in confidence
-   *
-   *  @param entity_id
-   *  @param gen_id
-   *  @return - the data from the api
-  */
-  char * deleteEntityWebsite( char *entity_id, char *gen_id) {
-    CURL *curl = curl_easy_init();
-    char params[10000];
-    char *p;
-    strcpy(params,"?api_key=");
-    strcat(params,API_KEY);
-    strcat(params,"?");
-    strcat(params,"entity_id=");
-    p = curl_easy_escape(curl,entity_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"gen_id=");
-    p = curl_easy_escape(curl,gen_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    return doCurl("DELETE","/entity/website",params);
-  }
-
-
-  /**
    * With a known entity id, a website object can be added.
    *
    *  @param entity_id
@@ -5279,6 +5251,34 @@ char * doCurl (char * method, char * path, char * params) {
 
 
   /**
+   * Allows a website object to be reduced in confidence
+   *
+   *  @param entity_id
+   *  @param gen_id
+   *  @return - the data from the api
+  */
+  char * deleteEntityWebsite( char *entity_id, char *gen_id) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"entity_id=");
+    p = curl_easy_escape(curl,entity_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"gen_id=");
+    p = curl_easy_escape(curl,gen_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("DELETE","/entity/website",params);
+  }
+
+
+  /**
    * Add an entityserve document
    *
    *  @param entity_id - The id of the entity to create the entityserve event for
@@ -5309,6 +5309,28 @@ char * doCurl (char * method, char * path, char * params) {
     curl_free(p);
     strcat(params,"&");
     return doCurl("PUT","/entityserve",params);
+  }
+
+
+  /**
+   * Remove a flatpack using a supplied flatpack_id
+   *
+   *  @param flatpack_id - the id of the flatpack to delete
+   *  @return - the data from the api
+  */
+  char * deleteFlatpack( char *flatpack_id) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"flatpack_id=");
+    p = curl_easy_escape(curl,flatpack_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("DELETE","/flatpack",params);
   }
 
 
@@ -5665,28 +5687,6 @@ char * doCurl (char * method, char * path, char * params) {
 
 
   /**
-   * Remove a flatpack using a supplied flatpack_id
-   *
-   *  @param flatpack_id - the id of the flatpack to delete
-   *  @return - the data from the api
-  */
-  char * deleteFlatpack( char *flatpack_id) {
-    CURL *curl = curl_easy_init();
-    char params[10000];
-    char *p;
-    strcpy(params,"?api_key=");
-    strcat(params,API_KEY);
-    strcat(params,"?");
-    strcat(params,"flatpack_id=");
-    p = curl_easy_escape(curl,flatpack_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    return doCurl("DELETE","/flatpack",params);
-  }
-
-
-  /**
    * Get a flatpack
    *
    *  @param flatpack_id - the unique id to search for
@@ -5887,6 +5887,34 @@ char * doCurl (char * method, char * path, char * params) {
 
 
   /**
+   * Remove a canned link to an existing flatpack site.
+   *
+   *  @param flatpack_id - the id of the flatpack to delete
+   *  @param gen_id - the id of the canned link to remove
+   *  @return - the data from the api
+  */
+  char * deleteFlatpackLink( char *flatpack_id, char *gen_id) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"flatpack_id=");
+    p = curl_easy_escape(curl,flatpack_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"gen_id=");
+    p = curl_easy_escape(curl,gen_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("DELETE","/flatpack/link",params);
+  }
+
+
+  /**
    * Add a canned link to an existing flatpack site.
    *
    *  @param flatpack_id - the id of the flatpack to delete
@@ -5923,34 +5951,6 @@ char * doCurl (char * method, char * path, char * params) {
     curl_free(p);
     strcat(params,"&");
     return doCurl("POST","/flatpack/link",params);
-  }
-
-
-  /**
-   * Remove a canned link to an existing flatpack site.
-   *
-   *  @param flatpack_id - the id of the flatpack to delete
-   *  @param gen_id - the id of the canned link to remove
-   *  @return - the data from the api
-  */
-  char * deleteFlatpackLink( char *flatpack_id, char *gen_id) {
-    CURL *curl = curl_easy_init();
-    char params[10000];
-    char *p;
-    strcpy(params,"?api_key=");
-    strcat(params,API_KEY);
-    strcat(params,"?");
-    strcat(params,"flatpack_id=");
-    p = curl_easy_escape(curl,flatpack_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"gen_id=");
-    p = curl_easy_escape(curl,gen_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    return doCurl("DELETE","/flatpack/link",params);
   }
 
 
@@ -6033,6 +6033,28 @@ char * doCurl (char * method, char * path, char * params) {
 
 
   /**
+   * Delete a group with a specified group_id
+   *
+   *  @param group_id
+   *  @return - the data from the api
+  */
+  char * deleteGroup( char *group_id) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"group_id=");
+    p = curl_easy_escape(curl,group_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("DELETE","/group",params);
+  }
+
+
+  /**
    * Update/Add a Group
    *
    *  @param group_id
@@ -6069,28 +6091,6 @@ char * doCurl (char * method, char * path, char * params) {
     curl_free(p);
     strcat(params,"&");
     return doCurl("POST","/group",params);
-  }
-
-
-  /**
-   * Delete a group with a specified group_id
-   *
-   *  @param group_id
-   *  @return - the data from the api
-  */
-  char * deleteGroup( char *group_id) {
-    CURL *curl = curl_easy_init();
-    char params[10000];
-    char *p;
-    strcpy(params,"?api_key=");
-    strcat(params,API_KEY);
-    strcat(params,"?");
-    strcat(params,"group_id=");
-    p = curl_easy_escape(curl,group_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    return doCurl("DELETE","/group",params);
   }
 
 
@@ -8389,6 +8389,50 @@ char * doCurl (char * method, char * path, char * params) {
 
 
   /**
+   * get a Syndication by entity_id
+   *
+   *  @param entity_id
+   *  @return - the data from the api
+  */
+  char * getSyndicationBy_entity_id( char *entity_id) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"entity_id=");
+    p = curl_easy_escape(curl,entity_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("GET","/syndication/by_entity_id",params);
+  }
+
+
+  /**
+   * Cancel a syndication
+   *
+   *  @param syndication_id
+   *  @return - the data from the api
+  */
+  char * postSyndicationCancel( char *syndication_id) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"syndication_id=");
+    p = curl_easy_escape(curl,syndication_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("POST","/syndication/cancel",params);
+  }
+
+
+  /**
    * Add a Syndicate
    *
    *  @param syndication_type
@@ -10171,6 +10215,28 @@ char * doCurl (char * method, char * path, char * params) {
 
 
   /**
+   * Deleting a traction
+   *
+   *  @param traction_id
+   *  @return - the data from the api
+  */
+  char * deleteTraction( char *traction_id) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"traction_id=");
+    p = curl_easy_escape(curl,traction_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("DELETE","/traction",params);
+  }
+
+
+  /**
    * Fetching a traction
    *
    *  @param traction_id
@@ -10293,28 +10359,6 @@ char * doCurl (char * method, char * path, char * params) {
 
 
   /**
-   * Deleting a traction
-   *
-   *  @param traction_id
-   *  @return - the data from the api
-  */
-  char * deleteTraction( char *traction_id) {
-    CURL *curl = curl_easy_init();
-    char params[10000];
-    char *p;
-    strcpy(params,"?api_key=");
-    strcat(params,API_KEY);
-    strcat(params,"?");
-    strcat(params,"traction_id=");
-    p = curl_easy_escape(curl,traction_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    return doCurl("DELETE","/traction",params);
-  }
-
-
-  /**
    * Fetching active tractions
    *
    *  @return - the data from the api
@@ -10327,6 +10371,28 @@ char * doCurl (char * method, char * path, char * params) {
     strcat(params,API_KEY);
     strcat(params,"?");
     return doCurl("GET","/traction/active",params);
+  }
+
+
+  /**
+   * Given a transaction_id retrieve information on it
+   *
+   *  @param transaction_id
+   *  @return - the data from the api
+  */
+  char * getTransaction( char *transaction_id) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"transaction_id=");
+    p = curl_easy_escape(curl,transaction_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("GET","/transaction",params);
   }
 
 
@@ -10379,28 +10445,6 @@ char * doCurl (char * method, char * path, char * params) {
     curl_free(p);
     strcat(params,"&");
     return doCurl("PUT","/transaction",params);
-  }
-
-
-  /**
-   * Given a transaction_id retrieve information on it
-   *
-   *  @param transaction_id
-   *  @return - the data from the api
-  */
-  char * getTransaction( char *transaction_id) {
-    CURL *curl = curl_easy_init();
-    char params[10000];
-    char *p;
-    strcpy(params,"?api_key=");
-    strcat(params,API_KEY);
-    strcat(params,"?");
-    strcat(params,"transaction_id=");
-    p = curl_easy_escape(curl,transaction_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    return doCurl("GET","/transaction",params);
   }
 
 
@@ -10545,28 +10589,6 @@ char * doCurl (char * method, char * path, char * params) {
 
 
   /**
-   * With a unique ID address an user can be retrieved
-   *
-   *  @param user_id
-   *  @return - the data from the api
-  */
-  char * getUser( char *user_id) {
-    CURL *curl = curl_easy_init();
-    char params[10000];
-    char *p;
-    strcpy(params,"?api_key=");
-    strcat(params,API_KEY);
-    strcat(params,"?");
-    strcat(params,"user_id=");
-    p = curl_easy_escape(curl,user_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    return doCurl("GET","/user",params);
-  }
-
-
-  /**
    * Update user based on email address or social_network/social_network_id
    *
    *  @param email
@@ -10657,6 +10679,28 @@ char * doCurl (char * method, char * path, char * params) {
     curl_free(p);
     strcat(params,"&");
     return doCurl("POST","/user",params);
+  }
+
+
+  /**
+   * With a unique ID address an user can be retrieved
+   *
+   *  @param user_id
+   *  @return - the data from the api
+  */
+  char * getUser( char *user_id) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"user_id=");
+    p = curl_easy_escape(curl,user_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("GET","/user",params);
   }
 
 

@@ -1399,6 +1399,16 @@ void set_debug_mode (int debug);
 
  
   /**
+   * Allows a special offer object to be reduced in confidence
+   *
+   *  @param entity_id
+   *  @param gen_id
+   *  @return - the data from the api
+  */
+  char * deleteEntitySpecial_offer( char *entity_id, char *gen_id);
+
+ 
+  /**
    * With a known entity id, a website object can be added.
    *
    *  @param entity_id
@@ -1415,16 +1425,6 @@ void set_debug_mode (int debug);
 
  
   /**
-   * Allows a special offer object to be reduced in confidence
-   *
-   *  @param entity_id
-   *  @param gen_id
-   *  @return - the data from the api
-  */
-  char * deleteEntitySpecial_offer( char *entity_id, char *gen_id);
-
- 
-  /**
    * With a known entity id, a status object can be updated.
    *
    *  @param entity_id
@@ -1437,6 +1437,16 @@ void set_debug_mode (int debug);
 
  
   /**
+   * Allows a tag object to be reduced in confidence
+   *
+   *  @param entity_id
+   *  @param gen_id
+   *  @return - the data from the api
+  */
+  char * deleteEntityTag( char *entity_id, char *gen_id);
+
+ 
+  /**
    * With a known entity id, an tag object can be added.
    *
    *  @param entity_id
@@ -1445,16 +1455,6 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * postEntityTag( char *entity_id, char *tag, char *language);
-
- 
-  /**
-   * Allows a tag object to be reduced in confidence
-   *
-   *  @param entity_id
-   *  @param gen_id
-   *  @return - the data from the api
-  */
-  char * deleteEntityTag( char *entity_id, char *gen_id);
 
  
   /**
@@ -1524,16 +1524,6 @@ void set_debug_mode (int debug);
 
  
   /**
-   * Allows a website object to be reduced in confidence
-   *
-   *  @param entity_id
-   *  @param gen_id
-   *  @return - the data from the api
-  */
-  char * deleteEntityWebsite( char *entity_id, char *gen_id);
-
- 
-  /**
    * With a known entity id, a website object can be added.
    *
    *  @param entity_id
@@ -1547,6 +1537,16 @@ void set_debug_mode (int debug);
 
  
   /**
+   * Allows a website object to be reduced in confidence
+   *
+   *  @param entity_id
+   *  @param gen_id
+   *  @return - the data from the api
+  */
+  char * deleteEntityWebsite( char *entity_id, char *gen_id);
+
+ 
+  /**
    * Add an entityserve document
    *
    *  @param entity_id - The id of the entity to create the entityserve event for
@@ -1555,6 +1555,15 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * putEntityserve( char *entity_id, char *country, char *event_type);
+
+ 
+  /**
+   * Remove a flatpack using a supplied flatpack_id
+   *
+   *  @param flatpack_id - the id of the flatpack to delete
+   *  @return - the data from the api
+  */
+  char * deleteFlatpack( char *flatpack_id);
 
  
   /**
@@ -1619,15 +1628,6 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * postFlatpack( char *flatpack_id, char *domainName, char *stub, char *flatpackName, char *less, char *language, char *country, char *mapsType, char *mapKey, char *searchFormShowOn, char *searchFormShowKeywordsBox, char *searchFormShowLocationBox, char *searchFormKeywordsAutoComplete, char *searchFormLocationsAutoComplete, char *searchFormDefaultLocation, char *searchFormPlaceholderKeywords, char *searchFormPlaceholderLocation, char *searchFormKeywordsLabel, char *searchFormLocationLabel, char *cannedLinksHeader, char *homepageTitle, char *homepageDescription, char *homepageIntroTitle, char *homepageIntroText, char *head, char *adblock, char *bodyTop, char *bodyBottom, char *header_menu, char *header_menu_bottom, char *footer_menu, char *bdpTitle, char *bdpDescription, char *bdpAds, char *serpTitle, char *serpDescription, char *serpNumberResults, char *serpNumberAdverts, char *serpAds, char *serpTitleNoWhat, char *serpDescriptionNoWhat, char *cookiePolicyUrl, char *cookiePolicyNotice, char *addBusinessButtonText, char *twitterUrl, char *facebookUrl, char *copyright, char *phoneReveal, char *loginLinkText, char *contextLocationId, char *addBusinessButtonPosition, char *denyIndexing, char *contextRadius, char *activityStream, char *activityStreamSize, char *products);
-
- 
-  /**
-   * Remove a flatpack using a supplied flatpack_id
-   *
-   *  @param flatpack_id - the id of the flatpack to delete
-   *  @return - the data from the api
-  */
-  char * deleteFlatpack( char *flatpack_id);
 
  
   /**
@@ -1707,6 +1707,16 @@ void set_debug_mode (int debug);
 
  
   /**
+   * Remove a canned link to an existing flatpack site.
+   *
+   *  @param flatpack_id - the id of the flatpack to delete
+   *  @param gen_id - the id of the canned link to remove
+   *  @return - the data from the api
+  */
+  char * deleteFlatpackLink( char *flatpack_id, char *gen_id);
+
+ 
+  /**
    * Add a canned link to an existing flatpack site.
    *
    *  @param flatpack_id - the id of the flatpack to delete
@@ -1716,16 +1726,6 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * postFlatpackLink( char *flatpack_id, char *keywords, char *location, char *linkText);
-
- 
-  /**
-   * Remove a canned link to an existing flatpack site.
-   *
-   *  @param flatpack_id - the id of the flatpack to delete
-   *  @param gen_id - the id of the canned link to remove
-   *  @return - the data from the api
-  */
-  char * deleteFlatpackLink( char *flatpack_id, char *gen_id);
 
  
   /**
@@ -1758,6 +1758,15 @@ void set_debug_mode (int debug);
 
  
   /**
+   * Delete a group with a specified group_id
+   *
+   *  @param group_id
+   *  @return - the data from the api
+  */
+  char * deleteGroup( char *group_id);
+
+ 
+  /**
    * Update/Add a Group
    *
    *  @param group_id
@@ -1767,15 +1776,6 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * postGroup( char *group_id, char *name, char *description, char *url);
-
- 
-  /**
-   * Delete a group with a specified group_id
-   *
-   *  @param group_id
-   *  @return - the data from the api
-  */
-  char * deleteGroup( char *group_id);
 
  
   /**
@@ -2508,6 +2508,24 @@ void set_debug_mode (int debug);
 
  
   /**
+   * get a Syndication by entity_id
+   *
+   *  @param entity_id
+   *  @return - the data from the api
+  */
+  char * getSyndicationBy_entity_id( char *entity_id);
+
+ 
+  /**
+   * Cancel a syndication
+   *
+   *  @param syndication_id
+   *  @return - the data from the api
+  */
+  char * postSyndicationCancel( char *syndication_id);
+
+ 
+  /**
    * Add a Syndicate
    *
    *  @param syndication_type
@@ -3077,6 +3095,15 @@ void set_debug_mode (int debug);
 
  
   /**
+   * Deleting a traction
+   *
+   *  @param traction_id
+   *  @return - the data from the api
+  */
+  char * deleteTraction( char *traction_id);
+
+ 
+  /**
    * Fetching a traction
    *
    *  @param traction_id
@@ -3108,20 +3135,20 @@ void set_debug_mode (int debug);
 
  
   /**
-   * Deleting a traction
-   *
-   *  @param traction_id
-   *  @return - the data from the api
-  */
-  char * deleteTraction( char *traction_id);
-
- 
-  /**
    * Fetching active tractions
    *
    *  @return - the data from the api
   */
   char * getTractionActive();
+
+ 
+  /**
+   * Given a transaction_id retrieve information on it
+   *
+   *  @param transaction_id
+   *  @return - the data from the api
+  */
+  char * getTransaction( char *transaction_id);
 
  
   /**
@@ -3136,15 +3163,6 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * putTransaction( char *entity_id, char *user_id, char *basket_total, char *basket, char *currency, char *notes);
-
- 
-  /**
-   * Given a transaction_id retrieve information on it
-   *
-   *  @param transaction_id
-   *  @return - the data from the api
-  */
-  char * getTransaction( char *transaction_id);
 
  
   /**
@@ -3198,15 +3216,6 @@ void set_debug_mode (int debug);
 
  
   /**
-   * With a unique ID address an user can be retrieved
-   *
-   *  @param user_id
-   *  @return - the data from the api
-  */
-  char * getUser( char *user_id);
-
- 
-  /**
    * Update user based on email address or social_network/social_network_id
    *
    *  @param email
@@ -3225,6 +3234,15 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * postUser( char *email, char *user_id, char *first_name, char *last_name, char *active, char *trust, char *creation_date, char *user_type, char *social_network, char *social_network_id, char *reseller_admin_masheryid, char *group_id, char *admin_upgrader);
+
+ 
+  /**
+   * With a unique ID address an user can be retrieved
+   *
+   *  @param user_id
+   *  @return - the data from the api
+  */
+  char * getUser( char *user_id);
 
  
   /**
