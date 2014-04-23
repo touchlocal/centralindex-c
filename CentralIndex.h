@@ -439,15 +439,6 @@ void set_debug_mode (int debug);
 
  
   /**
-   * Fetching a country
-   *
-   *  @param country_id
-   *  @return - the data from the api
-  */
-  char * getCountry( char *country_id);
-
- 
-  /**
    * Update/Add a country
    *
    *  @param country_id
@@ -486,6 +477,15 @@ void set_debug_mode (int debug);
 
  
   /**
+   * Fetching a country
+   *
+   *  @param country_id
+   *  @return - the data from the api
+  */
+  char * getCountry( char *country_id);
+
+ 
+  /**
    * For a given country add/update a background image to show in the add/edit path
    *
    *  @param country_id
@@ -521,15 +521,6 @@ void set_debug_mode (int debug);
 
  
   /**
-   * Allows a whole entity to be pulled from the datastore by its unique id
-   *
-   *  @param entity_id - The unique entity ID e.g. 379236608286720
-   *  @return - the data from the api
-  */
-  char * getEntity( char *entity_id);
-
- 
-  /**
    * This entity isn't really supported anymore. You probably want PUT /business. Only to be used for testing.
    *
    *  @param type
@@ -540,6 +531,15 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * putEntity( char *type, char *scope, char *country, char *trust, char *our_data);
+
+ 
+  /**
+   * Allows a whole entity to be pulled from the datastore by its unique id
+   *
+   *  @param entity_id - The unique entity ID e.g. 379236608286720
+   *  @return - the data from the api
+  */
+  char * getEntity( char *entity_id);
 
  
   /**
@@ -846,6 +846,17 @@ void set_debug_mode (int debug);
 
  
   /**
+   * With a known entity id, an document object can be added.
+   *
+   *  @param entity_id
+   *  @param name
+   *  @param filedata
+   *  @return - the data from the api
+  */
+  char * postEntityDocument( char *entity_id, char *name, char *filedata);
+
+ 
+  /**
    * Allows a phone object to be reduced in confidence
    *
    *  @param entity_id
@@ -856,14 +867,14 @@ void set_debug_mode (int debug);
 
  
   /**
-   * With a known entity id, an document object can be added.
+   * With a known entity id, an email address object can be added.
    *
    *  @param entity_id
-   *  @param name
-   *  @param filedata
+   *  @param email_address
+   *  @param email_description
    *  @return - the data from the api
   */
-  char * postEntityDocument( char *entity_id, char *name, char *filedata);
+  char * postEntityEmail( char *entity_id, char *email_address, char *email_description);
 
  
   /**
@@ -877,14 +888,13 @@ void set_debug_mode (int debug);
 
  
   /**
-   * With a known entity id, an email address object can be added.
+   * Allows an employee object to be reduced in confidence
    *
    *  @param entity_id
-   *  @param email_address
-   *  @param email_description
+   *  @param gen_id
    *  @return - the data from the api
   */
-  char * postEntityEmail( char *entity_id, char *email_address, char *email_description);
+  char * deleteEntityEmployee( char *entity_id, char *gen_id);
 
  
   /**
@@ -901,16 +911,6 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * postEntityEmployee( char *entity_id, char *title, char *forename, char *surname, char *job_title, char *description, char *email, char *phone_number);
-
- 
-  /**
-   * Allows an employee object to be reduced in confidence
-   *
-   *  @param entity_id
-   *  @param gen_id
-   *  @return - the data from the api
-  */
-  char * deleteEntityEmployee( char *entity_id, char *gen_id);
 
  
   /**
@@ -999,15 +999,6 @@ void set_debug_mode (int debug);
 
  
   /**
-   * With a known entity id and a known invoice_address ID, we can delete a specific invoice_address object from an enitity.
-   *
-   *  @param entity_id
-   *  @return - the data from the api
-  */
-  char * deleteEntityInvoice_address( char *entity_id);
-
- 
-  /**
    * With a known entity id, an invoice_address object can be updated.
    *
    *  @param entity_id
@@ -1024,6 +1015,15 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * postEntityInvoice_address( char *entity_id, char *building_number, char *address1, char *address2, char *address3, char *district, char *town, char *county, char *province, char *postcode, char *address_type);
+
+ 
+  /**
+   * With a known entity id and a known invoice_address ID, we can delete a specific invoice_address object from an enitity.
+   *
+   *  @param entity_id
+   *  @return - the data from the api
+  */
+  char * deleteEntityInvoice_address( char *entity_id);
 
  
   /**
@@ -1462,6 +1462,16 @@ void set_debug_mode (int debug);
 
  
   /**
+   * Allows a special offer object to be reduced in confidence
+   *
+   *  @param entity_id
+   *  @param gen_id
+   *  @return - the data from the api
+  */
+  char * deleteEntitySpecial_offer( char *entity_id, char *gen_id);
+
+ 
+  /**
    * With a known entity id, a website object can be added.
    *
    *  @param entity_id
@@ -1475,16 +1485,6 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * postEntitySpecial_offer( char *entity_id, char *title, char *description, char *terms, char *start_date, char *expiry_date, char *url, char *image_url);
-
- 
-  /**
-   * Allows a special offer object to be reduced in confidence
-   *
-   *  @param entity_id
-   *  @param gen_id
-   *  @return - the data from the api
-  */
-  char * deleteEntitySpecial_offer( char *entity_id, char *gen_id);
 
  
   /**
@@ -1621,15 +1621,6 @@ void set_debug_mode (int debug);
 
  
   /**
-   * Remove a flatpack using a supplied flatpack_id
-   *
-   *  @param flatpack_id - the id of the flatpack to delete
-   *  @return - the data from the api
-  */
-  char * deleteFlatpack( char *flatpack_id);
-
- 
-  /**
    * Update/Add a flatpack
    *
    *  @param flatpack_id - this record's unique, auto-generated id - if supplied, then this is an edit, otherwise it's an add
@@ -1691,6 +1682,15 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * postFlatpack( char *flatpack_id, char *domainName, char *stub, char *flatpackName, char *less, char *language, char *country, char *mapsType, char *mapKey, char *searchFormShowOn, char *searchFormShowKeywordsBox, char *searchFormShowLocationBox, char *searchFormKeywordsAutoComplete, char *searchFormLocationsAutoComplete, char *searchFormDefaultLocation, char *searchFormPlaceholderKeywords, char *searchFormPlaceholderLocation, char *searchFormKeywordsLabel, char *searchFormLocationLabel, char *cannedLinksHeader, char *homepageTitle, char *homepageDescription, char *homepageIntroTitle, char *homepageIntroText, char *head, char *adblock, char *bodyTop, char *bodyBottom, char *header_menu, char *header_menu_bottom, char *footer_menu, char *bdpTitle, char *bdpDescription, char *bdpAds, char *serpTitle, char *serpDescription, char *serpNumberResults, char *serpNumberAdverts, char *serpAds, char *serpTitleNoWhat, char *serpDescriptionNoWhat, char *cookiePolicyUrl, char *cookiePolicyNotice, char *addBusinessButtonText, char *twitterUrl, char *facebookUrl, char *copyright, char *phoneReveal, char *loginLinkText, char *contextLocationId, char *addBusinessButtonPosition, char *denyIndexing, char *contextRadius, char *activityStream, char *activityStreamSize, char *products);
+
+ 
+  /**
+   * Remove a flatpack using a supplied flatpack_id
+   *
+   *  @param flatpack_id - the id of the flatpack to delete
+   *  @return - the data from the api
+  */
+  char * deleteFlatpack( char *flatpack_id);
 
  
   /**
@@ -1830,6 +1830,15 @@ void set_debug_mode (int debug);
 
  
   /**
+   * Delete a group with a specified group_id
+   *
+   *  @param group_id
+   *  @return - the data from the api
+  */
+  char * deleteGroup( char *group_id);
+
+ 
+  /**
    * Update/Add a Group
    *
    *  @param group_id
@@ -1841,15 +1850,6 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * postGroup( char *group_id, char *name, char *description, char *url, char *stamp_user_id, char *stamp_sql);
-
- 
-  /**
-   * Delete a group with a specified group_id
-   *
-   *  @param group_id
-   *  @return - the data from the api
-  */
-  char * deleteGroup( char *group_id);
 
  
   /**
@@ -1923,15 +1923,6 @@ void set_debug_mode (int debug);
 
  
   /**
-   * Get an ingest job from the collection
-   *
-   *  @param job_id
-   *  @return - the data from the api
-  */
-  char * getIngest_job( char *job_id);
-
- 
-  /**
    * Add a ingest job to the collection
    *
    *  @param description
@@ -1939,6 +1930,15 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * postIngest_job( char *description, char *category_type);
+
+ 
+  /**
+   * Get an ingest job from the collection
+   *
+   *  @param job_id
+   *  @return - the data from the api
+  */
+  char * getIngest_job( char *job_id);
 
  
   /**
@@ -2332,6 +2332,15 @@ void set_debug_mode (int debug);
 
  
   /**
+   * Returns publisher that matches a given publisher id
+   *
+   *  @param publisher_id
+   *  @return - the data from the api
+  */
+  char * getPublisher( char *publisher_id);
+
+ 
+  /**
    * Update/Add a publisher
    *
    *  @param publisher_id
@@ -2356,15 +2365,6 @@ void set_debug_mode (int debug);
   /**
    * Returns publisher that matches a given publisher id
    *
-   *  @param publisher_id
-   *  @return - the data from the api
-  */
-  char * getPublisher( char *publisher_id);
-
- 
-  /**
-   * Returns publisher that matches a given publisher id
-   *
    *  @param country
    *  @return - the data from the api
   */
@@ -2378,6 +2378,16 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * getPublisherByEntityId( char *entity_id);
+
+ 
+  /**
+   * Create a queue item
+   *
+   *  @param queue_name
+   *  @param data
+   *  @return - the data from the api
+  */
+  char * putQueue( char *queue_name, char *data);
 
  
   /**
@@ -2397,16 +2407,6 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * getQueue( char *limit, char *queue_name);
-
- 
-  /**
-   * Create a queue item
-   *
-   *  @param queue_name
-   *  @param data
-   *  @return - the data from the api
-  */
-  char * putQueue( char *queue_name, char *data);
 
  
   /**
@@ -2440,6 +2440,15 @@ void set_debug_mode (int debug);
 
  
   /**
+   * Returns reseller that matches a given reseller id
+   *
+   *  @param reseller_id
+   *  @return - the data from the api
+  */
+  char * getReseller( char *reseller_id);
+
+ 
+  /**
    * Update/Add a reseller
    *
    *  @param reseller_id
@@ -2451,15 +2460,6 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * postReseller( char *reseller_id, char *country, char *name, char *description, char *active, char *products);
-
- 
-  /**
-   * Returns reseller that matches a given reseller id
-   *
-   *  @param reseller_id
-   *  @return - the data from the api
-  */
-  char * getReseller( char *reseller_id);
 
  
   /**
@@ -3250,24 +3250,6 @@ void set_debug_mode (int debug);
 
  
   /**
-   * Deleting a traction
-   *
-   *  @param traction_id
-   *  @return - the data from the api
-  */
-  char * deleteTraction( char *traction_id);
-
- 
-  /**
-   * Fetching a traction
-   *
-   *  @param traction_id
-   *  @return - the data from the api
-  */
-  char * getTraction( char *traction_id);
-
- 
-  /**
    * Update/Add a traction
    *
    *  @param traction_id
@@ -3290,11 +3272,38 @@ void set_debug_mode (int debug);
 
  
   /**
+   * Deleting a traction
+   *
+   *  @param traction_id
+   *  @return - the data from the api
+  */
+  char * deleteTraction( char *traction_id);
+
+ 
+  /**
+   * Fetching a traction
+   *
+   *  @param traction_id
+   *  @return - the data from the api
+  */
+  char * getTraction( char *traction_id);
+
+ 
+  /**
    * Fetching active tractions
    *
    *  @return - the data from the api
   */
   char * getTractionActive();
+
+ 
+  /**
+   * Given a transaction_id retrieve information on it
+   *
+   *  @param transaction_id
+   *  @return - the data from the api
+  */
+  char * getTransaction( char *transaction_id);
 
  
   /**
@@ -3309,15 +3318,6 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * putTransaction( char *entity_id, char *user_id, char *basket_total, char *basket, char *currency, char *notes);
-
- 
-  /**
-   * Given a transaction_id retrieve information on it
-   *
-   *  @param transaction_id
-   *  @return - the data from the api
-  */
-  char * getTransaction( char *transaction_id);
 
  
   /**
@@ -3371,15 +3371,6 @@ void set_debug_mode (int debug);
 
  
   /**
-   * With a unique ID address an user can be retrieved
-   *
-   *  @param user_id
-   *  @return - the data from the api
-  */
-  char * getUser( char *user_id);
-
- 
-  /**
    * Update user based on email address or social_network/social_network_id
    *
    *  @param email
@@ -3398,6 +3389,25 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * postUser( char *email, char *user_id, char *first_name, char *last_name, char *active, char *trust, char *creation_date, char *user_type, char *social_network, char *social_network_id, char *reseller_admin_masheryid, char *group_id, char *admin_upgrader);
+
+ 
+  /**
+   * With a unique ID address an user can be retrieved
+   *
+   *  @param user_id
+   *  @return - the data from the api
+  */
+  char * getUser( char *user_id);
+
+ 
+  /**
+   * Is this user allowed to edit this entity
+   *
+   *  @param entity_id
+   *  @param user_id
+   *  @return - the data from the api
+  */
+  char * getUserAllowed_to_edit( char *entity_id, char *user_id);
 
  
   /**
