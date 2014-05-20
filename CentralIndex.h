@@ -1845,12 +1845,17 @@ void set_debug_mode (int debug);
 
  
   /**
-   * Returns group that matches a given group id
+   * Update/Add a Group
    *
    *  @param group_id
+   *  @param name
+   *  @param description
+   *  @param url
+   *  @param stamp_user_id
+   *  @param stamp_sql
    *  @return - the data from the api
   */
-  char * getGroup( char *group_id);
+  char * postGroup( char *group_id, char *name, char *description, char *url, char *stamp_user_id, char *stamp_sql);
 
  
   /**
@@ -1863,17 +1868,12 @@ void set_debug_mode (int debug);
 
  
   /**
-   * Update/Add a Group
+   * Returns group that matches a given group id
    *
    *  @param group_id
-   *  @param name
-   *  @param description
-   *  @param url
-   *  @param stamp_user_id
-   *  @param stamp_sql
    *  @return - the data from the api
   */
-  char * postGroup( char *group_id, char *name, char *description, char *url, char *stamp_user_id, char *stamp_sql);
+  char * getGroup( char *group_id);
 
  
   /**
@@ -1988,15 +1988,6 @@ void set_debug_mode (int debug);
 
  
   /**
-   * Read a location with the supplied ID in the locations reference database.
-   *
-   *  @param location_id
-   *  @return - the data from the api
-  */
-  char * getLocation( char *location_id);
-
- 
-  /**
    * Create/update a new locz document with the supplied ID in the locations reference database.
    *
    *  @param location_id
@@ -2026,6 +2017,15 @@ void set_debug_mode (int debug);
 
  
   /**
+   * Read a location with the supplied ID in the locations reference database.
+   *
+   *  @param location_id
+   *  @return - the data from the api
+  */
+  char * getLocation( char *location_id);
+
+ 
+  /**
    * Given a location_id or a lat/lon, find other locations within the radius
    *
    *  @param location_id
@@ -2052,21 +2052,21 @@ void set_debug_mode (int debug);
    * Fetch the project logo, the symbol of the Wolf
    *
    *  @param a
-   *  @param b
-   *  @param c
-   *  @param d
    *  @return - the data from the api
   */
-  char * getLogo( char *a, char *b, char *c, char *d);
+  char * putLogo( char *a);
 
  
   /**
    * Fetch the project logo, the symbol of the Wolf
    *
    *  @param a
+   *  @param b
+   *  @param c
+   *  @param d
    *  @return - the data from the api
   */
-  char * putLogo( char *a);
+  char * getLogo( char *a, char *b, char *c, char *d);
 
  
   /**
@@ -2211,9 +2211,17 @@ void set_debug_mode (int debug);
    *  @param menuTop - the JSON that describes a navigation at the top of the page
    *  @param menuBottom - the JSON that describes a navigation below the masthead
    *  @param language - An ISO compatible language code, E.g. en e.g. en
+   *  @param menuFooter - the JSON that describes a navigation at the bottom of the page
+   *  @param searchNumberResults - the number of search results per page
+   *  @param searchTitle - Title of serps page
+   *  @param searchDescription - Description of serps page
+   *  @param searchTitleNoWhere - Title when no where is specified
+   *  @param searchDescriptionNoWhere - Description of serps page when no where is specified
+   *  @param searchIntroHeader - Introductory header
+   *  @param searchIntroText - Introductory text
    *  @return - the data from the api
   */
-  char * postMultipack( char *multipack_id, char *group_id, char *domainName, char *multipackName, char *less, char *country, char *menuTop, char *menuBottom, char *language);
+  char * postMultipack( char *multipack_id, char *group_id, char *domainName, char *multipackName, char *less, char *country, char *menuTop, char *menuBottom, char *language, char *menuFooter, char *searchNumberResults, char *searchTitle, char *searchDescription, char *searchTitleNoWhere, char *searchDescriptionNoWhere, char *searchIntroHeader, char *searchIntroText);
 
  
   /**
@@ -2233,6 +2241,16 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * postMultipackLogo( char *multipack_id, char *filedata);
+
+ 
+  /**
+   * Add a map pin to a multipack domain
+   *
+   *  @param multipack_id - the unique id to search for
+   *  @param filedata
+   *  @return - the data from the api
+  */
+  char * postMultipackMap_pin( char *multipack_id, char *filedata);
 
  
   /**
@@ -2264,6 +2282,15 @@ void set_debug_mode (int debug);
 
  
   /**
+   * Returns the product information given a valid product_id
+   *
+   *  @param product_id
+   *  @return - the data from the api
+  */
+  char * getProduct( char *product_id);
+
+ 
+  /**
    * Update/Add a product
    *
    *  @param product_id - The ID of the product
@@ -2282,15 +2309,6 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * postProduct( char *product_id, char *name, char *strapline, char *price, char *tax_rate, char *currency, char *active, char *billing_period, char *title, char *intro_paragraph, char *bullets, char *outro_paragraph, char *thanks_paragraph);
-
- 
-  /**
-   * Returns the product information given a valid product_id
-   *
-   *  @param product_id
-   *  @return - the data from the api
-  */
-  char * getProduct( char *product_id);
 
  
   /**
@@ -2451,13 +2469,12 @@ void set_debug_mode (int debug);
 
  
   /**
-   * Create a queue item
+   * With a known queue id, a queue item can be removed.
    *
-   *  @param queue_name
-   *  @param data
+   *  @param queue_id
    *  @return - the data from the api
   */
-  char * putQueue( char *queue_name, char *data);
+  char * deleteQueue( char *queue_id);
 
  
   /**
@@ -2471,12 +2488,22 @@ void set_debug_mode (int debug);
 
  
   /**
-   * With a known queue id, a queue item can be removed.
+   * Create a queue item
+   *
+   *  @param queue_name
+   *  @param data
+   *  @return - the data from the api
+  */
+  char * putQueue( char *queue_name, char *data);
+
+ 
+  /**
+   * Find a queue item by its cloudant id
    *
    *  @param queue_id
    *  @return - the data from the api
   */
-  char * deleteQueue( char *queue_id);
+  char * getQueueBy_id( char *queue_id);
 
  
   /**
@@ -2739,15 +2766,6 @@ void set_debug_mode (int debug);
 
  
   /**
-   * Returns a Syndication Submission
-   *
-   *  @param syndication_submission_id
-   *  @return - the data from the api
-  */
-  char * getSyndication_submission( char *syndication_submission_id);
-
- 
-  /**
    * Creates a new Syndication Submission
    *
    *  @param syndication_type
@@ -2757,6 +2775,15 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * putSyndication_submission( char *syndication_type, char *entity_id, char *publisher_id, char *submission_id);
+
+ 
+  /**
+   * Returns a Syndication Submission
+   *
+   *  @param syndication_submission_id
+   *  @return - the data from the api
+  */
+  char * getSyndication_submission( char *syndication_submission_id);
 
  
   /**
@@ -3341,6 +3368,24 @@ void set_debug_mode (int debug);
 
  
   /**
+   * Fetching a traction
+   *
+   *  @param traction_id
+   *  @return - the data from the api
+  */
+  char * getTraction( char *traction_id);
+
+ 
+  /**
+   * Deleting a traction
+   *
+   *  @param traction_id
+   *  @return - the data from the api
+  */
+  char * deleteTraction( char *traction_id);
+
+ 
+  /**
    * Update/Add a traction
    *
    *  @param traction_id
@@ -3363,38 +3408,11 @@ void set_debug_mode (int debug);
 
  
   /**
-   * Fetching a traction
-   *
-   *  @param traction_id
-   *  @return - the data from the api
-  */
-  char * getTraction( char *traction_id);
-
- 
-  /**
-   * Deleting a traction
-   *
-   *  @param traction_id
-   *  @return - the data from the api
-  */
-  char * deleteTraction( char *traction_id);
-
- 
-  /**
    * Fetching active tractions
    *
    *  @return - the data from the api
   */
   char * getTractionActive();
-
- 
-  /**
-   * Given a transaction_id retrieve information on it
-   *
-   *  @param transaction_id
-   *  @return - the data from the api
-  */
-  char * getTransaction( char *transaction_id);
 
  
   /**
@@ -3409,6 +3427,15 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * putTransaction( char *entity_id, char *user_id, char *basket_total, char *basket, char *currency, char *notes);
+
+ 
+  /**
+   * Given a transaction_id retrieve information on it
+   *
+   *  @param transaction_id
+   *  @return - the data from the api
+  */
+  char * getTransaction( char *transaction_id);
 
  
   /**
@@ -3462,6 +3489,15 @@ void set_debug_mode (int debug);
 
  
   /**
+   * With a unique ID address an user can be retrieved
+   *
+   *  @param user_id
+   *  @return - the data from the api
+  */
+  char * getUser( char *user_id);
+
+ 
+  /**
    * Update user based on email address or social_network/social_network_id
    *
    *  @param email
@@ -3480,15 +3516,6 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * postUser( char *email, char *user_id, char *first_name, char *last_name, char *active, char *trust, char *creation_date, char *user_type, char *social_network, char *social_network_id, char *reseller_admin_masheryid, char *group_id, char *admin_upgrader);
-
- 
-  /**
-   * With a unique ID address an user can be retrieved
-   *
-   *  @param user_id
-   *  @return - the data from the api
-  */
-  char * getUser( char *user_id);
 
  
   /**
