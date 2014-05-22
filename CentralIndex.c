@@ -7488,9 +7488,13 @@ char * doCurl (char * method, char * path, char * params) {
    *  @param searchDescriptionNoWhere - Description of serps page when no where is specified
    *  @param searchIntroHeader - Introductory header
    *  @param searchIntroText - Introductory text
+   *  @param cookiePolicyShow - whether to show cookie policy
+   *  @param cookiePolicyUrl - url of cookie policy
+   *  @param twitterUrl - url of twitter feed
+   *  @param facebookUrl - url of facebook feed
    *  @return - the data from the api
   */
-  char * postMultipack( char *multipack_id, char *group_id, char *domainName, char *multipackName, char *less, char *country, char *menuTop, char *menuBottom, char *language, char *menuFooter, char *searchNumberResults, char *searchTitle, char *searchDescription, char *searchTitleNoWhere, char *searchDescriptionNoWhere, char *searchIntroHeader, char *searchIntroText) {
+  char * postMultipack( char *multipack_id, char *group_id, char *domainName, char *multipackName, char *less, char *country, char *menuTop, char *menuBottom, char *language, char *menuFooter, char *searchNumberResults, char *searchTitle, char *searchDescription, char *searchTitleNoWhere, char *searchDescriptionNoWhere, char *searchIntroHeader, char *searchIntroText, char *cookiePolicyShow, char *cookiePolicyUrl, char *twitterUrl, char *facebookUrl) {
     CURL *curl = curl_easy_init();
     char params[10000];
     char *p;
@@ -7579,6 +7583,26 @@ char * doCurl (char * method, char * path, char * params) {
     strcat(params,"&");
     strcat(params,"searchIntroText=");
     p = curl_easy_escape(curl,searchIntroText,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"cookiePolicyShow=");
+    p = curl_easy_escape(curl,cookiePolicyShow,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"cookiePolicyUrl=");
+    p = curl_easy_escape(curl,cookiePolicyUrl,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"twitterUrl=");
+    p = curl_easy_escape(curl,twitterUrl,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"facebookUrl=");
+    p = curl_easy_escape(curl,facebookUrl,0);
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");
