@@ -7665,9 +7665,11 @@ char * doCurl (char * method, char * path, char * params) {
    *
    *  @param multipack_id - the unique id to search for
    *  @param filedata
+   *  @param mapPinOffsetX
+   *  @param mapPinOffsetY
    *  @return - the data from the api
   */
-  char * postMultipackMap_pin( char *multipack_id, char *filedata) {
+  char * postMultipackMap_pin( char *multipack_id, char *filedata, char *mapPinOffsetX, char *mapPinOffsetY) {
     CURL *curl = curl_easy_init();
     char params[10000];
     char *p;
@@ -7681,6 +7683,16 @@ char * doCurl (char * method, char * path, char * params) {
     strcat(params,"&");
     strcat(params,"filedata=");
     p = curl_easy_escape(curl,filedata,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"mapPinOffsetX=");
+    p = curl_easy_escape(curl,mapPinOffsetX,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"mapPinOffsetY=");
+    p = curl_easy_escape(curl,mapPinOffsetY,0);
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");
@@ -11724,9 +11736,10 @@ char * doCurl (char * method, char * path, char * params) {
    * Downgrade an existing user
    *
    *  @param user_id
+   *  @param user_type
    *  @return - the data from the api
   */
-  char * postUserDowngrade( char *user_id) {
+  char * postUserDowngrade( char *user_id, char *user_type) {
     CURL *curl = curl_easy_init();
     char params[10000];
     char *p;
@@ -11735,6 +11748,11 @@ char * doCurl (char * method, char * path, char * params) {
     strcat(params,"?");
     strcat(params,"user_id=");
     p = curl_easy_escape(curl,user_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"user_type=");
+    p = curl_easy_escape(curl,user_type,0);
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");

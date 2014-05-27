@@ -2252,9 +2252,11 @@ void set_debug_mode (int debug);
    *
    *  @param multipack_id - the unique id to search for
    *  @param filedata
+   *  @param mapPinOffsetX
+   *  @param mapPinOffsetY
    *  @return - the data from the api
   */
-  char * postMultipackMap_pin( char *multipack_id, char *filedata);
+  char * postMultipackMap_pin( char *multipack_id, char *filedata, char *mapPinOffsetX, char *mapPinOffsetY);
 
  
   /**
@@ -3573,9 +3575,10 @@ void set_debug_mode (int debug);
    * Downgrade an existing user
    *
    *  @param user_id
+   *  @param user_type
    *  @return - the data from the api
   */
-  char * postUserDowngrade( char *user_id);
+  char * postUserDowngrade( char *user_id, char *user_type);
 
  
   /**
