@@ -324,9 +324,12 @@ void set_debug_mode (int debug);
    *  @param source
    *  @param channel
    *  @param campaign
+   *  @param referrer_domain
+   *  @param referrer_name
+   *  @param flatpack_id
    *  @return - the data from the api
   */
-  char * postContractCreate( char *entity_id, char *user_id, char *payment_provider, char *basket, char *billing_period, char *source, char *channel, char *campaign);
+  char * postContractCreate( char *entity_id, char *user_id, char *payment_provider, char *basket, char *billing_period, char *source, char *channel, char *campaign, char *referrer_domain, char *referrer_name, char *flatpack_id);
 
  
   /**
@@ -2219,13 +2222,14 @@ void set_debug_mode (int debug);
    *  @param searchDescriptionNoWhere - Description of serps page when no where is specified
    *  @param searchIntroHeader - Introductory header
    *  @param searchIntroText - Introductory text
+   *  @param searchShowAll - display all search results on one page
    *  @param cookiePolicyShow - whether to show cookie policy
    *  @param cookiePolicyUrl - url of cookie policy
    *  @param twitterUrl - url of twitter feed
    *  @param facebookUrl - url of facebook feed
    *  @return - the data from the api
   */
-  char * postMultipack( char *multipack_id, char *group_id, char *domainName, char *multipackName, char *less, char *country, char *menuTop, char *menuBottom, char *language, char *menuFooter, char *searchNumberResults, char *searchTitle, char *searchDescription, char *searchTitleNoWhere, char *searchDescriptionNoWhere, char *searchIntroHeader, char *searchIntroText, char *cookiePolicyShow, char *cookiePolicyUrl, char *twitterUrl, char *facebookUrl);
+  char * postMultipack( char *multipack_id, char *group_id, char *domainName, char *multipackName, char *less, char *country, char *menuTop, char *menuBottom, char *language, char *menuFooter, char *searchNumberResults, char *searchTitle, char *searchDescription, char *searchTitleNoWhere, char *searchDescriptionNoWhere, char *searchIntroHeader, char *searchIntroText, char *searchShowAll, char *cookiePolicyShow, char *cookiePolicyUrl, char *twitterUrl, char *facebookUrl);
 
  
   /**
