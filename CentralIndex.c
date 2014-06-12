@@ -7595,54 +7595,66 @@ char * doCurl (char * method, char * path, char * params) {
   /**
    * Create a matching log
    *
-   *  @param processed_entity_id
-   *  @param matched_entity_id
-   *  @param processed_mega
-   *  @param matched_mega
-   *  @param processed_group
-   *  @param matched_group
-   *  @param merged
+   *  @param primary_entity_id
+   *  @param secondary_entity_id
+   *  @param primary_name
+   *  @param secondary_name
+   *  @param address_score
+   *  @param address_match
+   *  @param name_score
+   *  @param name_match
+   *  @param distance
    *  @return - the data from the api
   */
-  char * putMatching_log( char *processed_entity_id, char *matched_entity_id, char *processed_mega, char *matched_mega, char *processed_group, char *matched_group, char *merged) {
+  char * putMatching_log( char *primary_entity_id, char *secondary_entity_id, char *primary_name, char *secondary_name, char *address_score, char *address_match, char *name_score, char *name_match, char *distance) {
     CURL *curl = curl_easy_init();
     char params[10000];
     char *p;
     strcpy(params,"?api_key=");
     strcat(params,API_KEY);
     strcat(params,"?");
-    strcat(params,"processed_entity_id=");
-    p = curl_easy_escape(curl,processed_entity_id,0);
+    strcat(params,"primary_entity_id=");
+    p = curl_easy_escape(curl,primary_entity_id,0);
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");
-    strcat(params,"matched_entity_id=");
-    p = curl_easy_escape(curl,matched_entity_id,0);
+    strcat(params,"secondary_entity_id=");
+    p = curl_easy_escape(curl,secondary_entity_id,0);
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");
-    strcat(params,"processed_mega=");
-    p = curl_easy_escape(curl,processed_mega,0);
+    strcat(params,"primary_name=");
+    p = curl_easy_escape(curl,primary_name,0);
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");
-    strcat(params,"matched_mega=");
-    p = curl_easy_escape(curl,matched_mega,0);
+    strcat(params,"secondary_name=");
+    p = curl_easy_escape(curl,secondary_name,0);
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");
-    strcat(params,"processed_group=");
-    p = curl_easy_escape(curl,processed_group,0);
+    strcat(params,"address_score=");
+    p = curl_easy_escape(curl,address_score,0);
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");
-    strcat(params,"matched_group=");
-    p = curl_easy_escape(curl,matched_group,0);
+    strcat(params,"address_match=");
+    p = curl_easy_escape(curl,address_match,0);
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");
-    strcat(params,"merged=");
-    p = curl_easy_escape(curl,merged,0);
+    strcat(params,"name_score=");
+    p = curl_easy_escape(curl,name_score,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"name_match=");
+    p = curl_easy_escape(curl,name_match,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"distance=");
+    p = curl_easy_escape(curl,distance,0);
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");

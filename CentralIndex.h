@@ -2212,16 +2212,18 @@ void set_debug_mode (int debug);
   /**
    * Create a matching log
    *
-   *  @param processed_entity_id
-   *  @param matched_entity_id
-   *  @param processed_mega
-   *  @param matched_mega
-   *  @param processed_group
-   *  @param matched_group
-   *  @param merged
+   *  @param primary_entity_id
+   *  @param secondary_entity_id
+   *  @param primary_name
+   *  @param secondary_name
+   *  @param address_score
+   *  @param address_match
+   *  @param name_score
+   *  @param name_match
+   *  @param distance
    *  @return - the data from the api
   */
-  char * putMatching_log( char *processed_entity_id, char *matched_entity_id, char *processed_mega, char *matched_mega, char *processed_group, char *matched_group, char *merged);
+  char * putMatching_log( char *primary_entity_id, char *secondary_entity_id, char *primary_name, char *secondary_name, char *address_score, char *address_match, char *name_score, char *name_match, char *distance);
 
  
   /**
