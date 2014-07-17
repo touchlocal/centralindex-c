@@ -2303,10 +2303,13 @@ void set_debug_mode (int debug);
    *  @param name_match
    *  @param distance
    *  @param phone_match
+   *  @param category_match
+   *  @param email_match
+   *  @param website_match
    *  @param match
    *  @return - the data from the api
   */
-  char * putMatching_log( char *primary_entity_id, char *secondary_entity_id, char *primary_name, char *secondary_name, char *address_score, char *address_match, char *name_score, char *name_match, char *distance, char *phone_match, char *match);
+  char * putMatching_log( char *primary_entity_id, char *secondary_entity_id, char *primary_name, char *secondary_name, char *address_score, char *address_match, char *name_score, char *name_match, char *distance, char *phone_match, char *category_match, char *email_match, char *website_match, char *match);
 
  
   /**

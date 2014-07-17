@@ -7803,10 +7803,13 @@ char * doCurl (char * method, char * path, char * params) {
    *  @param name_match
    *  @param distance
    *  @param phone_match
+   *  @param category_match
+   *  @param email_match
+   *  @param website_match
    *  @param match
    *  @return - the data from the api
   */
-  char * putMatching_log( char *primary_entity_id, char *secondary_entity_id, char *primary_name, char *secondary_name, char *address_score, char *address_match, char *name_score, char *name_match, char *distance, char *phone_match, char *match) {
+  char * putMatching_log( char *primary_entity_id, char *secondary_entity_id, char *primary_name, char *secondary_name, char *address_score, char *address_match, char *name_score, char *name_match, char *distance, char *phone_match, char *category_match, char *email_match, char *website_match, char *match) {
     CURL *curl = curl_easy_init();
     char params[10000];
     char *p;
@@ -7860,6 +7863,21 @@ char * doCurl (char * method, char * path, char * params) {
     strcat(params,"&");
     strcat(params,"phone_match=");
     p = curl_easy_escape(curl,phone_match,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"category_match=");
+    p = curl_easy_escape(curl,category_match,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"email_match=");
+    p = curl_easy_escape(curl,email_match,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"website_match=");
+    p = curl_easy_escape(curl,website_match,0);
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");
