@@ -17,6 +17,20 @@ void set_api_key ( char * apikey);
 
 void set_debug_mode (int debug);
   /**
+   * When we get some activity make a record of it
+   *
+   *  @param entity_id - The entity to pull
+   *  @param entity_name - The entity name this entry refers to
+   *  @param type - The activity type.
+   *  @param country - The country for the activity
+   *  @param longitude - The longitude for teh activity
+   *  @param latitude - The latitude for teh activity
+   *  @return - the data from the api
+  */
+  char * postActivity_stream( char *entity_id, char *entity_name, char *type, char *country, char *longitude, char *latitude);
+
+ 
+  /**
    * Get the activity from the collection
    *
    *  @param type - The activity type: add, claim, special offer, image, video, description, testimonial
@@ -30,20 +44,6 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * getActivity_stream( char *type, char *country, char *latitude_1, char *longitude_1, char *latitude_2, char *longitude_2, char *number_results, char *unique_action);
-
- 
-  /**
-   * When we get some activity make a record of it
-   *
-   *  @param entity_id - The entity to pull
-   *  @param entity_name - The entity name this entry refers to
-   *  @param type - The activity type.
-   *  @param country - The country for the activity
-   *  @param longitude - The longitude for teh activity
-   *  @param latitude - The latitude for teh activity
-   *  @return - the data from the api
-  */
-  char * postActivity_stream( char *entity_id, char *entity_name, char *type, char *country, char *longitude, char *latitude);
 
  
   /**
@@ -163,12 +163,17 @@ void set_debug_mode (int debug);
 
  
   /**
-   * Returns business tool that matches a given tool id
+   * Update/Add a Business Tool
    *
    *  @param tool_id
+   *  @param country
+   *  @param headline
+   *  @param description
+   *  @param link_url
+   *  @param active
    *  @return - the data from the api
   */
-  char * getBusiness_tool( char *tool_id);
+  char * postBusiness_tool( char *tool_id, char *country, char *headline, char *description, char *link_url, char *active);
 
  
   /**
@@ -181,17 +186,12 @@ void set_debug_mode (int debug);
 
  
   /**
-   * Update/Add a Business Tool
+   * Returns business tool that matches a given tool id
    *
    *  @param tool_id
-   *  @param country
-   *  @param headline
-   *  @param description
-   *  @param link_url
-   *  @param active
    *  @return - the data from the api
   */
-  char * postBusiness_tool( char *tool_id, char *country, char *headline, char *description, char *link_url, char *active);
+  char * getBusiness_tool( char *tool_id);
 
  
   /**
@@ -214,15 +214,6 @@ void set_debug_mode (int debug);
 
  
   /**
-   * Returns the supplied wolf category object by fetching the supplied category_id from our categories object.
-   *
-   *  @param category_id
-   *  @return - the data from the api
-  */
-  char * getCategory( char *category_id);
-
- 
-  /**
    * With a known category id, an category object can be added.
    *
    *  @param category_id
@@ -234,11 +225,31 @@ void set_debug_mode (int debug);
 
  
   /**
+   * Returns the supplied wolf category object by fetching the supplied category_id from our categories object.
+   *
+   *  @param category_id
+   *  @return - the data from the api
+  */
+  char * getCategory( char *category_id);
+
+ 
+  /**
    * Returns all Central Index categories and associated data
    *
    *  @return - the data from the api
   */
   char * getCategoryAll();
+
+ 
+  /**
+   * With a known category id, a mapping object can be deleted.
+   *
+   *  @param category_id
+   *  @param category_type
+   *  @param mapped_id
+   *  @return - the data from the api
+  */
+  char * deleteCategoryMappings( char *category_id, char *category_type, char *mapped_id);
 
  
   /**
@@ -254,17 +265,6 @@ void set_debug_mode (int debug);
 
  
   /**
-   * With a known category id, a mapping object can be deleted.
-   *
-   *  @param category_id
-   *  @param category_type
-   *  @param mapped_id
-   *  @return - the data from the api
-  */
-  char * deleteCategoryMappings( char *category_id, char *category_type, char *mapped_id);
-
- 
-  /**
    * Allows a category object to merged with another
    *
    *  @param from
@@ -272,17 +272,6 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * postCategoryMerge( char *from, char *to);
-
- 
-  /**
-   * With a known category id, a synonyms object can be removed.
-   *
-   *  @param category_id
-   *  @param synonym
-   *  @param language
-   *  @return - the data from the api
-  */
-  char * deleteCategorySynonym( char *category_id, char *synonym, char *language);
 
  
   /**
@@ -294,6 +283,17 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * postCategorySynonym( char *category_id, char *synonym, char *language);
+
+ 
+  /**
+   * With a known category id, a synonyms object can be removed.
+   *
+   *  @param category_id
+   *  @param synonym
+   *  @param language
+   *  @return - the data from the api
+  */
+  char * deleteCategorySynonym( char *category_id, char *synonym, char *language);
 
  
   /**
@@ -462,15 +462,6 @@ void set_debug_mode (int debug);
 
  
   /**
-   * Fetching a country
-   *
-   *  @param country_id
-   *  @return - the data from the api
-  */
-  char * getCountry( char *country_id);
-
- 
-  /**
    * Update/Add a country
    *
    *  @param country_id
@@ -506,6 +497,15 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * postCountry( char *country_id, char *name, char *synonyms, char *continentName, char *continent, char *geonameId, char *dbpediaURL, char *freebaseURL, char *population, char *currencyCode, char *languages, char *areaInSqKm, char *capital, char *east, char *west, char *north, char *south, char *claimProductId, char *claimMethods, char *twilio_sms, char *twilio_phone, char *twilio_voice, char *currency_symbol, char *currency_symbol_html, char *postcodeLookupActive, char *addressFields, char *addressMatching, char *dateFormat, char *iso_3166_alpha_3, char *iso_3166_numeric);
+
+ 
+  /**
+   * Fetching a country
+   *
+   *  @param country_id
+   *  @return - the data from the api
+  */
+  char * getCountry( char *country_id);
 
  
   /**
@@ -689,16 +689,6 @@ void set_debug_mode (int debug);
 
  
   /**
-   * Adding an affiliate adblock to a known entity
-   *
-   *  @param entity_id
-   *  @param adblock - Number of results returned per page
-   *  @return - the data from the api
-  */
-  char * postEntityAffiliate_adblock( char *entity_id, char *adblock);
-
- 
-  /**
    * Deleteing an affiliate adblock from a known entity
    *
    *  @param entity_id
@@ -706,6 +696,16 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * deleteEntityAffiliate_adblock( char *entity_id, char *gen_id);
+
+ 
+  /**
+   * Adding an affiliate adblock to a known entity
+   *
+   *  @param entity_id
+   *  @param adblock - Number of results returned per page
+   *  @return - the data from the api
+  */
+  char * postEntityAffiliate_adblock( char *entity_id, char *adblock);
 
  
   /**
@@ -823,16 +823,6 @@ void set_debug_mode (int debug);
 
  
   /**
-   * Allows a category object to be reduced in confidence
-   *
-   *  @param entity_id
-   *  @param gen_id
-   *  @return - the data from the api
-  */
-  char * deleteEntityCategory( char *entity_id, char *gen_id);
-
- 
-  /**
    * With a known entity id, an category object can be added.
    *
    *  @param entity_id
@@ -841,6 +831,16 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * postEntityCategory( char *entity_id, char *category_id, char *category_type);
+
+ 
+  /**
+   * Allows a category object to be reduced in confidence
+   *
+   *  @param entity_id
+   *  @param gen_id
+   *  @return - the data from the api
+  */
+  char * deleteEntityCategory( char *entity_id, char *gen_id);
 
  
   /**
@@ -892,6 +892,16 @@ void set_debug_mode (int debug);
 
  
   /**
+   * Allows a phone object to be reduced in confidence
+   *
+   *  @param entity_id
+   *  @param gen_id
+   *  @return - the data from the api
+  */
+  char * deleteEntityDocument( char *entity_id, char *gen_id);
+
+ 
+  /**
    * With a known entity id, an document object can be added.
    *
    *  @param entity_id
@@ -900,16 +910,6 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * postEntityDocument( char *entity_id, char *name, char *filedata);
-
- 
-  /**
-   * Allows a phone object to be reduced in confidence
-   *
-   *  @param entity_id
-   *  @param gen_id
-   *  @return - the data from the api
-  */
-  char * deleteEntityDocument( char *entity_id, char *gen_id);
 
  
   /**
@@ -934,6 +934,16 @@ void set_debug_mode (int debug);
 
  
   /**
+   * Allows an employee object to be reduced in confidence
+   *
+   *  @param entity_id
+   *  @param gen_id
+   *  @return - the data from the api
+  */
+  char * deleteEntityEmployee( char *entity_id, char *gen_id);
+
+ 
+  /**
    * With a known entity id, an employee object can be added.
    *
    *  @param entity_id
@@ -950,13 +960,13 @@ void set_debug_mode (int debug);
 
  
   /**
-   * Allows an employee object to be reduced in confidence
+   * Allows a fax object to be reduced in confidence
    *
    *  @param entity_id
    *  @param gen_id
    *  @return - the data from the api
   */
-  char * deleteEntityEmployee( char *entity_id, char *gen_id);
+  char * deleteEntityFax( char *entity_id, char *gen_id);
 
  
   /**
@@ -968,16 +978,6 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * postEntityFax( char *entity_id, char *number, char *description);
-
- 
-  /**
-   * Allows a fax object to be reduced in confidence
-   *
-   *  @param entity_id
-   *  @param gen_id
-   *  @return - the data from the api
-  */
-  char * deleteEntityFax( char *entity_id, char *gen_id);
 
  
   /**
@@ -1013,6 +1013,16 @@ void set_debug_mode (int debug);
 
  
   /**
+   * Allows a group object to be removed from an entities group members
+   *
+   *  @param entity_id
+   *  @param gen_id
+   *  @return - the data from the api
+  */
+  char * deleteEntityGroup( char *entity_id, char *gen_id);
+
+ 
+  /**
    * With a known entity id, a group  can be added to group members.
    *
    *  @param entity_id
@@ -1023,13 +1033,13 @@ void set_debug_mode (int debug);
 
  
   /**
-   * Allows a group object to be removed from an entities group members
+   * Allows a image object to be reduced in confidence
    *
    *  @param entity_id
    *  @param gen_id
    *  @return - the data from the api
   */
-  char * deleteEntityGroup( char *entity_id, char *gen_id);
+  char * deleteEntityImage( char *entity_id, char *gen_id);
 
  
   /**
@@ -1041,16 +1051,6 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * postEntityImage( char *entity_id, char *filedata, char *image_name);
-
- 
-  /**
-   * Allows a image object to be reduced in confidence
-   *
-   *  @param entity_id
-   *  @param gen_id
-   *  @return - the data from the api
-  */
-  char * deleteEntityImage( char *entity_id, char *gen_id);
 
  
   /**
@@ -1093,16 +1093,6 @@ void set_debug_mode (int debug);
 
  
   /**
-   * Allows a list description object to be reduced in confidence
-   *
-   *  @param gen_id
-   *  @param entity_id
-   *  @return - the data from the api
-  */
-  char * deleteEntityList( char *gen_id, char *entity_id);
-
- 
-  /**
    * With a known entity id, a list description object can be added.
    *
    *  @param entity_id
@@ -1111,6 +1101,16 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * postEntityList( char *entity_id, char *headline, char *body);
+
+ 
+  /**
+   * Allows a list description object to be reduced in confidence
+   *
+   *  @param gen_id
+   *  @param entity_id
+   *  @return - the data from the api
+  */
+  char * deleteEntityList( char *gen_id, char *entity_id);
 
  
   /**
@@ -1585,10 +1585,9 @@ void set_debug_mode (int debug);
    *  @param start_date
    *  @param expiry_date
    *  @param url
-   *  @param image_url
    *  @return - the data from the api
   */
-  char * postEntitySpecial_offer( char *entity_id, char *title, char *description, char *terms, char *start_date, char *expiry_date, char *url, char *image_url);
+  char * postEntitySpecial_offer( char *entity_id, char *title, char *description, char *terms, char *start_date, char *expiry_date, char *url);
 
  
   /**
@@ -1625,16 +1624,6 @@ void set_debug_mode (int debug);
 
  
   /**
-   * Allows a testimonial object to be reduced in confidence
-   *
-   *  @param entity_id
-   *  @param gen_id
-   *  @return - the data from the api
-  */
-  char * deleteEntityTestimonial( char *entity_id, char *gen_id);
-
- 
-  /**
    * With a known entity id, a testimonial object can be added.
    *
    *  @param entity_id
@@ -1645,6 +1634,16 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * postEntityTestimonial( char *entity_id, char *title, char *text, char *date, char *testifier_name);
+
+ 
+  /**
+   * Allows a testimonial object to be reduced in confidence
+   *
+   *  @param entity_id
+   *  @param gen_id
+   *  @return - the data from the api
+  */
+  char * deleteEntityTestimonial( char *entity_id, char *gen_id);
 
  
   /**
@@ -1702,16 +1701,6 @@ void set_debug_mode (int debug);
 
  
   /**
-   * Allows a website object to be reduced in confidence
-   *
-   *  @param entity_id
-   *  @param gen_id
-   *  @return - the data from the api
-  */
-  char * deleteEntityWebsite( char *entity_id, char *gen_id);
-
- 
-  /**
    * With a known entity id, a website object can be added.
    *
    *  @param entity_id
@@ -1722,6 +1711,26 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * postEntityWebsite( char *entity_id, char *website_url, char *display_url, char *website_description, char *gen_id);
+
+ 
+  /**
+   * Allows a website object to be reduced in confidence
+   *
+   *  @param entity_id
+   *  @param gen_id
+   *  @return - the data from the api
+  */
+  char * deleteEntityWebsite( char *entity_id, char *gen_id);
+
+ 
+  /**
+   * Allows a yext list object to be removed
+   *
+   *  @param entity_id
+   *  @param gen_id
+   *  @return - the data from the api
+  */
+  char * deleteEntityYext_list( char *entity_id, char *gen_id);
 
  
   /**
@@ -1738,16 +1747,6 @@ void set_debug_mode (int debug);
 
  
   /**
-   * Allows a yext list object to be removed
-   *
-   *  @param entity_id
-   *  @param gen_id
-   *  @return - the data from the api
-  */
-  char * deleteEntityYext_list( char *entity_id, char *gen_id);
-
- 
-  /**
    * Add an entityserve document
    *
    *  @param entity_id - The id of the entity to create the entityserve event for
@@ -1758,15 +1757,6 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * putEntityserve( char *entity_id, char *country, char *event_type, char *domain, char *path);
-
- 
-  /**
-   * Get a flatpack
-   *
-   *  @param flatpack_id - the unique id to search for
-   *  @return - the data from the api
-  */
-  char * getFlatpack( char *flatpack_id);
 
  
   /**
@@ -1841,6 +1831,15 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * postFlatpack( char *flatpack_id, char *domainName, char *stub, char *flatpackName, char *less, char *language, char *country, char *mapsType, char *mapKey, char *searchFormShowOn, char *searchFormShowKeywordsBox, char *searchFormShowLocationBox, char *searchFormKeywordsAutoComplete, char *searchFormLocationsAutoComplete, char *searchFormDefaultLocation, char *searchFormPlaceholderKeywords, char *searchFormPlaceholderLocation, char *searchFormKeywordsLabel, char *searchFormLocationLabel, char *cannedLinksHeader, char *homepageTitle, char *homepageDescription, char *homepageIntroTitle, char *homepageIntroText, char *head, char *adblock, char *bodyTop, char *bodyBottom, char *header_menu, char *header_menu_bottom, char *footer_menu, char *bdpTitle, char *bdpDescription, char *bdpAds, char *serpTitle, char *serpDescription, char *serpNumberResults, char *serpNumberAdverts, char *serpAds, char *serpTitleNoWhat, char *serpDescriptionNoWhat, char *cookiePolicyUrl, char *cookiePolicyNotice, char *addBusinessButtonText, char *twitterUrl, char *facebookUrl, char *copyright, char *phoneReveal, char *loginLinkText, char *contextLocationId, char *addBusinessButtonPosition, char *denyIndexing, char *contextRadius, char *activityStream, char *activityStreamSize, char *products, char *linkToRoot);
+
+ 
+  /**
+   * Get a flatpack
+   *
+   *  @param flatpack_id - the unique id to search for
+   *  @return - the data from the api
+  */
+  char * getFlatpack( char *flatpack_id);
 
  
   /**
@@ -2348,6 +2347,15 @@ void set_debug_mode (int debug);
 
  
   /**
+   * Get a multipack
+   *
+   *  @param multipack_id - the unique id to search for
+   *  @return - the data from the api
+  */
+  char * getMultipack( char *multipack_id);
+
+ 
+  /**
    * Update/Add a multipack
    *
    *  @param multipack_id - this record's unique, auto-generated id - if supplied, then this is an edit, otherwise it's an add
@@ -2376,15 +2384,6 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * postMultipack( char *multipack_id, char *group_id, char *domainName, char *multipackName, char *less, char *country, char *menuTop, char *menuBottom, char *language, char *menuFooter, char *searchNumberResults, char *searchTitle, char *searchDescription, char *searchTitleNoWhere, char *searchDescriptionNoWhere, char *searchIntroHeader, char *searchIntroText, char *searchShowAll, char *searchUnitOfDistance, char *cookiePolicyShow, char *cookiePolicyUrl, char *twitterUrl, char *facebookUrl);
-
- 
-  /**
-   * Get a multipack
-   *
-   *  @param multipack_id - the unique id to search for
-   *  @return - the data from the api
-  */
-  char * getMultipack( char *multipack_id);
 
  
   /**
@@ -2467,15 +2466,6 @@ void set_debug_mode (int debug);
 
  
   /**
-   * Returns the product information given a valid product_id
-   *
-   *  @param product_id
-   *  @return - the data from the api
-  */
-  char * getProduct( char *product_id);
-
- 
-  /**
    * Update/Add a product
    *
    *  @param product_id - The ID of the product
@@ -2494,6 +2484,15 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * postProduct( char *product_id, char *name, char *strapline, char *price, char *tax_rate, char *currency, char *active, char *billing_period, char *title, char *intro_paragraph, char *bullets, char *outro_paragraph, char *thanks_paragraph);
+
+ 
+  /**
+   * Returns the product information given a valid product_id
+   *
+   *  @param product_id
+   *  @return - the data from the api
+  */
+  char * getProduct( char *product_id);
 
  
   /**
@@ -2604,15 +2603,6 @@ void set_debug_mode (int debug);
 
  
   /**
-   * Returns publisher that matches a given publisher id
-   *
-   *  @param publisher_id
-   *  @return - the data from the api
-  */
-  char * getPublisher( char *publisher_id);
-
- 
-  /**
    * Update/Add a publisher
    *
    *  @param publisher_id
@@ -2624,6 +2614,15 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * postPublisher( char *publisher_id, char *country, char *name, char *description, char *active, char *url_patterns);
+
+ 
+  /**
+   * Returns publisher that matches a given publisher id
+   *
+   *  @param publisher_id
+   *  @return - the data from the api
+  */
+  char * getPublisher( char *publisher_id);
 
  
   /**
@@ -2654,15 +2653,6 @@ void set_debug_mode (int debug);
 
  
   /**
-   * With a known queue id, a queue item can be removed.
-   *
-   *  @param queue_id
-   *  @return - the data from the api
-  */
-  char * deleteQueue( char *queue_id);
-
- 
-  /**
    * Create a queue item
    *
    *  @param queue_name
@@ -2670,6 +2660,15 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * putQueue( char *queue_name, char *data);
+
+ 
+  /**
+   * With a known queue id, a queue item can be removed.
+   *
+   *  @param queue_id
+   *  @return - the data from the api
+  */
+  char * deleteQueue( char *queue_id);
 
  
   /**
@@ -3424,6 +3423,15 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * getToolsSyndicateFactual( char *entity_id, char *destructive);
+
+ 
+  /**
+   * Fetch the entity and convert it to Factual CSV / TSV format
+   *
+   *  @param entity_id - The entity_id to fetch
+   *  @return - the data from the api
+  */
+  char * getToolsSyndicateFactualcsv( char *entity_id);
 
  
   /**
