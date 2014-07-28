@@ -137,9 +137,10 @@ void set_debug_mode (int debug);
    *  @param referrer_url
    *  @param referrer_name
    *  @param destructive
+   *  @param delete_mode - The type of object contribution deletion
    *  @return - the data from the api
   */
-  char * putBusiness( char *name, char *building_number, char *branch_name, char *address1, char *address2, char *address3, char *district, char *town, char *county, char *province, char *postcode, char *country, char *latitude, char *longitude, char *timezone, char *telephone_number, char *additional_telephone_number, char *email, char *website, char *category_id, char *category_type, char *do_not_display, char *referrer_url, char *referrer_name, char *destructive);
+  char * putBusiness( char *name, char *building_number, char *branch_name, char *address1, char *address2, char *address3, char *district, char *town, char *county, char *province, char *postcode, char *country, char *latitude, char *longitude, char *timezone, char *telephone_number, char *additional_telephone_number, char *email, char *website, char *category_id, char *category_type, char *do_not_display, char *referrer_url, char *referrer_name, char *destructive, char *delete_mode);
 
  
   /**
@@ -562,9 +563,10 @@ void set_debug_mode (int debug);
    *  @param entity_id - The unique entity ID e.g. 379236608286720
    *  @param domain
    *  @param path
+   *  @param data_filter
    *  @return - the data from the api
   */
-  char * getEntity( char *entity_id, char *domain, char *path);
+  char * getEntity( char *entity_id, char *domain, char *path, char *data_filter);
 
  
   /**
@@ -1165,9 +1167,10 @@ void set_debug_mode (int debug);
    *  @param uncontribute_masheryid - Do we want to uncontribute any data for a masheryid?
    *  @param uncontribute_userid - Do we want to uncontribute any data for a user_id?
    *  @param uncontribute_supplierid - Do we want to uncontribute any data for a supplier_id?
+   *  @param delete_mode - The type of object contribution deletion
    *  @return - the data from the api
   */
-  char * postEntityMerge( char *from, char *to, char *override_trust, char *uncontribute_masheryid, char *uncontribute_userid, char *uncontribute_supplierid);
+  char * postEntityMerge( char *from, char *to, char *override_trust, char *uncontribute_masheryid, char *uncontribute_userid, char *uncontribute_supplierid, char *delete_mode);
 
  
   /**
@@ -2738,9 +2741,10 @@ void set_debug_mode (int debug);
    *  @param description
    *  @param active
    *  @param products
+   *  @param master_user_id
    *  @return - the data from the api
   */
-  char * postReseller( char *reseller_id, char *country, char *name, char *description, char *active, char *products);
+  char * postReseller( char *reseller_id, char *country, char *name, char *description, char *active, char *products, char *master_user_id);
 
  
   /**
@@ -2911,9 +2915,10 @@ void set_debug_mode (int debug);
    *  @param seed_masheryid
    *  @param supplier_masheryid
    *  @param country
+   *  @param data_type
    *  @return - the data from the api
   */
-  char * postSyndicationCreate( char *syndication_type, char *publisher_id, char *expiry_date, char *entity_id, char *group_id, char *seed_masheryid, char *supplier_masheryid, char *country);
+  char * postSyndicationCreate( char *syndication_type, char *publisher_id, char *expiry_date, char *entity_id, char *group_id, char *seed_masheryid, char *supplier_masheryid, char *country, char *data_type);
 
  
   /**
