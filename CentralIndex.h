@@ -138,9 +138,10 @@ void set_debug_mode (int debug);
    *  @param referrer_name
    *  @param destructive
    *  @param delete_mode - The type of object contribution deletion
+   *  @param master_entity_id - The entity you want this data to go to
    *  @return - the data from the api
   */
-  char * putBusiness( char *name, char *building_number, char *branch_name, char *address1, char *address2, char *address3, char *district, char *town, char *county, char *province, char *postcode, char *country, char *latitude, char *longitude, char *timezone, char *telephone_number, char *additional_telephone_number, char *email, char *website, char *category_id, char *category_type, char *do_not_display, char *referrer_url, char *referrer_name, char *destructive, char *delete_mode);
+  char * putBusiness( char *name, char *building_number, char *branch_name, char *address1, char *address2, char *address3, char *district, char *town, char *county, char *province, char *postcode, char *country, char *latitude, char *longitude, char *timezone, char *telephone_number, char *additional_telephone_number, char *email, char *website, char *category_id, char *category_type, char *do_not_display, char *referrer_url, char *referrer_name, char *destructive, char *delete_mode, char *master_entity_id);
 
  
   /**
@@ -149,9 +150,10 @@ void set_debug_mode (int debug);
    *  @param json - Business JSON
    *  @param country - The country to fetch results for e.g. gb
    *  @param timezone
+   *  @param master_entity_id - The entity you want this data to go to
    *  @return - the data from the api
   */
-  char * putBusinessJson( char *json, char *country, char *timezone);
+  char * putBusinessJson( char *json, char *country, char *timezone, char *master_entity_id);
 
  
   /**
@@ -3489,7 +3491,7 @@ void set_debug_mode (int debug);
 
  
   /**
-   * Fetch the entity and convert it to Nokia CSV format
+   * Fetch the entity and convert it to Nokia NBS CSV format
    *
    *  @param entity_id - The entity_id to fetch
    *  @return - the data from the api
