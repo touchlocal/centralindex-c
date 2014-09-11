@@ -1667,11 +1667,13 @@ void set_debug_mode (int debug);
    * Separates an entity into two distinct entities 
    *
    *  @param entity_id
-   *  @param supplier_masheryid
-   *  @param supplier_id
+   *  @param unmerge_masheryid
+   *  @param unmerge_supplier_id
+   *  @param unmerge_user_id
+   *  @param destructive
    *  @return - the data from the api
   */
-  char * postEntityUnmerge( char *entity_id, char *supplier_masheryid, char *supplier_id);
+  char * postEntityUnmerge( char *entity_id, char *unmerge_masheryid, char *unmerge_supplier_id, char *unmerge_user_id, char *destructive);
 
  
   /**

@@ -5760,11 +5760,13 @@ char * doCurl (char * method, char * path, char * params) {
    * Separates an entity into two distinct entities 
    *
    *  @param entity_id
-   *  @param supplier_masheryid
-   *  @param supplier_id
+   *  @param unmerge_masheryid
+   *  @param unmerge_supplier_id
+   *  @param unmerge_user_id
+   *  @param destructive
    *  @return - the data from the api
   */
-  char * postEntityUnmerge( char *entity_id, char *supplier_masheryid, char *supplier_id) {
+  char * postEntityUnmerge( char *entity_id, char *unmerge_masheryid, char *unmerge_supplier_id, char *unmerge_user_id, char *destructive) {
     CURL *curl = curl_easy_init();
     char params[10000];
     char *p;
@@ -5776,13 +5778,23 @@ char * doCurl (char * method, char * path, char * params) {
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");
-    strcat(params,"supplier_masheryid=");
-    p = curl_easy_escape(curl,supplier_masheryid,0);
+    strcat(params,"unmerge_masheryid=");
+    p = curl_easy_escape(curl,unmerge_masheryid,0);
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");
-    strcat(params,"supplier_id=");
-    p = curl_easy_escape(curl,supplier_id,0);
+    strcat(params,"unmerge_supplier_id=");
+    p = curl_easy_escape(curl,unmerge_supplier_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"unmerge_user_id=");
+    p = curl_easy_escape(curl,unmerge_user_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"destructive=");
+    p = curl_easy_escape(curl,destructive,0);
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");
