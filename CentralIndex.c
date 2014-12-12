@@ -9578,9 +9578,10 @@ char * doCurl (char * method, char * path, char * params) {
    *  @param data_type - The type of data being reported
    *  @param inactive_reason - The reason for making the entity inactive
    *  @param inactive_description - A description to accompany the inactive reasoning
+   *  @param feedback - Some feedback from the person submitting the signal
    *  @return - the data from the api
   */
-  char * postSignal( char *entity_id, char *country, char *gen_id, char *signal_type, char *data_type, char *inactive_reason, char *inactive_description) {
+  char * postSignal( char *entity_id, char *country, char *gen_id, char *signal_type, char *data_type, char *inactive_reason, char *inactive_description, char *feedback) {
     CURL *curl = curl_easy_init();
     char params[10000];
     char *p;
@@ -9619,6 +9620,11 @@ char * doCurl (char * method, char * path, char * params) {
     strcat(params,"&");
     strcat(params,"inactive_description=");
     p = curl_easy_escape(curl,inactive_description,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"feedback=");
+    p = curl_easy_escape(curl,feedback,0);
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");
