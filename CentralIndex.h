@@ -2206,9 +2206,10 @@ void set_debug_mode (int debug);
    *  @param radius - Radius in km
    *  @param resolution
    *  @param country
+   *  @param num_results
    *  @return - the data from the api
   */
-  char * getLocationContext( char *location_id, char *latitude, char *longitude, char *radius, char *resolution, char *country);
+  char * getLocationContext( char *location_id, char *latitude, char *longitude, char *radius, char *resolution, char *country, char *num_results);
 
  
   /**

@@ -7529,9 +7529,10 @@ char * doCurl (char * method, char * path, char * params) {
    *  @param radius - Radius in km
    *  @param resolution
    *  @param country
+   *  @param num_results
    *  @return - the data from the api
   */
-  char * getLocationContext( char *location_id, char *latitude, char *longitude, char *radius, char *resolution, char *country) {
+  char * getLocationContext( char *location_id, char *latitude, char *longitude, char *radius, char *resolution, char *country, char *num_results) {
     CURL *curl = curl_easy_init();
     char params[10000];
     char *p;
@@ -7565,6 +7566,11 @@ char * doCurl (char * method, char * path, char * params) {
     strcat(params,"&");
     strcat(params,"country=");
     p = curl_easy_escape(curl,country,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"num_results=");
+    p = curl_easy_escape(curl,num_results,0);
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");
