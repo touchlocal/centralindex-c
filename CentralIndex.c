@@ -685,18 +685,24 @@ char * doCurl (char * method, char * path, char * params) {
   /**
    * Create entity via JSON
    *
-   *  @param queue_id - Queue ID
+   *  @param entity_id - The entity to add rich data too
+   *  @param json - The rich data to add to the entity
    *  @return - the data from the api
   */
-  char * postBusinessJsonProcess( char *queue_id) {
+  char * postBusinessJsonProcess( char *entity_id, char *json) {
     CURL *curl = curl_easy_init();
     char params[10000];
     char *p;
     strcpy(params,"?api_key=");
     strcat(params,API_KEY);
     strcat(params,"?");
-    strcat(params,"queue_id=");
-    p = curl_easy_escape(curl,queue_id,0);
+    strcat(params,"entity_id=");
+    p = curl_easy_escape(curl,entity_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"json=");
+    p = curl_easy_escape(curl,json,0);
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");
@@ -923,40 +929,6 @@ char * doCurl (char * method, char * path, char * params) {
 
 
   /**
-   * With a known category id, a mapping object can be deleted.
-   *
-   *  @param category_id
-   *  @param category_type
-   *  @param mapped_id
-   *  @return - the data from the api
-  */
-  char * deleteCategoryMappings( char *category_id, char *category_type, char *mapped_id) {
-    CURL *curl = curl_easy_init();
-    char params[10000];
-    char *p;
-    strcpy(params,"?api_key=");
-    strcat(params,API_KEY);
-    strcat(params,"?");
-    strcat(params,"category_id=");
-    p = curl_easy_escape(curl,category_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"category_type=");
-    p = curl_easy_escape(curl,category_type,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"mapped_id=");
-    p = curl_easy_escape(curl,mapped_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    return doCurl("DELETE","/category/mappings",params);
-  }
-
-
-  /**
    * With a known category id, a mapping object can be added.
    *
    *  @param category_id
@@ -997,6 +969,40 @@ char * doCurl (char * method, char * path, char * params) {
 
 
   /**
+   * With a known category id, a mapping object can be deleted.
+   *
+   *  @param category_id
+   *  @param category_type
+   *  @param mapped_id
+   *  @return - the data from the api
+  */
+  char * deleteCategoryMappings( char *category_id, char *category_type, char *mapped_id) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"category_id=");
+    p = curl_easy_escape(curl,category_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"category_type=");
+    p = curl_easy_escape(curl,category_type,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"mapped_id=");
+    p = curl_easy_escape(curl,mapped_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("DELETE","/category/mappings",params);
+  }
+
+
+  /**
    * Allows a category object to merged with another
    *
    *  @param from
@@ -1021,40 +1027,6 @@ char * doCurl (char * method, char * path, char * params) {
     curl_free(p);
     strcat(params,"&");
     return doCurl("POST","/category/merge",params);
-  }
-
-
-  /**
-   * With a known category id, an synonym object can be added.
-   *
-   *  @param category_id
-   *  @param synonym
-   *  @param language
-   *  @return - the data from the api
-  */
-  char * postCategorySynonym( char *category_id, char *synonym, char *language) {
-    CURL *curl = curl_easy_init();
-    char params[10000];
-    char *p;
-    strcpy(params,"?api_key=");
-    strcat(params,API_KEY);
-    strcat(params,"?");
-    strcat(params,"category_id=");
-    p = curl_easy_escape(curl,category_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"synonym=");
-    p = curl_easy_escape(curl,synonym,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"language=");
-    p = curl_easy_escape(curl,language,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    return doCurl("POST","/category/synonym",params);
   }
 
 
@@ -1089,6 +1061,40 @@ char * doCurl (char * method, char * path, char * params) {
     curl_free(p);
     strcat(params,"&");
     return doCurl("DELETE","/category/synonym",params);
+  }
+
+
+  /**
+   * With a known category id, an synonym object can be added.
+   *
+   *  @param category_id
+   *  @param synonym
+   *  @param language
+   *  @return - the data from the api
+  */
+  char * postCategorySynonym( char *category_id, char *synonym, char *language) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"category_id=");
+    p = curl_easy_escape(curl,category_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"synonym=");
+    p = curl_easy_escape(curl,synonym,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"language=");
+    p = curl_easy_escape(curl,language,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("POST","/category/synonym",params);
   }
 
 
@@ -2491,34 +2497,6 @@ char * doCurl (char * method, char * path, char * params) {
 
 
   /**
-   * Deleteing an affiliate adblock from a known entity
-   *
-   *  @param entity_id
-   *  @param gen_id
-   *  @return - the data from the api
-  */
-  char * deleteEntityAffiliate_adblock( char *entity_id, char *gen_id) {
-    CURL *curl = curl_easy_init();
-    char params[10000];
-    char *p;
-    strcpy(params,"?api_key=");
-    strcat(params,API_KEY);
-    strcat(params,"?");
-    strcat(params,"entity_id=");
-    p = curl_easy_escape(curl,entity_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"gen_id=");
-    p = curl_easy_escape(curl,gen_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    return doCurl("DELETE","/entity/affiliate_adblock",params);
-  }
-
-
-  /**
    * Adding an affiliate adblock to a known entity
    *
    *  @param entity_id
@@ -2547,13 +2525,13 @@ char * doCurl (char * method, char * path, char * params) {
 
 
   /**
-   * Allows an affiliate link object to be reduced in confidence
+   * Deleteing an affiliate adblock from a known entity
    *
    *  @param entity_id
    *  @param gen_id
    *  @return - the data from the api
   */
-  char * deleteEntityAffiliate_link( char *entity_id, char *gen_id) {
+  char * deleteEntityAffiliate_adblock( char *entity_id, char *gen_id) {
     CURL *curl = curl_easy_init();
     char params[10000];
     char *p;
@@ -2570,7 +2548,7 @@ char * doCurl (char * method, char * path, char * params) {
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");
-    return doCurl("DELETE","/entity/affiliate_link",params);
+    return doCurl("DELETE","/entity/affiliate_adblock",params);
   }
 
 
@@ -2623,6 +2601,34 @@ char * doCurl (char * method, char * path, char * params) {
     curl_free(p);
     strcat(params,"&");
     return doCurl("POST","/entity/affiliate_link",params);
+  }
+
+
+  /**
+   * Allows an affiliate link object to be reduced in confidence
+   *
+   *  @param entity_id
+   *  @param gen_id
+   *  @return - the data from the api
+  */
+  char * deleteEntityAffiliate_link( char *entity_id, char *gen_id) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"entity_id=");
+    p = curl_easy_escape(curl,entity_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"gen_id=");
+    p = curl_easy_escape(curl,gen_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("DELETE","/entity/affiliate_link",params);
   }
 
 
@@ -3033,6 +3039,68 @@ char * doCurl (char * method, char * path, char * params) {
 
 
   /**
+   * Allow an entity to be claimed by a valid user
+   *
+   *  @param entity_id
+   *  @param claimed_user_id
+   *  @param expiry_date
+   *  @return - the data from the api
+  */
+  char * postEntityClaimRenew( char *entity_id, char *claimed_user_id, char *expiry_date) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"entity_id=");
+    p = curl_easy_escape(curl,entity_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"claimed_user_id=");
+    p = curl_easy_escape(curl,claimed_user_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"expiry_date=");
+    p = curl_easy_escape(curl,expiry_date,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("POST","/entity/claim/renew",params);
+  }
+
+
+  /**
+   * Allows a description object to be reduced in confidence
+   *
+   *  @param entity_id
+   *  @param gen_id
+   *  @return - the data from the api
+  */
+  char * deleteEntityDescription( char *entity_id, char *gen_id) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"entity_id=");
+    p = curl_easy_escape(curl,entity_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"gen_id=");
+    p = curl_easy_escape(curl,gen_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("DELETE","/entity/description",params);
+  }
+
+
+  /**
    * With a known entity id, a description object can be added.
    *
    *  @param entity_id
@@ -3069,34 +3137,6 @@ char * doCurl (char * method, char * path, char * params) {
     curl_free(p);
     strcat(params,"&");
     return doCurl("POST","/entity/description",params);
-  }
-
-
-  /**
-   * Allows a description object to be reduced in confidence
-   *
-   *  @param entity_id
-   *  @param gen_id
-   *  @return - the data from the api
-  */
-  char * deleteEntityDescription( char *entity_id, char *gen_id) {
-    CURL *curl = curl_easy_init();
-    char params[10000];
-    char *p;
-    strcpy(params,"?api_key=");
-    strcat(params,API_KEY);
-    strcat(params,"?");
-    strcat(params,"entity_id=");
-    p = curl_easy_escape(curl,entity_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"gen_id=");
-    p = curl_easy_escape(curl,gen_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    return doCurl("DELETE","/entity/description",params);
   }
 
 
@@ -3225,6 +3265,34 @@ char * doCurl (char * method, char * path, char * params) {
 
 
   /**
+   * Allows an employee object to be reduced in confidence
+   *
+   *  @param entity_id
+   *  @param gen_id
+   *  @return - the data from the api
+  */
+  char * deleteEntityEmployee( char *entity_id, char *gen_id) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"entity_id=");
+    p = curl_easy_escape(curl,entity_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"gen_id=");
+    p = curl_easy_escape(curl,gen_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("DELETE","/entity/employee",params);
+  }
+
+
+  /**
    * With a known entity id, an employee object can be added.
    *
    *  @param entity_id
@@ -3285,34 +3353,6 @@ char * doCurl (char * method, char * path, char * params) {
     curl_free(p);
     strcat(params,"&");
     return doCurl("POST","/entity/employee",params);
-  }
-
-
-  /**
-   * Allows an employee object to be reduced in confidence
-   *
-   *  @param entity_id
-   *  @param gen_id
-   *  @return - the data from the api
-  */
-  char * deleteEntityEmployee( char *entity_id, char *gen_id) {
-    CURL *curl = curl_easy_init();
-    char params[10000];
-    char *p;
-    strcpy(params,"?api_key=");
-    strcat(params,API_KEY);
-    strcat(params,"?");
-    strcat(params,"entity_id=");
-    p = curl_easy_escape(curl,entity_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"gen_id=");
-    p = curl_easy_escape(curl,gen_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    return doCurl("DELETE","/entity/employee",params);
   }
 
 
@@ -3475,34 +3515,6 @@ char * doCurl (char * method, char * path, char * params) {
 
 
   /**
-   * Allows a group object to be removed from an entities group members
-   *
-   *  @param entity_id
-   *  @param gen_id
-   *  @return - the data from the api
-  */
-  char * deleteEntityGroup( char *entity_id, char *gen_id) {
-    CURL *curl = curl_easy_init();
-    char params[10000];
-    char *p;
-    strcpy(params,"?api_key=");
-    strcat(params,API_KEY);
-    strcat(params,"?");
-    strcat(params,"entity_id=");
-    p = curl_easy_escape(curl,entity_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"gen_id=");
-    p = curl_easy_escape(curl,gen_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    return doCurl("DELETE","/entity/group",params);
-  }
-
-
-  /**
    * With a known entity id, a group  can be added to group members.
    *
    *  @param entity_id
@@ -3531,13 +3543,13 @@ char * doCurl (char * method, char * path, char * params) {
 
 
   /**
-   * Allows a image object to be reduced in confidence
+   * Allows a group object to be removed from an entities group members
    *
    *  @param entity_id
    *  @param gen_id
    *  @return - the data from the api
   */
-  char * deleteEntityImage( char *entity_id, char *gen_id) {
+  char * deleteEntityGroup( char *entity_id, char *gen_id) {
     CURL *curl = curl_easy_init();
     char params[10000];
     char *p;
@@ -3554,7 +3566,7 @@ char * doCurl (char * method, char * path, char * params) {
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");
-    return doCurl("DELETE","/entity/image",params);
+    return doCurl("DELETE","/entity/group",params);
   }
 
 
@@ -3593,6 +3605,34 @@ char * doCurl (char * method, char * path, char * params) {
 
 
   /**
+   * Allows a image object to be reduced in confidence
+   *
+   *  @param entity_id
+   *  @param gen_id
+   *  @return - the data from the api
+  */
+  char * deleteEntityImage( char *entity_id, char *gen_id) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"entity_id=");
+    p = curl_easy_escape(curl,entity_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"gen_id=");
+    p = curl_easy_escape(curl,gen_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("DELETE","/entity/image",params);
+  }
+
+
+  /**
    * With a known entity id, a image can be retrieved from a url and added.
    *
    *  @param entity_id
@@ -3623,28 +3663,6 @@ char * doCurl (char * method, char * path, char * params) {
     curl_free(p);
     strcat(params,"&");
     return doCurl("POST","/entity/image/by_url",params);
-  }
-
-
-  /**
-   * With a known entity id and a known invoice_address ID, we can delete a specific invoice_address object from an enitity.
-   *
-   *  @param entity_id
-   *  @return - the data from the api
-  */
-  char * deleteEntityInvoice_address( char *entity_id) {
-    CURL *curl = curl_easy_init();
-    char params[10000];
-    char *p;
-    strcpy(params,"?api_key=");
-    strcat(params,API_KEY);
-    strcat(params,"?");
-    strcat(params,"entity_id=");
-    p = curl_easy_escape(curl,entity_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    return doCurl("DELETE","/entity/invoice_address",params);
   }
 
 
@@ -3727,6 +3745,28 @@ char * doCurl (char * method, char * path, char * params) {
     curl_free(p);
     strcat(params,"&");
     return doCurl("POST","/entity/invoice_address",params);
+  }
+
+
+  /**
+   * With a known entity id and a known invoice_address ID, we can delete a specific invoice_address object from an enitity.
+   *
+   *  @param entity_id
+   *  @return - the data from the api
+  */
+  char * deleteEntityInvoice_address( char *entity_id) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"entity_id=");
+    p = curl_easy_escape(curl,entity_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("DELETE","/entity/invoice_address",params);
   }
 
 
@@ -4153,6 +4193,34 @@ char * doCurl (char * method, char * path, char * params) {
 
 
   /**
+   * With a known entity id, a payment_type object can be added.
+   *
+   *  @param entity_id - the id of the entity to add the payment type to
+   *  @param payment_type - the payment type to add to the entity
+   *  @return - the data from the api
+  */
+  char * postEntityPayment_type( char *entity_id, char *payment_type) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"entity_id=");
+    p = curl_easy_escape(curl,entity_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"payment_type=");
+    p = curl_easy_escape(curl,payment_type,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("POST","/entity/payment_type",params);
+  }
+
+
+  /**
    * Allows a payment_type object to be reduced in confidence
    *
    *  @param entity_id
@@ -4181,13 +4249,13 @@ char * doCurl (char * method, char * path, char * params) {
 
 
   /**
-   * With a known entity id, a payment_type object can be added.
+   * Allows a phone object to be reduced in confidence
    *
-   *  @param entity_id - the id of the entity to add the payment type to
-   *  @param payment_type - the payment type to add to the entity
+   *  @param entity_id
+   *  @param gen_id
    *  @return - the data from the api
   */
-  char * postEntityPayment_type( char *entity_id, char *payment_type) {
+  char * deleteEntityPhone( char *entity_id, char *gen_id) {
     CURL *curl = curl_easy_init();
     char params[10000];
     char *p;
@@ -4199,12 +4267,12 @@ char * doCurl (char * method, char * path, char * params) {
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");
-    strcat(params,"payment_type=");
-    p = curl_easy_escape(curl,payment_type,0);
+    strcat(params,"gen_id=");
+    p = curl_easy_escape(curl,gen_id,0);
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");
-    return doCurl("POST","/entity/payment_type",params);
+    return doCurl("DELETE","/entity/phone",params);
   }
 
 
@@ -4239,34 +4307,6 @@ char * doCurl (char * method, char * path, char * params) {
     curl_free(p);
     strcat(params,"&");
     return doCurl("POST","/entity/phone",params);
-  }
-
-
-  /**
-   * Allows a phone object to be reduced in confidence
-   *
-   *  @param entity_id
-   *  @param gen_id
-   *  @return - the data from the api
-  */
-  char * deleteEntityPhone( char *entity_id, char *gen_id) {
-    CURL *curl = curl_easy_init();
-    char params[10000];
-    char *p;
-    strcpy(params,"?api_key=");
-    strcat(params,API_KEY);
-    strcat(params,"?");
-    strcat(params,"entity_id=");
-    p = curl_easy_escape(curl,entity_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"gen_id=");
-    p = curl_easy_escape(curl,gen_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    return doCurl("DELETE","/entity/phone",params);
   }
 
 
@@ -4381,7 +4421,7 @@ char * doCurl (char * method, char * path, char * params) {
 
 
   /**
-   * removes  a given entities supplier/masheryid/user_id content and makes the entity inactive if the entity is un-usable
+   * removes a given entities supplier/masheryid/user_id content and makes the entity inactive if the entity is un-usable
    *
    *  @param entity_id - The entity to pull
    *  @param purge_masheryid - The purge masheryid to match
@@ -4423,6 +4463,64 @@ char * doCurl (char * method, char * path, char * params) {
     curl_free(p);
     strcat(params,"&");
     return doCurl("POST","/entity/purge",params);
+  }
+
+
+  /**
+   * removes a portion of a given entity and makes the entity inactive if the resulting leftover entity is un-usable
+   *
+   *  @param entity_id - The entity to pull
+   *  @param object
+   *  @param gen_id - The gen_id of any multi-object being purged
+   *  @param purge_masheryid - The purge masheryid to match
+   *  @param purge_supplier_id - The purge supplier id to match
+   *  @param purge_user_id - The purge user id to match
+   *  @param destructive
+   *  @return - the data from the api
+  */
+  char * postEntityPurgeBy_object( char *entity_id, char *object, char *gen_id, char *purge_masheryid, char *purge_supplier_id, char *purge_user_id, char *destructive) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"entity_id=");
+    p = curl_easy_escape(curl,entity_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"object=");
+    p = curl_easy_escape(curl,object,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"gen_id=");
+    p = curl_easy_escape(curl,gen_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"purge_masheryid=");
+    p = curl_easy_escape(curl,purge_masheryid,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"purge_supplier_id=");
+    p = curl_easy_escape(curl,purge_supplier_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"purge_user_id=");
+    p = curl_easy_escape(curl,purge_user_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"destructive=");
+    p = curl_easy_escape(curl,destructive,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("POST","/entity/purge/by_object",params);
   }
 
 
@@ -5393,34 +5491,6 @@ char * doCurl (char * method, char * path, char * params) {
 
 
   /**
-   * Allows a social media object to be reduced in confidence
-   *
-   *  @param entity_id
-   *  @param gen_id
-   *  @return - the data from the api
-  */
-  char * deleteEntitySocialmedia( char *entity_id, char *gen_id) {
-    CURL *curl = curl_easy_init();
-    char params[10000];
-    char *p;
-    strcpy(params,"?api_key=");
-    strcat(params,API_KEY);
-    strcat(params,"?");
-    strcat(params,"entity_id=");
-    p = curl_easy_escape(curl,entity_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"gen_id=");
-    p = curl_easy_escape(curl,gen_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    return doCurl("DELETE","/entity/socialmedia",params);
-  }
-
-
-  /**
    * With a known entity id, a social media object can be added.
    *
    *  @param entity_id
@@ -5451,6 +5521,34 @@ char * doCurl (char * method, char * path, char * params) {
     curl_free(p);
     strcat(params,"&");
     return doCurl("POST","/entity/socialmedia",params);
+  }
+
+
+  /**
+   * Allows a social media object to be reduced in confidence
+   *
+   *  @param entity_id
+   *  @param gen_id
+   *  @return - the data from the api
+  */
+  char * deleteEntitySocialmedia( char *entity_id, char *gen_id) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"entity_id=");
+    p = curl_easy_escape(curl,entity_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"gen_id=");
+    p = curl_easy_escape(curl,gen_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("DELETE","/entity/socialmedia",params);
   }
 
 
@@ -5893,6 +5991,34 @@ char * doCurl (char * method, char * path, char * params) {
 
 
   /**
+   * Allows a website object to be reduced in confidence
+   *
+   *  @param entity_id
+   *  @param gen_id
+   *  @return - the data from the api
+  */
+  char * deleteEntityWebsite( char *entity_id, char *gen_id) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"entity_id=");
+    p = curl_easy_escape(curl,entity_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"gen_id=");
+    p = curl_easy_escape(curl,gen_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("DELETE","/entity/website",params);
+  }
+
+
+  /**
    * With a known entity id, a website object can be added.
    *
    *  @param entity_id
@@ -5935,34 +6061,6 @@ char * doCurl (char * method, char * path, char * params) {
     curl_free(p);
     strcat(params,"&");
     return doCurl("POST","/entity/website",params);
-  }
-
-
-  /**
-   * Allows a website object to be reduced in confidence
-   *
-   *  @param entity_id
-   *  @param gen_id
-   *  @return - the data from the api
-  */
-  char * deleteEntityWebsite( char *entity_id, char *gen_id) {
-    CURL *curl = curl_easy_init();
-    char params[10000];
-    char *p;
-    strcpy(params,"?api_key=");
-    strcat(params,API_KEY);
-    strcat(params,"?");
-    strcat(params,"entity_id=");
-    p = curl_easy_escape(curl,entity_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"gen_id=");
-    p = curl_easy_escape(curl,gen_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    return doCurl("DELETE","/entity/website",params);
   }
 
 
@@ -6773,6 +6871,34 @@ char * doCurl (char * method, char * path, char * params) {
 
 
   /**
+   * Remove a canned link to an existing flatpack site.
+   *
+   *  @param flatpack_id - the id of the flatpack to delete
+   *  @param gen_id - the id of the canned link to remove
+   *  @return - the data from the api
+  */
+  char * deleteFlatpackLink( char *flatpack_id, char *gen_id) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"flatpack_id=");
+    p = curl_easy_escape(curl,flatpack_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"gen_id=");
+    p = curl_easy_escape(curl,gen_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("DELETE","/flatpack/link",params);
+  }
+
+
+  /**
    * Add a canned link to an existing flatpack site.
    *
    *  @param flatpack_id - the id of the flatpack to delete
@@ -6809,34 +6935,6 @@ char * doCurl (char * method, char * path, char * params) {
     curl_free(p);
     strcat(params,"&");
     return doCurl("POST","/flatpack/link",params);
-  }
-
-
-  /**
-   * Remove a canned link to an existing flatpack site.
-   *
-   *  @param flatpack_id - the id of the flatpack to delete
-   *  @param gen_id - the id of the canned link to remove
-   *  @return - the data from the api
-  */
-  char * deleteFlatpackLink( char *flatpack_id, char *gen_id) {
-    CURL *curl = curl_easy_init();
-    char params[10000];
-    char *p;
-    strcpy(params,"?api_key=");
-    strcat(params,API_KEY);
-    strcat(params,"?");
-    strcat(params,"flatpack_id=");
-    p = curl_easy_escape(curl,flatpack_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"gen_id=");
-    p = curl_easy_escape(curl,gen_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    return doCurl("DELETE","/flatpack/link",params);
   }
 
 
@@ -6947,6 +7045,28 @@ char * doCurl (char * method, char * path, char * params) {
 
 
   /**
+   * Returns group that matches a given group id
+   *
+   *  @param group_id
+   *  @return - the data from the api
+  */
+  char * getGroup( char *group_id) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"group_id=");
+    p = curl_easy_escape(curl,group_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("GET","/group",params);
+  }
+
+
+  /**
    * Update/Add a Group
    *
    *  @param group_id
@@ -6995,28 +7115,6 @@ char * doCurl (char * method, char * path, char * params) {
     curl_free(p);
     strcat(params,"&");
     return doCurl("POST","/group",params);
-  }
-
-
-  /**
-   * Returns group that matches a given group id
-   *
-   *  @param group_id
-   *  @return - the data from the api
-  */
-  char * getGroup( char *group_id) {
-    CURL *curl = curl_easy_init();
-    char params[10000];
-    char *p;
-    strcpy(params,"?api_key=");
-    strcat(params,API_KEY);
-    strcat(params,"?");
-    strcat(params,"group_id=");
-    p = curl_easy_escape(curl,group_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    return doCurl("GET","/group",params);
   }
 
 

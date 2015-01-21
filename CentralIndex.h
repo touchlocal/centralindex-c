@@ -159,10 +159,11 @@ void set_debug_mode (int debug);
   /**
    * Create entity via JSON
    *
-   *  @param queue_id - Queue ID
+   *  @param entity_id - The entity to add rich data too
+   *  @param json - The rich data to add to the entity
    *  @return - the data from the api
   */
-  char * postBusinessJsonProcess( char *queue_id);
+  char * postBusinessJsonProcess( char *entity_id, char *json);
 
  
   /**
@@ -245,17 +246,6 @@ void set_debug_mode (int debug);
 
  
   /**
-   * With a known category id, a mapping object can be deleted.
-   *
-   *  @param category_id
-   *  @param category_type
-   *  @param mapped_id
-   *  @return - the data from the api
-  */
-  char * deleteCategoryMappings( char *category_id, char *category_type, char *mapped_id);
-
- 
-  /**
    * With a known category id, a mapping object can be added.
    *
    *  @param category_id
@@ -265,6 +255,17 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * postCategoryMappings( char *category_id, char *type, char *id, char *name);
+
+ 
+  /**
+   * With a known category id, a mapping object can be deleted.
+   *
+   *  @param category_id
+   *  @param category_type
+   *  @param mapped_id
+   *  @return - the data from the api
+  */
+  char * deleteCategoryMappings( char *category_id, char *category_type, char *mapped_id);
 
  
   /**
@@ -278,17 +279,6 @@ void set_debug_mode (int debug);
 
  
   /**
-   * With a known category id, an synonym object can be added.
-   *
-   *  @param category_id
-   *  @param synonym
-   *  @param language
-   *  @return - the data from the api
-  */
-  char * postCategorySynonym( char *category_id, char *synonym, char *language);
-
- 
-  /**
    * With a known category id, a synonyms object can be removed.
    *
    *  @param category_id
@@ -297,6 +287,17 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * deleteCategorySynonym( char *category_id, char *synonym, char *language);
+
+ 
+  /**
+   * With a known category id, an synonym object can be added.
+   *
+   *  @param category_id
+   *  @param synonym
+   *  @param language
+   *  @return - the data from the api
+  */
+  char * postCategorySynonym( char *category_id, char *synonym, char *language);
 
  
   /**
@@ -693,16 +694,6 @@ void set_debug_mode (int debug);
 
  
   /**
-   * Deleteing an affiliate adblock from a known entity
-   *
-   *  @param entity_id
-   *  @param gen_id
-   *  @return - the data from the api
-  */
-  char * deleteEntityAffiliate_adblock( char *entity_id, char *gen_id);
-
- 
-  /**
    * Adding an affiliate adblock to a known entity
    *
    *  @param entity_id
@@ -713,13 +704,13 @@ void set_debug_mode (int debug);
 
  
   /**
-   * Allows an affiliate link object to be reduced in confidence
+   * Deleteing an affiliate adblock from a known entity
    *
    *  @param entity_id
    *  @param gen_id
    *  @return - the data from the api
   */
-  char * deleteEntityAffiliate_link( char *entity_id, char *gen_id);
+  char * deleteEntityAffiliate_adblock( char *entity_id, char *gen_id);
 
  
   /**
@@ -734,6 +725,16 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * postEntityAffiliate_link( char *entity_id, char *affiliate_name, char *affiliate_link, char *affiliate_message, char *affiliate_logo, char *affiliate_action);
+
+ 
+  /**
+   * Allows an affiliate link object to be reduced in confidence
+   *
+   *  @param entity_id
+   *  @param gen_id
+   *  @return - the data from the api
+  */
+  char * deleteEntityAffiliate_link( char *entity_id, char *gen_id);
 
  
   /**
@@ -874,15 +875,14 @@ void set_debug_mode (int debug);
 
  
   /**
-   * With a known entity id, a description object can be added.
+   * Allow an entity to be claimed by a valid user
    *
    *  @param entity_id
-   *  @param headline
-   *  @param body
-   *  @param gen_id
+   *  @param claimed_user_id
+   *  @param expiry_date
    *  @return - the data from the api
   */
-  char * postEntityDescription( char *entity_id, char *headline, char *body, char *gen_id);
+  char * postEntityClaimRenew( char *entity_id, char *claimed_user_id, char *expiry_date);
 
  
   /**
@@ -893,6 +893,18 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * deleteEntityDescription( char *entity_id, char *gen_id);
+
+ 
+  /**
+   * With a known entity id, a description object can be added.
+   *
+   *  @param entity_id
+   *  @param headline
+   *  @param body
+   *  @param gen_id
+   *  @return - the data from the api
+  */
+  char * postEntityDescription( char *entity_id, char *headline, char *body, char *gen_id);
 
  
   /**
@@ -938,6 +950,16 @@ void set_debug_mode (int debug);
 
  
   /**
+   * Allows an employee object to be reduced in confidence
+   *
+   *  @param entity_id
+   *  @param gen_id
+   *  @return - the data from the api
+  */
+  char * deleteEntityEmployee( char *entity_id, char *gen_id);
+
+ 
+  /**
    * With a known entity id, an employee object can be added.
    *
    *  @param entity_id
@@ -951,16 +973,6 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * postEntityEmployee( char *entity_id, char *title, char *forename, char *surname, char *job_title, char *description, char *email, char *phone_number);
-
- 
-  /**
-   * Allows an employee object to be reduced in confidence
-   *
-   *  @param entity_id
-   *  @param gen_id
-   *  @return - the data from the api
-  */
-  char * deleteEntityEmployee( char *entity_id, char *gen_id);
 
  
   /**
@@ -1017,16 +1029,6 @@ void set_debug_mode (int debug);
 
  
   /**
-   * Allows a group object to be removed from an entities group members
-   *
-   *  @param entity_id
-   *  @param gen_id
-   *  @return - the data from the api
-  */
-  char * deleteEntityGroup( char *entity_id, char *gen_id);
-
- 
-  /**
    * With a known entity id, a group  can be added to group members.
    *
    *  @param entity_id
@@ -1037,13 +1039,13 @@ void set_debug_mode (int debug);
 
  
   /**
-   * Allows a image object to be reduced in confidence
+   * Allows a group object to be removed from an entities group members
    *
    *  @param entity_id
    *  @param gen_id
    *  @return - the data from the api
   */
-  char * deleteEntityImage( char *entity_id, char *gen_id);
+  char * deleteEntityGroup( char *entity_id, char *gen_id);
 
  
   /**
@@ -1058,6 +1060,16 @@ void set_debug_mode (int debug);
 
  
   /**
+   * Allows a image object to be reduced in confidence
+   *
+   *  @param entity_id
+   *  @param gen_id
+   *  @return - the data from the api
+  */
+  char * deleteEntityImage( char *entity_id, char *gen_id);
+
+ 
+  /**
    * With a known entity id, a image can be retrieved from a url and added.
    *
    *  @param entity_id
@@ -1066,15 +1078,6 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * postEntityImageBy_url( char *entity_id, char *image_url, char *image_name);
-
- 
-  /**
-   * With a known entity id and a known invoice_address ID, we can delete a specific invoice_address object from an enitity.
-   *
-   *  @param entity_id
-   *  @return - the data from the api
-  */
-  char * deleteEntityInvoice_address( char *entity_id);
 
  
   /**
@@ -1094,6 +1097,15 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * postEntityInvoice_address( char *entity_id, char *building_number, char *address1, char *address2, char *address3, char *district, char *town, char *county, char *province, char *postcode, char *address_type);
+
+ 
+  /**
+   * With a known entity id and a known invoice_address ID, we can delete a specific invoice_address object from an enitity.
+   *
+   *  @param entity_id
+   *  @return - the data from the api
+  */
+  char * deleteEntityInvoice_address( char *entity_id);
 
  
   /**
@@ -1226,6 +1238,16 @@ void set_debug_mode (int debug);
 
  
   /**
+   * With a known entity id, a payment_type object can be added.
+   *
+   *  @param entity_id - the id of the entity to add the payment type to
+   *  @param payment_type - the payment type to add to the entity
+   *  @return - the data from the api
+  */
+  char * postEntityPayment_type( char *entity_id, char *payment_type);
+
+ 
+  /**
    * Allows a payment_type object to be reduced in confidence
    *
    *  @param entity_id
@@ -1236,13 +1258,13 @@ void set_debug_mode (int debug);
 
  
   /**
-   * With a known entity id, a payment_type object can be added.
+   * Allows a phone object to be reduced in confidence
    *
-   *  @param entity_id - the id of the entity to add the payment type to
-   *  @param payment_type - the payment type to add to the entity
+   *  @param entity_id
+   *  @param gen_id
    *  @return - the data from the api
   */
-  char * postEntityPayment_type( char *entity_id, char *payment_type);
+  char * deleteEntityPhone( char *entity_id, char *gen_id);
 
  
   /**
@@ -1254,16 +1276,6 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * postEntityPhone( char *entity_id, char *number, char *trackable);
-
- 
-  /**
-   * Allows a phone object to be reduced in confidence
-   *
-   *  @param entity_id
-   *  @param gen_id
-   *  @return - the data from the api
-  */
-  char * deleteEntityPhone( char *entity_id, char *gen_id);
 
  
   /**
@@ -1296,7 +1308,7 @@ void set_debug_mode (int debug);
 
  
   /**
-   * removes  a given entities supplier/masheryid/user_id content and makes the entity inactive if the entity is un-usable
+   * removes a given entities supplier/masheryid/user_id content and makes the entity inactive if the entity is un-usable
    *
    *  @param entity_id - The entity to pull
    *  @param purge_masheryid - The purge masheryid to match
@@ -1306,6 +1318,21 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * postEntityPurge( char *entity_id, char *purge_masheryid, char *purge_supplier_id, char *purge_user_id, char *destructive);
+
+ 
+  /**
+   * removes a portion of a given entity and makes the entity inactive if the resulting leftover entity is un-usable
+   *
+   *  @param entity_id - The entity to pull
+   *  @param object
+   *  @param gen_id - The gen_id of any multi-object being purged
+   *  @param purge_masheryid - The purge masheryid to match
+   *  @param purge_supplier_id - The purge supplier id to match
+   *  @param purge_user_id - The purge user id to match
+   *  @param destructive
+   *  @return - the data from the api
+  */
+  char * postEntityPurgeBy_object( char *entity_id, char *object, char *gen_id, char *purge_masheryid, char *purge_supplier_id, char *purge_user_id, char *destructive);
 
  
   /**
@@ -1550,16 +1577,6 @@ void set_debug_mode (int debug);
 
  
   /**
-   * Allows a social media object to be reduced in confidence
-   *
-   *  @param entity_id
-   *  @param gen_id
-   *  @return - the data from the api
-  */
-  char * deleteEntitySocialmedia( char *entity_id, char *gen_id);
-
- 
-  /**
    * With a known entity id, a social media object can be added.
    *
    *  @param entity_id
@@ -1568,6 +1585,16 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * postEntitySocialmedia( char *entity_id, char *type, char *website_url);
+
+ 
+  /**
+   * Allows a social media object to be reduced in confidence
+   *
+   *  @param entity_id
+   *  @param gen_id
+   *  @return - the data from the api
+  */
+  char * deleteEntitySocialmedia( char *entity_id, char *gen_id);
 
  
   /**
@@ -1708,6 +1735,16 @@ void set_debug_mode (int debug);
 
  
   /**
+   * Allows a website object to be reduced in confidence
+   *
+   *  @param entity_id
+   *  @param gen_id
+   *  @return - the data from the api
+  */
+  char * deleteEntityWebsite( char *entity_id, char *gen_id);
+
+ 
+  /**
    * With a known entity id, a website object can be added.
    *
    *  @param entity_id
@@ -1718,16 +1755,6 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * postEntityWebsite( char *entity_id, char *website_url, char *display_url, char *website_description, char *gen_id);
-
- 
-  /**
-   * Allows a website object to be reduced in confidence
-   *
-   *  @param entity_id
-   *  @param gen_id
-   *  @return - the data from the api
-  */
-  char * deleteEntityWebsite( char *entity_id, char *gen_id);
 
  
   /**
@@ -1956,6 +1983,16 @@ void set_debug_mode (int debug);
 
  
   /**
+   * Remove a canned link to an existing flatpack site.
+   *
+   *  @param flatpack_id - the id of the flatpack to delete
+   *  @param gen_id - the id of the canned link to remove
+   *  @return - the data from the api
+  */
+  char * deleteFlatpackLink( char *flatpack_id, char *gen_id);
+
+ 
+  /**
    * Add a canned link to an existing flatpack site.
    *
    *  @param flatpack_id - the id of the flatpack to delete
@@ -1965,16 +2002,6 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * postFlatpackLink( char *flatpack_id, char *keywords, char *location, char *linkText);
-
- 
-  /**
-   * Remove a canned link to an existing flatpack site.
-   *
-   *  @param flatpack_id - the id of the flatpack to delete
-   *  @param gen_id - the id of the canned link to remove
-   *  @return - the data from the api
-  */
-  char * deleteFlatpackLink( char *flatpack_id, char *gen_id);
 
  
   /**
@@ -2017,6 +2044,15 @@ void set_debug_mode (int debug);
 
  
   /**
+   * Returns group that matches a given group id
+   *
+   *  @param group_id
+   *  @return - the data from the api
+  */
+  char * getGroup( char *group_id);
+
+ 
+  /**
    * Update/Add a Group
    *
    *  @param group_id
@@ -2028,15 +2064,6 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * postGroup( char *group_id, char *name, char *description, char *url, char *stamp_user_id, char *stamp_sql);
-
- 
-  /**
-   * Returns group that matches a given group id
-   *
-   *  @param group_id
-   *  @return - the data from the api
-  */
-  char * getGroup( char *group_id);
 
  
   /**
