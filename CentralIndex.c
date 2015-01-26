@@ -649,9 +649,10 @@ char * doCurl (char * method, char * path, char * params) {
    *  @param country - The country to fetch results for e.g. gb
    *  @param timezone
    *  @param master_entity_id - The entity you want this data to go to
+   *  @param queue_priority
    *  @return - the data from the api
   */
-  char * putBusinessJson( char *json, char *country, char *timezone, char *master_entity_id) {
+  char * putBusinessJson( char *json, char *country, char *timezone, char *master_entity_id, char *queue_priority) {
     CURL *curl = curl_easy_init();
     char params[10000];
     char *p;
@@ -675,6 +676,11 @@ char * doCurl (char * method, char * path, char * params) {
     strcat(params,"&");
     strcat(params,"master_entity_id=");
     p = curl_easy_escape(curl,master_entity_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"queue_priority=");
+    p = curl_easy_escape(curl,queue_priority,0);
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");

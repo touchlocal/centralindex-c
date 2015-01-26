@@ -151,9 +151,10 @@ void set_debug_mode (int debug);
    *  @param country - The country to fetch results for e.g. gb
    *  @param timezone
    *  @param master_entity_id - The entity you want this data to go to
+   *  @param queue_priority
    *  @return - the data from the api
   */
-  char * putBusinessJson( char *json, char *country, char *timezone, char *master_entity_id);
+  char * putBusinessJson( char *json, char *country, char *timezone, char *master_entity_id, char *queue_priority);
 
  
   /**
