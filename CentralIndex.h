@@ -2967,6 +2967,16 @@ void set_debug_mode (int debug);
 
  
   /**
+   * Get a Syndication by Reseller (Mashery ID) and optional entity ID
+   *
+   *  @param reseller_masheryid
+   *  @param entity_id
+   *  @return - the data from the api
+  */
+  char * getSyndicationBy_reseller( char *reseller_masheryid, char *entity_id);
+
+ 
+  /**
    * Cancel a syndication
    *
    *  @param syndication_id
@@ -3775,15 +3785,6 @@ void set_debug_mode (int debug);
 
  
   /**
-   * Given a transaction_id retrieve information on it
-   *
-   *  @param transaction_id
-   *  @return - the data from the api
-  */
-  char * getTransaction( char *transaction_id);
-
- 
-  /**
    * Create a new transaction
    *
    *  @param entity_id
@@ -3795,6 +3796,15 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * putTransaction( char *entity_id, char *user_id, char *basket_total, char *basket, char *currency, char *notes);
+
+ 
+  /**
+   * Given a transaction_id retrieve information on it
+   *
+   *  @param transaction_id
+   *  @return - the data from the api
+  */
+  char * getTransaction( char *transaction_id);
 
  
   /**

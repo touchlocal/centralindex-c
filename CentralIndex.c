@@ -9959,6 +9959,34 @@ char * doCurl (char * method, char * path, char * params) {
 
 
   /**
+   * Get a Syndication by Reseller (Mashery ID) and optional entity ID
+   *
+   *  @param reseller_masheryid
+   *  @param entity_id
+   *  @return - the data from the api
+  */
+  char * getSyndicationBy_reseller( char *reseller_masheryid, char *entity_id) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"reseller_masheryid=");
+    p = curl_easy_escape(curl,reseller_masheryid,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"entity_id=");
+    p = curl_easy_escape(curl,entity_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("GET","/syndication/by_reseller",params);
+  }
+
+
+  /**
    * Cancel a syndication
    *
    *  @param syndication_id
@@ -12439,28 +12467,6 @@ char * doCurl (char * method, char * path, char * params) {
 
 
   /**
-   * Given a transaction_id retrieve information on it
-   *
-   *  @param transaction_id
-   *  @return - the data from the api
-  */
-  char * getTransaction( char *transaction_id) {
-    CURL *curl = curl_easy_init();
-    char params[10000];
-    char *p;
-    strcpy(params,"?api_key=");
-    strcat(params,API_KEY);
-    strcat(params,"?");
-    strcat(params,"transaction_id=");
-    p = curl_easy_escape(curl,transaction_id,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    return doCurl("GET","/transaction",params);
-  }
-
-
-  /**
    * Create a new transaction
    *
    *  @param entity_id
@@ -12509,6 +12515,28 @@ char * doCurl (char * method, char * path, char * params) {
     curl_free(p);
     strcat(params,"&");
     return doCurl("PUT","/transaction",params);
+  }
+
+
+  /**
+   * Given a transaction_id retrieve information on it
+   *
+   *  @param transaction_id
+   *  @return - the data from the api
+  */
+  char * getTransaction( char *transaction_id) {
+    CURL *curl = curl_easy_init();
+    char params[10000];
+    char *p;
+    strcpy(params,"?api_key=");
+    strcat(params,API_KEY);
+    strcat(params,"?");
+    strcat(params,"transaction_id=");
+    p = curl_easy_escape(curl,transaction_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    return doCurl("GET","/transaction",params);
   }
 
 
