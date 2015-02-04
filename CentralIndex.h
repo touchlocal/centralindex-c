@@ -1315,10 +1315,11 @@ void set_debug_mode (int debug);
    *  @param purge_masheryid - The purge masheryid to match
    *  @param purge_supplier_id - The purge supplier id to match
    *  @param purge_user_id - The purge user id to match
+   *  @param exclude - List of entity fields that are excluded from the purge
    *  @param destructive
    *  @return - the data from the api
   */
-  char * postEntityPurge( char *entity_id, char *purge_masheryid, char *purge_supplier_id, char *purge_user_id, char *destructive);
+  char * postEntityPurge( char *entity_id, char *purge_masheryid, char *purge_supplier_id, char *purge_user_id, char *exclude, char *destructive);
 
  
   /**

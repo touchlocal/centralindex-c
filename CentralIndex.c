@@ -4433,10 +4433,11 @@ char * doCurl (char * method, char * path, char * params) {
    *  @param purge_masheryid - The purge masheryid to match
    *  @param purge_supplier_id - The purge supplier id to match
    *  @param purge_user_id - The purge user id to match
+   *  @param exclude - List of entity fields that are excluded from the purge
    *  @param destructive
    *  @return - the data from the api
   */
-  char * postEntityPurge( char *entity_id, char *purge_masheryid, char *purge_supplier_id, char *purge_user_id, char *destructive) {
+  char * postEntityPurge( char *entity_id, char *purge_masheryid, char *purge_supplier_id, char *purge_user_id, char *exclude, char *destructive) {
     CURL *curl = curl_easy_init();
     char params[10000];
     char *p;
@@ -4460,6 +4461,11 @@ char * doCurl (char * method, char * path, char * params) {
     strcat(params,"&");
     strcat(params,"purge_user_id=");
     p = curl_easy_escape(curl,purge_user_id,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"exclude=");
+    p = curl_easy_escape(curl,exclude,0);
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");
