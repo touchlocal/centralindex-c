@@ -8799,9 +8799,10 @@ char * doCurl (char * method, char * path, char * params) {
    *  @param type
    *  @param action
    *  @param data
+   *  @param slack_channel
    *  @return - the data from the api
   */
-  char * postOps_log( char *success, char *type, char *action, char *data) {
+  char * postOps_log( char *success, char *type, char *action, char *data, char *slack_channel) {
     CURL *curl = curl_easy_init();
     char params[10000];
     char *p;
@@ -8825,6 +8826,11 @@ char * doCurl (char * method, char * path, char * params) {
     strcat(params,"&");
     strcat(params,"data=");
     p = curl_easy_escape(curl,data,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"slack_channel=");
+    p = curl_easy_escape(curl,slack_channel,0);
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");

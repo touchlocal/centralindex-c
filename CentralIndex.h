@@ -2592,9 +2592,10 @@ void set_debug_mode (int debug);
    *  @param type
    *  @param action
    *  @param data
+   *  @param slack_channel
    *  @return - the data from the api
   */
-  char * postOps_log( char *success, char *type, char *action, char *data);
+  char * postOps_log( char *success, char *type, char *action, char *data, char *slack_channel);
 
  
   /**
