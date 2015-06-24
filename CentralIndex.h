@@ -1427,9 +1427,10 @@ void set_debug_mode (int debug);
    *  @param language
    *  @param domain
    *  @param path
+   *  @param restrict_category_ids - Pipe delimited optional IDs to restrict matches to (optional)
    *  @return - the data from the api
   */
-  char * getEntitySearchByboundingbox( char *latitude_1, char *longitude_1, char *latitude_2, char *longitude_2, char *per_page, char *page, char *country, char *language, char *domain, char *path);
+  char * getEntitySearchByboundingbox( char *latitude_1, char *longitude_1, char *latitude_2, char *longitude_2, char *per_page, char *page, char *country, char *language, char *domain, char *path, char *restrict_category_ids);
 
  
   /**
@@ -1444,9 +1445,10 @@ void set_debug_mode (int debug);
    *  @param longitude - The decimal longitude of the search context (optional)
    *  @param domain
    *  @param path
+   *  @param restrict_category_ids - Pipe delimited optional IDs to restrict matches to (optional)
    *  @return - the data from the api
   */
-  char * getEntitySearchBylocation( char *where, char *per_page, char *page, char *country, char *language, char *latitude, char *longitude, char *domain, char *path);
+  char * getEntitySearchBylocation( char *where, char *per_page, char *page, char *country, char *language, char *latitude, char *longitude, char *domain, char *path, char *restrict_category_ids);
 
  
   /**
@@ -1463,9 +1465,10 @@ void set_debug_mode (int debug);
    *  @param domain
    *  @param path
    *  @param unitOfDistance
+   *  @param restrict_category_ids - Pipe delimited optional IDs to restrict matches to (optional)
    *  @return - the data from the api
   */
-  char * getEntitySearchGroupBynearest( char *group_id, char *country, char *per_page, char *page, char *language, char *latitude, char *longitude, char *where, char *domain, char *path, char *unitOfDistance);
+  char * getEntitySearchGroupBynearest( char *group_id, char *country, char *per_page, char *page, char *language, char *latitude, char *longitude, char *where, char *domain, char *path, char *unitOfDistance, char *restrict_category_ids);
 
  
   /**
@@ -1480,9 +1483,10 @@ void set_debug_mode (int debug);
    *  @param longitude - The decimal longitude of the centre point of the search
    *  @param domain
    *  @param path
+   *  @param restrict_category_ids - Pipe delimited optional IDs to restrict matches to (optional)
    *  @return - the data from the api
   */
-  char * getEntitySearchKeywordBynearest( char *keyword, char *country, char *per_page, char *page, char *language, char *latitude, char *longitude, char *domain, char *path);
+  char * getEntitySearchKeywordBynearest( char *keyword, char *country, char *per_page, char *page, char *language, char *latitude, char *longitude, char *domain, char *path, char *restrict_category_ids);
 
  
   /**
@@ -1495,9 +1499,10 @@ void set_debug_mode (int debug);
    *  @param language - An ISO compatible language code, E.g. en
    *  @param domain
    *  @param path
+   *  @param restrict_category_ids - Pipe delimited optional IDs to restrict matches to (optional)
    *  @return - the data from the api
   */
-  char * getEntitySearchWhat( char *what, char *per_page, char *page, char *country, char *language, char *domain, char *path);
+  char * getEntitySearchWhat( char *what, char *per_page, char *page, char *country, char *language, char *domain, char *path, char *restrict_category_ids);
 
  
   /**
@@ -1514,9 +1519,10 @@ void set_debug_mode (int debug);
    *  @param language
    *  @param domain
    *  @param path
+   *  @param restrict_category_ids - Pipe delimited optional IDs to restrict matches to (optional)
    *  @return - the data from the api
   */
-  char * getEntitySearchWhatByboundingbox( char *what, char *latitude_1, char *longitude_1, char *latitude_2, char *longitude_2, char *per_page, char *page, char *country, char *language, char *domain, char *path);
+  char * getEntitySearchWhatByboundingbox( char *what, char *latitude_1, char *longitude_1, char *latitude_2, char *longitude_2, char *per_page, char *page, char *country, char *language, char *domain, char *path, char *restrict_category_ids);
 
  
   /**
@@ -1532,9 +1538,10 @@ void set_debug_mode (int debug);
    *  @param longitude - The decimal longitude of the search context (optional)
    *  @param domain
    *  @param path
+   *  @param restrict_category_ids - Pipe delimited optional IDs to restrict matches to (optional)
    *  @return - the data from the api
   */
-  char * getEntitySearchWhatBylocation( char *what, char *where, char *per_page, char *page, char *country, char *language, char *latitude, char *longitude, char *domain, char *path);
+  char * getEntitySearchWhatBylocation( char *what, char *where, char *per_page, char *page, char *country, char *language, char *latitude, char *longitude, char *domain, char *path, char *restrict_category_ids);
 
  
   /**
@@ -1549,9 +1556,10 @@ void set_debug_mode (int debug);
    *  @param longitude - The decimal longitude of the centre point of the search
    *  @param domain
    *  @param path
+   *  @param restrict_category_ids - Pipe delimited optional IDs to restrict matches to (optional)
    *  @return - the data from the api
   */
-  char * getEntitySearchWhatBynearest( char *what, char *country, char *per_page, char *page, char *language, char *latitude, char *longitude, char *domain, char *path);
+  char * getEntitySearchWhatBynearest( char *what, char *country, char *per_page, char *page, char *language, char *latitude, char *longitude, char *domain, char *path, char *restrict_category_ids);
 
  
   /**
@@ -1564,9 +1572,10 @@ void set_debug_mode (int debug);
    *  @param language - An ISO compatible language code, E.g. en
    *  @param domain
    *  @param path
+   *  @param restrict_category_ids - Pipe delimited optional IDs to restrict matches to (optional)
    *  @return - the data from the api
   */
-  char * getEntitySearchWho( char *who, char *per_page, char *page, char *country, char *language, char *domain, char *path);
+  char * getEntitySearchWho( char *who, char *per_page, char *page, char *country, char *language, char *domain, char *path, char *restrict_category_ids);
 
  
   /**
@@ -1583,9 +1592,10 @@ void set_debug_mode (int debug);
    *  @param language - An ISO compatible language code, E.g. en
    *  @param domain
    *  @param path
+   *  @param restrict_category_ids - Pipe delimited optional IDs to restrict matches to (optional)
    *  @return - the data from the api
   */
-  char * getEntitySearchWhoByboundingbox( char *who, char *latitude_1, char *longitude_1, char *latitude_2, char *longitude_2, char *per_page, char *page, char *country, char *language, char *domain, char *path);
+  char * getEntitySearchWhoByboundingbox( char *who, char *latitude_1, char *longitude_1, char *latitude_2, char *longitude_2, char *per_page, char *page, char *country, char *language, char *domain, char *path, char *restrict_category_ids);
 
  
   /**
@@ -1601,9 +1611,10 @@ void set_debug_mode (int debug);
    *  @param language - An ISO compatible language code, E.g. en
    *  @param domain
    *  @param path
+   *  @param restrict_category_ids - Pipe delimited optional IDs to restrict matches to (optional)
    *  @return - the data from the api
   */
-  char * getEntitySearchWhoBylocation( char *who, char *where, char *per_page, char *page, char *country, char *latitude, char *longitude, char *language, char *domain, char *path);
+  char * getEntitySearchWhoBylocation( char *who, char *where, char *per_page, char *page, char *country, char *latitude, char *longitude, char *language, char *domain, char *path, char *restrict_category_ids);
 
  
   /**
@@ -1618,9 +1629,10 @@ void set_debug_mode (int debug);
    *  @param longitude - The decimal longitude of the centre point of the search
    *  @param domain
    *  @param path
+   *  @param restrict_category_ids - Pipe delimited optional IDs to restrict matches to (optional)
    *  @return - the data from the api
   */
-  char * getEntitySearchWhoBynearest( char *who, char *country, char *per_page, char *page, char *language, char *latitude, char *longitude, char *domain, char *path);
+  char * getEntitySearchWhoBynearest( char *who, char *country, char *per_page, char *page, char *language, char *latitude, char *longitude, char *domain, char *path, char *restrict_category_ids);
 
  
   /**
