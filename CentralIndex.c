@@ -11707,9 +11707,10 @@ char * doCurl (char * method, char * path, char * params) {
    *  @param from - The phone number to call from
    *  @param pin - The pin to verify the phone number with
    *  @param twilio_voice - The language to read the verification in
+   *  @param extension - The pin to verify the phone number with
    *  @return - the data from the api
   */
-  char * getToolsPhonecallVerify( char *to, char *from, char *pin, char *twilio_voice) {
+  char * getToolsPhonecallVerify( char *to, char *from, char *pin, char *twilio_voice, char *extension) {
     CURL *curl = curl_easy_init();
     char params[10000];
     char *p;
@@ -11733,6 +11734,11 @@ char * doCurl (char * method, char * path, char * params) {
     strcat(params,"&");
     strcat(params,"twilio_voice=");
     p = curl_easy_escape(curl,twilio_voice,0);
+    strcat(params,p);
+    curl_free(p);
+    strcat(params,"&");
+    strcat(params,"extension=");
+    p = curl_easy_escape(curl,extension,0);
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");

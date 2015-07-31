@@ -3514,9 +3514,10 @@ void set_debug_mode (int debug);
    *  @param from - The phone number to call from
    *  @param pin - The pin to verify the phone number with
    *  @param twilio_voice - The language to read the verification in
+   *  @param extension - The pin to verify the phone number with
    *  @return - the data from the api
   */
-  char * getToolsPhonecallVerify( char *to, char *from, char *pin, char *twilio_voice);
+  char * getToolsPhonecallVerify( char *to, char *from, char *pin, char *twilio_voice, char *extension);
 
  
   /**
