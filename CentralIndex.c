@@ -11711,10 +11711,9 @@ char * doCurl (char * method, char * path, char * params) {
    *  @param province
    *  @param postcode
    *  @param country
-   *  @param geocoder
    *  @return - the data from the api
   */
-  char * getToolsGeocode( char *building_number, char *address1, char *address2, char *address3, char *district, char *town, char *county, char *province, char *postcode, char *country, char *geocoder) {
+  char * getToolsGeocode( char *building_number, char *address1, char *address2, char *address3, char *district, char *town, char *county, char *province, char *postcode, char *country) {
     CURL *curl = curl_easy_init();
     char params[10000];
     char *p;
@@ -11768,11 +11767,6 @@ char * doCurl (char * method, char * path, char * params) {
     strcat(params,"&");
     strcat(params,"country=");
     p = curl_easy_escape(curl,country,0);
-    strcat(params,p);
-    curl_free(p);
-    strcat(params,"&");
-    strcat(params,"geocoder=");
-    p = curl_easy_escape(curl,geocoder,0);
     strcat(params,p);
     curl_free(p);
     strcat(params,"&");
