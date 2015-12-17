@@ -68,6 +68,18 @@ void set_debug_mode (int debug);
 
  
   /**
+   * Will create a new association or update an existing one
+   *
+   *  @param association_id
+   *  @param association_name
+   *  @param association_url
+   *  @param filedata
+   *  @return - the data from the api
+  */
+  char * postAssociation( char *association_id, char *association_name, char *association_url, char *filedata);
+
+ 
+  /**
    * Delete an association
    *
    *  @param association_id
@@ -83,18 +95,6 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * getAssociation( char *association_id);
-
- 
-  /**
-   * Will create a new association or update an existing one
-   *
-   *  @param association_id
-   *  @param association_name
-   *  @param association_url
-   *  @param filedata
-   *  @return - the data from the api
-  */
-  char * postAssociation( char *association_id, char *association_name, char *association_url, char *filedata);
 
  
   /**
@@ -198,20 +198,6 @@ void set_debug_mode (int debug);
 
  
   /**
-   * Update/Add a Business Tool
-   *
-   *  @param tool_id
-   *  @param country
-   *  @param headline
-   *  @param description
-   *  @param link_url
-   *  @param active
-   *  @return - the data from the api
-  */
-  char * postBusiness_tool( char *tool_id, char *country, char *headline, char *description, char *link_url, char *active);
-
- 
-  /**
    * Returns business tool that matches a given tool id
    *
    *  @param tool_id
@@ -227,6 +213,20 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * deleteBusiness_tool( char *tool_id);
+
+ 
+  /**
+   * Update/Add a Business Tool
+   *
+   *  @param tool_id
+   *  @param country
+   *  @param headline
+   *  @param description
+   *  @param link_url
+   *  @param active
+   *  @return - the data from the api
+  */
+  char * postBusiness_tool( char *tool_id, char *country, char *headline, char *description, char *link_url, char *active);
 
  
   /**
@@ -249,15 +249,6 @@ void set_debug_mode (int debug);
 
  
   /**
-   * Returns the supplied wolf category object by fetching the supplied category_id from our categories object.
-   *
-   *  @param category_id
-   *  @return - the data from the api
-  */
-  char * getCategory( char *category_id);
-
- 
-  /**
    * With a known category id, an category object can be added.
    *
    *  @param category_id
@@ -266,6 +257,15 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * putCategory( char *category_id, char *language, char *name);
+
+ 
+  /**
+   * Returns the supplied wolf category object by fetching the supplied category_id from our categories object.
+   *
+   *  @param category_id
+   *  @return - the data from the api
+  */
+  char * getCategory( char *category_id);
 
  
   /**
@@ -310,17 +310,6 @@ void set_debug_mode (int debug);
 
  
   /**
-   * With a known category id, a synonyms object can be removed.
-   *
-   *  @param category_id
-   *  @param synonym
-   *  @param language
-   *  @return - the data from the api
-  */
-  char * deleteCategorySynonym( char *category_id, char *synonym, char *language);
-
- 
-  /**
    * With a known category id, an synonym object can be added.
    *
    *  @param category_id
@@ -329,6 +318,17 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * postCategorySynonym( char *category_id, char *synonym, char *language);
+
+ 
+  /**
+   * With a known category id, a synonyms object can be removed.
+   *
+   *  @param category_id
+   *  @param synonym
+   *  @param language
+   *  @return - the data from the api
+  */
+  char * deleteCategorySynonym( char *category_id, char *synonym, char *language);
 
  
   /**
@@ -567,6 +567,18 @@ void set_debug_mode (int debug);
 
  
   /**
+   * Allows a whole entity to be pulled from the datastore by its unique id
+   *
+   *  @param entity_id - The unique entity ID e.g. 379236608286720
+   *  @param domain
+   *  @param path
+   *  @param data_filter
+   *  @return - the data from the api
+  */
+  char * getEntity( char *entity_id, char *domain, char *path, char *data_filter);
+
+ 
+  /**
    * This entity isn't really supported anymore. You probably want PUT /business. Only to be used for testing.
    *
    *  @param type
@@ -577,18 +589,6 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * putEntity( char *type, char *scope, char *country, char *trust, char *our_data);
-
- 
-  /**
-   * Allows a whole entity to be pulled from the datastore by its unique id
-   *
-   *  @param entity_id - The unique entity ID e.g. 379236608286720
-   *  @param domain
-   *  @param path
-   *  @param data_filter
-   *  @return - the data from the api
-  */
-  char * getEntity( char *entity_id, char *domain, char *path, char *data_filter);
 
  
   /**
@@ -714,6 +714,18 @@ void set_debug_mode (int debug);
 
  
   /**
+   * Search for matching entities in a specified location that are advertisers and return a random selection upto the limit requested
+   *
+   *  @param location - The location to get results for. E.g. Dublin
+   *  @param limit - The number of advertisers that are to be returned
+   *  @param country - Which country to return results for. An ISO compatible country code, E.g. ie e.g. ie
+   *  @param language - An ISO compatible language code, E.g. en
+   *  @return - the data from the api
+  */
+  char * getEntityAdvertisersBy_location( char *location, char *limit, char *country, char *language);
+
+ 
+  /**
    * Adding an affiliate adblock to a known entity
    *
    *  @param entity_id
@@ -734,16 +746,6 @@ void set_debug_mode (int debug);
 
  
   /**
-   * Allows an affiliate link object to be reduced in confidence
-   *
-   *  @param entity_id
-   *  @param gen_id
-   *  @return - the data from the api
-  */
-  char * deleteEntityAffiliate_link( char *entity_id, char *gen_id);
-
- 
-  /**
    * With a known entity id, an affiliate link object can be added.
    *
    *  @param entity_id
@@ -758,13 +760,13 @@ void set_debug_mode (int debug);
 
  
   /**
-   * Allows a association_membership object to be reduced in confidence
+   * Allows an affiliate link object to be reduced in confidence
    *
    *  @param entity_id
    *  @param gen_id
    *  @return - the data from the api
   */
-  char * deleteEntityAssociation_membership( char *entity_id, char *gen_id);
+  char * deleteEntityAffiliate_link( char *entity_id, char *gen_id);
 
  
   /**
@@ -777,6 +779,16 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * postEntityAssociation_membership( char *entity_id, char *association_id, char *association_member_url, char *association_member_id);
+
+ 
+  /**
+   * Allows a association_membership object to be reduced in confidence
+   *
+   *  @param entity_id
+   *  @param gen_id
+   *  @return - the data from the api
+  */
+  char * deleteEntityAssociation_membership( char *entity_id, char *gen_id);
 
  
   /**
@@ -870,6 +882,16 @@ void set_debug_mode (int debug);
 
  
   /**
+   * Allows a category object to be reduced in confidence
+   *
+   *  @param entity_id
+   *  @param gen_id
+   *  @return - the data from the api
+  */
+  char * deleteEntityCategory( char *entity_id, char *gen_id);
+
+ 
+  /**
    * With a known entity id, an category object can be added.
    *
    *  @param entity_id
@@ -878,16 +900,6 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * postEntityCategory( char *entity_id, char *category_id, char *category_type);
-
- 
-  /**
-   * Allows a category object to be reduced in confidence
-   *
-   *  @param entity_id
-   *  @param gen_id
-   *  @return - the data from the api
-  */
-  char * deleteEntityCategory( char *entity_id, char *gen_id);
 
  
   /**
@@ -1057,6 +1069,15 @@ void set_debug_mode (int debug);
 
  
   /**
+   * Allows a featured message object to be removed
+   *
+   *  @param entity_id
+   *  @return - the data from the api
+  */
+  char * deleteEntityFeatured_message( char *entity_id);
+
+ 
+  /**
    * With a known entity id, a featured message can be added
    *
    *  @param entity_id
@@ -1065,15 +1086,6 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * postEntityFeatured_message( char *entity_id, char *featured_text, char *featured_url);
-
- 
-  /**
-   * Allows a featured message object to be removed
-   *
-   *  @param entity_id
-   *  @return - the data from the api
-  */
-  char * deleteEntityFeatured_message( char *entity_id);
 
  
   /**
@@ -1141,15 +1153,6 @@ void set_debug_mode (int debug);
 
  
   /**
-   * With a known entity id and a known invoice_address ID, we can delete a specific invoice_address object from an enitity.
-   *
-   *  @param entity_id
-   *  @return - the data from the api
-  */
-  char * deleteEntityInvoice_address( char *entity_id);
-
- 
-  /**
    * With a known entity id, an invoice_address object can be updated.
    *
    *  @param entity_id
@@ -1169,14 +1172,12 @@ void set_debug_mode (int debug);
 
  
   /**
-   * With a known entity id, a list description object can be added.
+   * With a known entity id and a known invoice_address ID, we can delete a specific invoice_address object from an enitity.
    *
    *  @param entity_id
-   *  @param headline
-   *  @param body
    *  @return - the data from the api
   */
-  char * postEntityList( char *entity_id, char *headline, char *body);
+  char * deleteEntityInvoice_address( char *entity_id);
 
  
   /**
@@ -1187,6 +1188,17 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * deleteEntityList( char *gen_id, char *entity_id);
+
+ 
+  /**
+   * With a known entity id, a list description object can be added.
+   *
+   *  @param entity_id
+   *  @param headline
+   *  @param body
+   *  @return - the data from the api
+  */
+  char * postEntityList( char *entity_id, char *headline, char *body);
 
  
   /**
@@ -1201,6 +1213,16 @@ void set_debug_mode (int debug);
 
  
   /**
+   * Allows a phone object to be reduced in confidence
+   *
+   *  @param entity_id
+   *  @param gen_id
+   *  @return - the data from the api
+  */
+  char * deleteEntityLogo( char *entity_id, char *gen_id);
+
+ 
+  /**
    * With a known entity id, a logo object can be added.
    *
    *  @param entity_id
@@ -1209,16 +1231,6 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * postEntityLogo( char *entity_id, char *filedata, char *logo_name);
-
- 
-  /**
-   * Allows a phone object to be reduced in confidence
-   *
-   *  @param entity_id
-   *  @param gen_id
-   *  @return - the data from the api
-  */
-  char * deleteEntityLogo( char *entity_id, char *gen_id);
 
  
   /**
@@ -1298,16 +1310,6 @@ void set_debug_mode (int debug);
 
  
   /**
-   * With a known entity id, a payment_type object can be added.
-   *
-   *  @param entity_id - the id of the entity to add the payment type to
-   *  @param payment_type - the payment type to add to the entity
-   *  @return - the data from the api
-  */
-  char * postEntityPayment_type( char *entity_id, char *payment_type);
-
- 
-  /**
    * Allows a payment_type object to be reduced in confidence
    *
    *  @param entity_id
@@ -1315,6 +1317,16 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * deleteEntityPayment_type( char *entity_id, char *gen_id);
+
+ 
+  /**
+   * With a known entity id, a payment_type object can be added.
+   *
+   *  @param entity_id - the id of the entity to add the payment type to
+   *  @param payment_type - the payment type to add to the entity
+   *  @return - the data from the api
+  */
+  char * postEntityPayment_type( char *entity_id, char *payment_type);
 
  
   /**
@@ -1655,16 +1667,6 @@ void set_debug_mode (int debug);
 
  
   /**
-   * Allows a social media object to be reduced in confidence
-   *
-   *  @param entity_id
-   *  @param gen_id
-   *  @return - the data from the api
-  */
-  char * deleteEntitySocialmedia( char *entity_id, char *gen_id);
-
- 
-  /**
    * With a known entity id, a social media object can be added.
    *
    *  @param entity_id
@@ -1676,13 +1678,13 @@ void set_debug_mode (int debug);
 
  
   /**
-   * Allows a special offer object to be reduced in confidence
+   * Allows a social media object to be reduced in confidence
    *
    *  @param entity_id
    *  @param gen_id
    *  @return - the data from the api
   */
-  char * deleteEntitySpecial_offer( char *entity_id, char *gen_id);
+  char * deleteEntitySocialmedia( char *entity_id, char *gen_id);
 
  
   /**
@@ -1698,6 +1700,16 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * postEntitySpecial_offer( char *entity_id, char *title, char *description, char *terms, char *start_date, char *expiry_date, char *url);
+
+ 
+  /**
+   * Allows a special offer object to be reduced in confidence
+   *
+   *  @param entity_id
+   *  @param gen_id
+   *  @return - the data from the api
+  */
+  char * deleteEntitySpecial_offer( char *entity_id, char *gen_id);
 
  
   /**
@@ -1836,6 +1848,16 @@ void set_debug_mode (int debug);
 
  
   /**
+   * Allows a yext list object to be removed
+   *
+   *  @param entity_id
+   *  @param gen_id
+   *  @return - the data from the api
+  */
+  char * deleteEntityYext_list( char *entity_id, char *gen_id);
+
+ 
+  /**
    * With a known entity id, a yext list can be added
    *
    *  @param entity_id
@@ -1846,16 +1868,6 @@ void set_debug_mode (int debug);
    *  @return - the data from the api
   */
   char * postEntityYext_list( char *entity_id, char *yext_list_id, char *description, char *name, char *type);
-
- 
-  /**
-   * Allows a yext list object to be removed
-   *
-   *  @param entity_id
-   *  @param gen_id
-   *  @return - the data from the api
-  */
-  char * deleteEntityYext_list( char *entity_id, char *gen_id);
 
  
   /**
