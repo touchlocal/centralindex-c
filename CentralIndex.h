@@ -873,7 +873,7 @@ void set_debug_mode (int debug);
 
  
   /**
-   * Get all entiies claimed by a specific user
+   * Get all entiies added or claimed by a specific user
    *
    *  @param user_id - The unique user ID of the user with claimed entities e.g. 379236608286720
    *  @return - the data from the api
