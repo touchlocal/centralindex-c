@@ -1873,7 +1873,7 @@ void set_debug_mode (int debug);
   /**
    * Add an entityserve document
    *
-   *  @param entity_id - The id of the entity to create the entityserve event for
+   *  @param entity_id - The ids of the entity/entities to create the entityserve event(s) for
    *  @param country - the ISO code of the country
    *  @param event_type - The event type being recorded
    *  @param domain
